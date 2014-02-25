@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<style> 
+		.ui-widget, 
+		.ui-widget .ui-widget { 
+		font-size: 11px !important; 
+		} 
+	</style>
+	<title>#{erro['message.title']}</title>
+</h:head>
+
+<h:body>
+	<p:layout fullPage="true">
+		<p:layoutUnit position="north" size="100">
+			<div id="header">
+			<ui:insert name="header">
+				<ui:include src="/pages/template/header.xhtml" />
+			</ui:insert>
+			</div>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="center">
+			<ui:insert name="menu">
+      				<ui:include src="/pages/template/barraMenu.xhtml" />
+      			</ui:insert>
+			<br />
+			<ui:insert name="content">
+
+			</ui:insert>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="south" size="100">
+			<ui:insert name="footer">
+				<ui:include src="/pages/template/footer.xhtml" />
+			</ui:insert>
+		</p:layoutUnit>
+	</p:layout>
+
+</h:body>
+
+</html>
