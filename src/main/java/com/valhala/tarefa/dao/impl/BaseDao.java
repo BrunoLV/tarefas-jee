@@ -25,8 +25,9 @@ abstract class BaseDao<T> implements Dao<T> {
 	protected EntityManager entityManager;
 	
 	@Override
-	public void persistir(T entidade) {
+	public T persistir(T entidade) {
 		this.entityManager.persist(entidade);
+		return entidade;
 	} // fim do método persistir
 
 	@Override
@@ -35,8 +36,9 @@ abstract class BaseDao<T> implements Dao<T> {
 	} // fim do método atualizar
 
 	@Override
-	public void remover(T entidade) {
+	public T remover(T entidade) {
 		this.entityManager.remove(entidade);
+		return entidade;
 	} // fim do método remover
 
 	@Override

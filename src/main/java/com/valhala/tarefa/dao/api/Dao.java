@@ -19,7 +19,7 @@ public interface Dao<T> {
 	 * Método utilizado para persistir uma entidade no banco de dados.
 	 * @param entidade
 	 */
-	void persistir(T entidade);
+	T persistir(T entidade);
 	
 	/**
 	 * Método utilizado para atualizar uma entidade no banco de dados.
@@ -32,7 +32,7 @@ public interface Dao<T> {
 	 * Método utilizado para remover um entidade do banco de dados.
 	 * @param entidade
 	 */
-	void remover(T entidade);
+	T remover(T entidade);
 	
 	/**
 	 * Método utilizado para realizar um consulta no banco de dados utilizando o id da entidade.

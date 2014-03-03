@@ -14,9 +14,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Version;
 
 /**
- * Entity que mapeia a tabela de Colabores no banco de dados.
+ * Entity que mapeia a tabela de Colaboradores no banco de dados.
  * @author Bruno Luiz Viana
  * @version 1.0
  * @since 23/02/2014
@@ -24,11 +25,14 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries({
-	@NamedQuery(name="buscarTodosColaboradores", query="select c from Colaborador c"),
-	@NamedQuery(name="buscarPorMatricula", query="select c from Colaborador c where c.matricula = :matricula")})
+	@NamedQuery(name=Colaborador.NAMEDQUERY_BUSCAR_TODOS, query="select c from Colaborador c"),
+	@NamedQuery(name=Colaborador.NAMEDQUERY_BUSCAR_POR_MATRICULA, query="select c from Colaborador c where c.matricula = :matricula")})
 public class Colaborador implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	public static final String NAMEDQUERY_BUSCAR_TODOS = "buscarTodosColaboradores";
+	public static final String NAMEDQUERY_BUSCAR_POR_MATRICULA = "buscarPorMatricula";
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -39,6 +43,9 @@ public class Colaborador implements Serializable {
 	@ElementCollection(targetClass = Atribuicao.class, fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
 	private List<Atribuicao> atribuicoes = new ArrayList<>();
+	
+	@Version
+	private Long versao;
 	
 	public Colaborador() {
 	}
@@ -81,6 +88,14 @@ public class Colaborador implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public Long getVersao() {
+		return versao;
+	}
+	
+	public void setVersao(Long versao) {
+		this.versao = versao;
 	}
 	
 	public List<Atribuicao> getAtribuicoes() {

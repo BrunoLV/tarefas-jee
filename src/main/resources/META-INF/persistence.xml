@@ -5,7 +5,9 @@
 	<persistence-unit name="tarefas-jee" transaction-type="JTA">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:/tarefas</jta-data-source>
-
+		
+		<class>com.valhala.tarefa.model.Revisao</class>
+		<class>com.valhala.tarefa.model.Tarefa</class>
 		<class>com.valhala.tarefa.model.Colaborador</class>
 
 		<properties>
@@ -14,6 +16,9 @@
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true"/>
 			<property name="hibernate.hbm2ddl.auto" value="update" />
+				
+			<property name="org.hibernate.envers.revision_field_name" value="codigoRevisao"/>
+			<property name="org.hibernate.envers.revision_type_field_name" value="tipoRevisao"/>
 		</properties>
 	</persistence-unit>
 </persistence>

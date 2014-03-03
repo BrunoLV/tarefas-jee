@@ -15,6 +15,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
+
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 
 /**
  * Entity que mapeia a tabela de Colabores no banco de dados.
@@ -23,15 +27,20 @@ import javax.persistence.TemporalType;
  * @since 23/02/2014
  *
  */
-@Entity
+@Entity @Audited
 @NamedQueries({
-		@NamedQuery(name="buscarTodasTarefas", query="select t from Tarefa t"),
-		@NamedQuery(name="buscarTodasTarefasPorColaborador", query="select t from Tarefa t where t.colaborador = :colaborador"),
-		@NamedQuery(name="buscarTodosTarefasPorColaboradorEStatus", query="select t from Tarefa t where t.colaborador = :colaborador and t.status in (:status)"),
-		@NamedQuery(name="buscarTodasTarefasPorStatus", query="select t from Tarefa t where t.status in (:status)")})
+		@NamedQuery(name=Tarefa.NAMEDQUERY_BUSCAR_TODOS, query="select t from Tarefa t"),
+		@NamedQuery(name=Tarefa.NAMEDQUERY_BUSCAR_POR_COLABORADOR, query="select t from Tarefa t where t.colaborador = :colaborador"),
+		@NamedQuery(name=Tarefa.NAMEDQUERY_BUSCAR_POR_COLABORADOR_E_STATUS, query="select t from Tarefa t where t.colaborador = :colaborador and t.status in (:status)"),
+		@NamedQuery(name=Tarefa.NAMEDQUERY_BUSCAR_POR_STATUS, query="select t from Tarefa t where t.status in (:status)")})
 public class Tarefa implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	public static final String NAMEDQUERY_BUSCAR_TODOS = "buscarTodasTarefas";
+	public static final String NAMEDQUERY_BUSCAR_POR_COLABORADOR = "buscarTodasTarefasPorColaborador";
+	public static final String NAMEDQUERY_BUSCAR_POR_COLABORADOR_E_STATUS = "buscarTodosTarefasPorColaboradorEStatus";
+	public static final String NAMEDQUERY_BUSCAR_POR_STATUS = "buscarTodasTarefasPorStatus";
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -52,8 +61,11 @@ public class Tarefa implements Serializable {
 	@Lob
 	private String observacao;
 	
-	@ManyToOne
+	@ManyToOne @Audited(targetAuditMode=RelationTargetAuditMode.NOT_AUDITED)
 	private Colaborador colaborador = new Colaborador();
+	
+	@Version
+	private Long versao;
 	
 	public Tarefa() {
 	}
@@ -144,6 +156,14 @@ public class Tarefa implements Serializable {
 	
 	public void setColaborador(Colaborador colaborador) {
 		this.colaborador = colaborador;
+	}
+	
+	public Long getVersao() {
+		return versao;
+	}
+	
+	public void setVersao(Long versao) {
+		this.versao = versao;
 	}
 
 	@Override

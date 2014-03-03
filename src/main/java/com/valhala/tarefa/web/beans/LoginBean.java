@@ -28,7 +28,7 @@ public class LoginBean extends BaseJSFBean implements Serializable {
 	private String matricula;
 	private String senha;
 	
-	private static final String USUARIO_LOGADO = "USUARIO_LOGADO";
+	public static final String USUARIO_LOGADO = "USUARIO_LOGADO";
 	
 	private static final String OUTCOME_SUCESSO = "/pages/public/visualizacao-tarefas.xhtml?faces-redirect=true";
 	private static final String OUTCOME_FALHA = "/pages/public/error.xhtml?faces-redirect=true";
@@ -49,6 +49,7 @@ public class LoginBean extends BaseJSFBean implements Serializable {
 			getSession().setAttribute(LoginBean.USUARIO_LOGADO, this.colaboradorService.buscarPorMatricula(principal.getName()));
 			outcome = LoginBean.OUTCOME_SUCESSO;
 		} catch (ServletException | ConsultaSemRetornoException e) {
+			System.out.println(e.getMessage());
 			outcome = LoginBean.OUTCOME_FALHA;
 		}
 		return outcome;

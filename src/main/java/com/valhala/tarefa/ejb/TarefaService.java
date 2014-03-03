@@ -10,6 +10,7 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 
+import com.valhala.tarefa.dao.api.ColaboradorDao;
 import com.valhala.tarefa.dao.api.TarefaDao;
 import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
 import com.valhala.tarefa.exceptions.CopiaDePropriedadesException;
@@ -34,6 +35,9 @@ public class TarefaService {
 	@Inject
 	private TarefaDao tarefaDao;
 	
+	@Inject
+	private ColaboradorDao colaboradorDao;
+	
 	/**
 	 * Método utilizado para executar a ação de cadastrar uma tarefa no sistema.
 	 * @param tarefa
@@ -43,6 +47,7 @@ public class TarefaService {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void cadastrarTarefa(Tarefa tarefa) throws ServiceException {
 		try {
+			tarefa.setColaborador(this.colaboradorDao.buscarPorId(tarefa.getColaborador().getId()));
 			this.tarefaDao.persistir(tarefa);
 		} catch (Exception e) {
 			throw new ServiceException(e.getMessage(), e);
@@ -61,6 +66,7 @@ public class TarefaService {
 		try {
 			tarefaPersitente = this.tarefaDao.buscarPorId(tarefa.getId());
 			Copiador.copiar(Tarefa.class, tarefaPersitente, tarefa);
+			tarefaPersitente.setColaborador(this.colaboradorDao.buscarPorId(tarefaPersitente.getColaborador().getId()));
 			this.tarefaDao.atualizar(tarefaPersitente);
 		} catch (ConsultaSemRetornoException | CopiaDePropriedadesException e) {
 			throw new ServiceException(e.getMessage(), e);
