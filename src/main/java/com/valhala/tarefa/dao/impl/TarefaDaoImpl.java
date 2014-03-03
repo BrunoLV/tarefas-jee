@@ -27,7 +27,7 @@ public class TarefaDaoImpl extends BaseDao<Tarefa> implements TarefaDao {
 	
 	@Override
 	public List<Tarefa> listarTudo() throws ConsultaSemRetornoException {
-		TypedQuery<Tarefa> query = this.entityManager.createNamedQuery("buscarTodasTarefas", TarefaDaoImpl.CLASSE_PERSISTENTE);
+		TypedQuery<Tarefa> query = this.entityManager.createNamedQuery(Tarefa.NAMEDQUERY_BUSCAR_TODOS, TarefaDaoImpl.CLASSE_PERSISTENTE);
 		List<Tarefa> tarefas = query.getResultList();
 		if (tarefas.isEmpty()) {
 			throw new ConsultaSemRetornoException("Consulta não trouxe resultados.");
@@ -37,7 +37,7 @@ public class TarefaDaoImpl extends BaseDao<Tarefa> implements TarefaDao {
 
 	@Override
 	public List<Tarefa> buscarTodasPorColaborador(Colaborador colaborador) throws ConsultaSemRetornoException {
-		TypedQuery<Tarefa> query = this.entityManager.createNamedQuery("buscarTodasTarefasPorColaborador", TarefaDaoImpl.CLASSE_PERSISTENTE);
+		TypedQuery<Tarefa> query = this.entityManager.createNamedQuery(Tarefa.NAMEDQUERY_BUSCAR_POR_COLABORADOR, TarefaDaoImpl.CLASSE_PERSISTENTE);
 		query.setParameter("id", colaborador);
 		List<Tarefa> tarefas = query.getResultList();
 		if (tarefas.isEmpty()) {
@@ -48,7 +48,7 @@ public class TarefaDaoImpl extends BaseDao<Tarefa> implements TarefaDao {
 
 	@Override
 	public List<Tarefa> buscarTodasPorColaboradorEStatus(Colaborador colaborador, List<Status> status) throws ConsultaSemRetornoException {
-		TypedQuery<Tarefa> query = this.entityManager.createNamedQuery("buscarTodosTarefasPorColaboradorEStatus", TarefaDaoImpl.CLASSE_PERSISTENTE);
+		TypedQuery<Tarefa> query = this.entityManager.createNamedQuery(Tarefa.NAMEDQUERY_BUSCAR_POR_COLABORADOR_E_STATUS, TarefaDaoImpl.CLASSE_PERSISTENTE);
 		query.setParameter("colaborador", colaborador);
 		query.setParameter("status", status);
 		List<Tarefa> tarefas = query.getResultList();
@@ -60,7 +60,7 @@ public class TarefaDaoImpl extends BaseDao<Tarefa> implements TarefaDao {
 
 	@Override
 	public List<Tarefa> buscarTodasPorStatus(List<Status> status) throws ConsultaSemRetornoException {
-		TypedQuery<Tarefa> query = this.entityManager.createNamedQuery("buscarTodasTarefasPorStatus", TarefaDaoImpl.CLASSE_PERSISTENTE);
+		TypedQuery<Tarefa> query = this.entityManager.createNamedQuery(Tarefa.NAMEDQUERY_BUSCAR_POR_STATUS, TarefaDaoImpl.CLASSE_PERSISTENTE);
 		query.setParameter("status", status);
 		List<Tarefa> tarefas = query.getResultList();
 		if (tarefas.isEmpty()) {

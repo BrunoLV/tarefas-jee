@@ -26,7 +26,7 @@ public class ColaboradorDaoImpl extends BaseDao<Colaborador> implements Colabora
 	
 	@Override
 	public List<Colaborador> listarTudo() throws ConsultaSemRetornoException {
-		TypedQuery<Colaborador> query = this.entityManager.createNamedQuery("buscarTodosColaboradores", ColaboradorDaoImpl.CLASSE_PERSISTENTE);
+		TypedQuery<Colaborador> query = this.entityManager.createNamedQuery(Colaborador.NAMEDQUERY_BUSCAR_TODOS, ColaboradorDaoImpl.CLASSE_PERSISTENTE);
 		List<Colaborador> colaboradores = query.getResultList();
 		if (colaboradores.isEmpty()) {
 			throw new ConsultaSemRetornoException("Consulta não trouxe resultados.");
@@ -36,7 +36,7 @@ public class ColaboradorDaoImpl extends BaseDao<Colaborador> implements Colabora
 
 	@Override
 	public Colaborador buscarPorMatricula(String matricula) throws ConsultaSemRetornoException {
-		TypedQuery<Colaborador> query = this.entityManager.createNamedQuery("buscarPorMatricula", ColaboradorDaoImpl.CLASSE_PERSISTENTE);
+		TypedQuery<Colaborador> query = this.entityManager.createNamedQuery(Colaborador.NAMEDQUERY_BUSCAR_POR_MATRICULA, ColaboradorDaoImpl.CLASSE_PERSISTENTE);
 		query.setParameter("matricula", matricula);
 		Colaborador colaborador;
 		try {
