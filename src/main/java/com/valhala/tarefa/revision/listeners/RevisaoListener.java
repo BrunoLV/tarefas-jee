@@ -1,4 +1,4 @@
-package com.valhala.tarefa.dao.revision.listeners;
+package com.valhala.tarefa.revision.listeners;
 
 import java.util.Date;
 

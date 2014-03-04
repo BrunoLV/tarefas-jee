@@ -1,5 +1,6 @@
 package com.valhala.tarefa.model;
 
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -14,7 +17,7 @@ import org.hibernate.envers.RevisionEntity;
 import org.hibernate.envers.RevisionNumber;
 import org.hibernate.envers.RevisionTimestamp;
 
-import com.valhala.tarefa.dao.revision.listeners.RevisaoListener;
+import com.valhala.tarefa.revision.listeners.RevisaoListener;
 
 /**
  * Classe que representa a tabela Revisao que guarda os detalhes de uma revisão.
@@ -24,9 +27,15 @@ import com.valhala.tarefa.dao.revision.listeners.RevisaoListener;
  */
 @Entity
 @RevisionEntity(RevisaoListener.class)
+@NamedQueries({
+	@NamedQuery(name=Revisao.NAMEDQUERY_BUSCAR_TODOS, query="select r from Revisao r")
+})
 public class Revisao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	
+	public static final String NAMEDQUERY_BUSCAR_TODOS = "buscarTodasRevisoes";
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

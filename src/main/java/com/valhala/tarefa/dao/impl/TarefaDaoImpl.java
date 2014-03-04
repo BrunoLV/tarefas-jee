@@ -19,7 +19,7 @@ import com.valhala.tarefa.model.Tarefa;
  */
 public class TarefaDaoImpl extends BaseDao<Tarefa> implements TarefaDao {
 
-	private static final Class<Tarefa> CLASSE_PERSISTENTE = Tarefa.class;
+	public static final Class<Tarefa> CLASSE_PERSISTENTE = Tarefa.class;
 	
 	public TarefaDaoImpl() {
 		this.classePersistente = TarefaDaoImpl.CLASSE_PERSISTENTE;

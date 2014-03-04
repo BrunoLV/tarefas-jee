@@ -18,7 +18,7 @@ import com.valhala.tarefa.model.Colaborador;
  */
 public class ColaboradorDaoImpl extends BaseDao<Colaborador> implements ColaboradorDao {
 
-	private static final Class<Colaborador> CLASSE_PERSISTENTE = Colaborador.class;
+	public static final Class<Colaborador> CLASSE_PERSISTENTE = Colaborador.class;
 	
 	public ColaboradorDaoImpl() {
 		this.classePersistente = ColaboradorDaoImpl.CLASSE_PERSISTENTE;
