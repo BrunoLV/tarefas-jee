@@ -74,5 +74,40 @@ public class Revisao implements Serializable {
 	public void setAutor(String autor) {
 		this.autor = autor;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((codigoRevisao == null) ? 0 : codigoRevisao.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Revisao other = (Revisao) obj;
+		if (codigoRevisao == null) {
+			if (other.codigoRevisao != null)
+				return false;
+		} else if (!codigoRevisao.equals(other.codigoRevisao))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return String.format(
+				"Revisao [codigoRevisao=%s, timestamp=%s, autor=%s]",
+				codigoRevisao, timestamp, autor);
+	}
+	
+	
 	
 } // fim da classe Revisao
