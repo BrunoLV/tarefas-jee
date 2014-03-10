@@ -2,7 +2,7 @@
 <persistence version="2.0"
 	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-	<persistence-unit name="tarefas-jee" transaction-type="JTA">
+	<persistence-unit name="tarefas-PU" transaction-type="JTA">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:/tarefas</jta-data-source>
 		
@@ -15,7 +15,7 @@
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true"/>
-			<property name="hibernate.hbm2ddl.auto" value="create" />
+			<property name="hibernate.hbm2ddl.auto" value="none" />
 				
 			<property name="org.hibernate.envers.revision_field_name" value="codigoRevisao"/>
 			<property name="org.hibernate.envers.revision_type_field_name" value="tipoRevisao"/>
