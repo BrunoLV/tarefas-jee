@@ -31,10 +31,10 @@
 						</p:selectOneMenu>
 						<p:message for="prioridadeList" />
 						<h:outputLabel value="#{recurso['label.dataInicio']}" for="inicioCalendar" />
-						<p:calendar id="inicioCalendar" pattern="dd/MM/yyyy" value="#{TarefaBean.tarefa.inicio}" showOn="button" required="true" requiredMessage="#{erro['message.campoObrigatorio']}" />
+						<p:calendar id="inicioCalendar" pattern="dd/MM/yyyy" value="#{TarefaBean.tarefa.inicio}" showOn="button" required="true" requiredMessage="#{erro['message.campoObrigatorio']}" locale="pt" />
 						<p:message for="inicioCalendar" />
 						<h:outputLabel value="#{recurso['label.dataFinalPlanejado']}" for="finalPlanejadoCalendar" />
-						<p:calendar id="finalPlanejadoCalendar" pattern="dd/MM/yyyy" value="#{TarefaBean.tarefa.finalPlanejado}" showOn="button" required="true" requiredMessage="#{erro['message.campoObrigatorio']}" />
+						<p:calendar id="finalPlanejadoCalendar" pattern="dd/MM/yyyy" value="#{TarefaBean.tarefa.finalPlanejado}" showOn="button" required="true" requiredMessage="#{erro['message.campoObrigatorio']}" locale="pt" />
 						<p:message for="finalPlanejadoCalendar" />
 						<h:outputLabel value="#{recurso['label.status']}" for="statusList" />
 						<p:selectOneMenu id="statusList" value="#{TarefaBean.tarefa.status}" required="true" requiredMessage="#{erro['message.campoObrigatorio']}">

@@ -27,7 +27,7 @@
 						<p:inputText id="totalHorasText" value="#{TarefaBean.tarefa.totalHoras}" required="false" requiredMessage="#{erro['message.campoObrigatorio']}" />
 						<p:message for="totalHorasText" />
 						<p:outputLabel value="#{recurso['label.dataFinalEfetiva']}" for="finalEfetivoCalendar" />
-						<p:calendar id="finalEfetivoCalendar" pattern="dd/MM/yyyy" value="#{TarefaBean.tarefa.finalEfetivo}" showOn="button" required="true" requiredMessage="#{erro['message.campoObrigatorio']}" />
+						<p:calendar id="finalEfetivoCalendar" pattern="dd/MM/yyyy" value="#{TarefaBean.tarefa.finalEfetivo}" showOn="button" required="true" requiredMessage="#{erro['message.campoObrigatorio']}" locale="pt" />
 					</p:panelGrid>
 					<p:panelGrid columns="1" id="observacaoPanelGrid">
 						<f:facet name="header">#{recurso['header.observacao']}</f:facet>

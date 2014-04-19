@@ -131,6 +131,10 @@
 								<p:dataExporter target="concluidosDataTable" type="pdf" fileName="concluidos" />
 							</h:commandLink>
 						</p:tab>
+						<p:tab id="calendarTab" title="Calendario">
+							<p:schedule id="schedule" value="#{TarefaBean.scheduleTarefas}" locale="pt">
+							</p:schedule>
+						</p:tab>
 				</p:tabView>
 			</h:form>
 		</div>

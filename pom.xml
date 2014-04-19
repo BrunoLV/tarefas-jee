@@ -23,7 +23,7 @@
 	</repositories>
 
 	<dependencies>
-
+	
 		<!-- Dependencia do Java EE -->
 		<dependency>
 			<groupId>javax</groupId>

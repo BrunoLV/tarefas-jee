@@ -11,6 +11,10 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
+import org.primefaces.model.DefaultScheduleEvent;
+import org.primefaces.model.DefaultScheduleModel;
+import org.primefaces.model.ScheduleModel;
+
 import com.valhala.tarefa.ejb.TarefaService;
 import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
 import com.valhala.tarefa.exceptions.CopiaDePropriedadesException;
@@ -145,7 +149,6 @@ public class TarefaBean extends BaseJSFBean implements Serializable {
 			inserirObjetoNaSession(TarefaBean.CHAVE_OBJETO_EDICAO, tarefa);
 			outcome = TarefaBean.OUTCOME_ENVIAR_EDICAO;
 		} catch (ConsultaSemRetornoException e) {
-			System.out.println(e.getMessage());
 			inserirMensagemDeErro(e.getMessage());
 		} 
 		return outcome;
@@ -159,10 +162,26 @@ public class TarefaBean extends BaseJSFBean implements Serializable {
 			inserirObjetoNaSession(TarefaBean.CHAVE_OBJETO_EDICAO, tarefa);
 			outcome = TarefaBean.OUTCOME_ENVIAR_AJUSTE;
 		} catch (ConsultaSemRetornoException e) {
-			System.out.println(e.getMessage());
 			inserirMensagemDeErro(e.getMessage());
 		} 
 		return outcome;
+	}
+	
+	public ScheduleModel getScheduleTarefas() {
+		ScheduleModel model = new DefaultScheduleModel();
+		List<Status> status = new ArrayList<>(Arrays.asList(Status.values()));
+		status.remove(Status.CONCLUIDO);
+		try {
+			List<Tarefa> tarefas = this.tarefaService.buscarTarefasPorStatus(status);
+			for (Tarefa tarefa : tarefas) {
+				model.addEvent(new DefaultScheduleEvent(String.format("%s - Demanda: %s - %s",  tarefa.getColaborador().getNome(), tarefa.getNumeroDemanda(), tarefa.getTitulo()), 
+						tarefa.getInicio(), 
+						tarefa.getFinalPlanejado()));
+			}
+		} catch (ConsultaSemRetornoException e) {
+			inserirMensagemDeErro(e.getMessage());
+		}
+		return model;
 	}
 	
 	public void setarObservacao(String observacao) {
