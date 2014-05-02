@@ -15,12 +15,19 @@ import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleModel;
 
+import com.valhala.tarefa.ejb.ClienteService;
+import com.valhala.tarefa.ejb.ColaboradorService;
+import com.valhala.tarefa.ejb.EquipeService;
+import com.valhala.tarefa.ejb.SistemaService;
 import com.valhala.tarefa.ejb.TarefaService;
 import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
 import com.valhala.tarefa.exceptions.CopiaDePropriedadesException;
 import com.valhala.tarefa.exceptions.ServiceException;
+import com.valhala.tarefa.model.Cliente;
 import com.valhala.tarefa.model.Colaborador;
+import com.valhala.tarefa.model.Equipe;
 import com.valhala.tarefa.model.Prioridade;
+import com.valhala.tarefa.model.Sistema;
 import com.valhala.tarefa.model.Status;
 import com.valhala.tarefa.model.Tarefa;
 import com.valhala.tarefa.util.Copiador;
@@ -39,15 +46,28 @@ public class TarefaBean extends BaseJSFBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private static final String CHAVE_OBJETO_EDICAO = "TAREFA_EDICAO";
+	private static final String CHAVE_ID_CONSULTA_SCHEDULE = "ID_CONSULTA_SCHEDULE";
 
 	private static final String OUTCOME_ENVIAR_EDICAO = "/pages/manter/cadastro-tarefas.xhtml?faces-redirect=true";
 	private static final String OUTCOME_ENVIAR_AJUSTE = "/pages/lider/ajuste-tarefas-administrativo.xhtml?faces-redirect=true";
 
 	@EJB
 	private TarefaService tarefaService;
+	@EJB
+	private ClienteService clienteService;
+	@EJB
+	private SistemaService sistemaService;
+	@EJB
+	private EquipeService equipeService;
+	@EJB
+	private ColaboradorService colaboradorService;
 
+	
+	private ScheduleModel scheduleModel;
+	
 	private Tarefa tarefa;
-	private List<Tarefa> tarefas;
+	
+	private Long idConsultaSchedule;
 
 	public TarefaBean() {
 	}
@@ -55,21 +75,30 @@ public class TarefaBean extends BaseJSFBean implements Serializable {
 	public Tarefa getTarefa() {
 		return tarefa;
 	}
+	
+	public Long getIdConsultaSchedule() {
+		return idConsultaSchedule;
+	}
+	
+	public void setIdConsultaSchedule(Long idConsultaSchedule) {
+		this.idConsultaSchedule = idConsultaSchedule;
+	}
 
 	public void setTarefa(Tarefa tarefa) {
 		this.tarefa = tarefa;
 	}
-
-	public List<Tarefa> getTarefas() {
-		return tarefas;
+	
+	public ScheduleModel getScheduleModel() {
+		return scheduleModel;
 	}
-
-	public void setTarefas(List<Tarefa> tarefas) {
-		this.tarefas = tarefas;
+	
+	public void setScheduleModel(ScheduleModel scheduleModel) {
+		this.scheduleModel = scheduleModel;
 	}
 
 	@PostConstruct
 	public void inicializarBean() {
+		this.setScheduleModel(montarScheduleTarefas(obterObjectDaSession(TarefaBean.CHAVE_ID_CONSULTA_SCHEDULE) != null ? (Long)obterObjectDaSession(TarefaBean.CHAVE_ID_CONSULTA_SCHEDULE) : 0l));
 		if (obterObjectDaSession(TarefaBean.CHAVE_OBJETO_EDICAO) != null) {
 			try {
 				this.tarefa = new Tarefa();
@@ -123,6 +152,7 @@ public class TarefaBean extends BaseJSFBean implements Serializable {
 				inserirMensagemDeSucesso("Registro atualizado com sucesso.");
 			} else {
 				tarefa.setId(null);
+				tarefa.setAbertura(new Date());
 				this.tarefaService.cadastrarTarefa(tarefa);
 				tarefa = new Tarefa();
 				inserirMensagemDeSucesso("Registro inserido com sucesso.");
@@ -167,12 +197,73 @@ public class TarefaBean extends BaseJSFBean implements Serializable {
 		return outcome;
 	}
 	
-	public ScheduleModel getScheduleTarefas() {
-		ScheduleModel model = new DefaultScheduleModel();
+	public List<Sistema> getSistemas() {
+		List<Sistema> sistemas;
+		try {
+			sistemas = this.sistemaService.buscarTodosSistemas();
+		} catch (ConsultaSemRetornoException e) {
+			sistemas = new ArrayList<Sistema>();
+		}
+		return sistemas;
+	}
+	
+	public List<Cliente> getClientes() {
+		List<Cliente> clientes;
+		try {
+			clientes = this.clienteService.buscarTodosClientes();
+		} catch (ConsultaSemRetornoException e) {
+			clientes = new ArrayList<Cliente>();
+		}
+		return clientes;
+	}
+	
+	public List<Equipe> getEquipes() {
+		List<Equipe> equipes;
+		try {
+			equipes = this.equipeService.buscarTodasEquipes();
+		} catch (ConsultaSemRetornoException e) {
+			equipes = new ArrayList<Equipe>();
+		}
+		return equipes;
+	}
+	
+	public List<Colaborador> getColaboradores() {
+		List<Colaborador> colaboradores;
+		try {
+			colaboradores = this.colaboradorService.buscarTodosColaboradores();
+		} catch (ConsultaSemRetornoException e) {
+			colaboradores = new ArrayList<Colaborador>();
+		}
+		return colaboradores;
+	}
+	
+	public List<Tarefa> getTarefasNaoConcluidas() {
+		List<Tarefa> tarefas;
 		List<Status> status = new ArrayList<>(Arrays.asList(Status.values()));
 		status.remove(Status.CONCLUIDO);
 		try {
-			List<Tarefa> tarefas = this.tarefaService.buscarTarefasPorStatus(status);
+			tarefas = this.tarefaService.buscarTarefasPorStatus(status);
+		} catch (ConsultaSemRetornoException e) {
+			tarefas = new ArrayList<Tarefa>();
+		}
+		return tarefas;
+	}
+	
+	public void filtrarSchedule() {
+		inserirObjetoNaSession(TarefaBean.CHAVE_ID_CONSULTA_SCHEDULE, this.idConsultaSchedule);
+	}
+	
+	public ScheduleModel montarScheduleTarefas(Long id) {
+		ScheduleModel model = new DefaultScheduleModel();
+		List<Tarefa> tarefas;
+		List<Status> status = new ArrayList<>(Arrays.asList(Status.values()));
+		status.remove(Status.CONCLUIDO);
+		try {
+			if(id.longValue() == 0) {
+				tarefas = this.tarefaService.buscarTarefasPorStatus(status);
+			} else {
+				tarefas = this.tarefaService.buscarTarefasPorColaboradorEStatus(this.colaboradorService.buscarPorId(id), status);
+			}
 			for (Tarefa tarefa : tarefas) {
 				model.addEvent(new DefaultScheduleEvent(String.format("%s - Demanda: %s - %s",  tarefa.getColaborador().getNome(), tarefa.getNumeroDemanda(), tarefa.getTitulo()), 
 						tarefa.getInicio(), 

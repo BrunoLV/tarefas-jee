@@ -14,11 +14,11 @@
 		</locale-config>
 		
 		<resource-bundle>
-			<base-name>com.valhala.tarefa.i18n.recursos</base-name>
+			<base-name>i18n.recursos</base-name>
 			<var>recurso</var>
 		</resource-bundle>
 		<resource-bundle>
-			<base-name>com.valhala.tarefa.i18n.erros</base-name>
+			<base-name>i18n.erros</base-name>
 			<var>erro</var>
 		</resource-bundle>
 

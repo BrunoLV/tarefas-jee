@@ -3,6 +3,7 @@ package com.valhala.tarefa.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,12 +14,10 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
-
-import org.hibernate.envers.Audited;
-import org.hibernate.envers.RelationTargetAuditMode;
 
 /**
  * Entity que mapeia a tabela de Colabores no banco de dados.
@@ -27,12 +26,15 @@ import org.hibernate.envers.RelationTargetAuditMode;
  * @since 23/02/2014
  *
  */
-@Entity @Audited
+@Entity @Table(name="tb_tarefa")
 @NamedQueries({
 		@NamedQuery(name=Tarefa.NAMEDQUERY_BUSCAR_TODOS, query="select t from Tarefa t"),
 		@NamedQuery(name=Tarefa.NAMEDQUERY_BUSCAR_POR_COLABORADOR, query="select t from Tarefa t where t.colaborador = :colaborador"),
 		@NamedQuery(name=Tarefa.NAMEDQUERY_BUSCAR_POR_COLABORADOR_E_STATUS, query="select t from Tarefa t where t.colaborador = :colaborador and t.status in (:status)"),
-		@NamedQuery(name=Tarefa.NAMEDQUERY_BUSCAR_POR_STATUS, query="select t from Tarefa t where t.status in (:status)")})
+		@NamedQuery(name=Tarefa.NAMEDQUERY_BUSCAR_POR_STATUS, query="select t from Tarefa t where t.status in (:status)"),
+		@NamedQuery(name=Tarefa.NAMEDQUERY_BUSCAR_POR_EQUIPE, query="select t from Tarefa t where t.equipe = :equipe"),
+		@NamedQuery(name=Tarefa.NAMEDQUERY_BUSCAR_POR_CLIENTE, query="select t from Tarefa t where t.cliente = :cliente"),
+		@NamedQuery(name=Tarefa.NAMEDQUERY_BUSCAR_POR_SISTEMA, query="select t from Tarefa t where t.sistema = :sistema")})
 public class Tarefa implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -41,35 +43,36 @@ public class Tarefa implements Serializable {
 	public static final String NAMEDQUERY_BUSCAR_POR_COLABORADOR = "buscarTodasTarefasPorColaborador";
 	public static final String NAMEDQUERY_BUSCAR_POR_COLABORADOR_E_STATUS = "buscarTodosTarefasPorColaboradorEStatus";
 	public static final String NAMEDQUERY_BUSCAR_POR_STATUS = "buscarTodasTarefasPorStatus";
+	public static final String NAMEDQUERY_BUSCAR_POR_EQUIPE = "buscarTodasTarefasPorEquipe";
+	public static final String NAMEDQUERY_BUSCAR_POR_CLIENTE = "buscarTodasTarefasPorCliente";
+	public static final String NAMEDQUERY_BUSCAR_POR_SISTEMA = "buscarTodasTarefasPorSistema";
 	
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private String numeroDemanda;
 	private String titulo;
-	private String areaSolicitante;
-	@Enumerated(EnumType.STRING)
 	private Prioridade prioridade;
-	@Temporal(TemporalType.DATE)
+	private Date abertura;
 	private Date inicio;
-	@Temporal(TemporalType.DATE)
 	private Date finalPlanejado;
-	@Temporal(TemporalType.DATE)
 	private Date finalEfetivo;
-	@Enumerated(EnumType.STRING)
 	private Status status;
-	private Integer totalHoras;
-	@Lob
+	private Integer estimativa;
+	private Boolean replanajado;
 	private String observacao;
-	
-	@ManyToOne @Audited(targetAuditMode=RelationTargetAuditMode.NOT_AUDITED)
 	private Colaborador colaborador = new Colaborador();
+	private Cliente cliente = new Cliente();
+	private Equipe equipe = new Equipe();
+	private Sistema sistema = new Sistema();
 	
 	@Version
 	private Long versao;
 	
 	public Tarefa() {
+		super();
 	}
 
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_tarefa")
 	public Long getId() {
 		return id;
 	}
@@ -78,6 +81,7 @@ public class Tarefa implements Serializable {
 		this.id = id;
 	}
 
+	@Column(name="numero_demanda", unique=true, nullable=false)
 	public String getNumeroDemanda() {
 		return numeroDemanda;
 	}
@@ -86,6 +90,7 @@ public class Tarefa implements Serializable {
 		this.numeroDemanda = numeroDemanda;
 	}
 
+	@Column(name="titulo_demanda", nullable=false, length=130)
 	public String getTitulo() {
 		return titulo;
 	}
@@ -94,14 +99,28 @@ public class Tarefa implements Serializable {
 		this.titulo = titulo;
 	}
 
+	@Enumerated(EnumType.STRING)
+	@Column(name="prioridade_demanda", nullable=false, length=80)	
 	public Prioridade getPrioridade() {
 		return prioridade;
 	}
-
+	
 	public void setPrioridade(Prioridade prioridade) {
 		this.prioridade = prioridade;
 	}
 
+	@Temporal(TemporalType.DATE)
+	@Column(name="data_abertura", nullable=false)
+	public Date getAbertura() {
+		return abertura;
+	}
+
+	public void setAbertura(Date abertura) {
+		this.abertura = abertura;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name="data_inicio")
 	public Date getInicio() {
 		return inicio;
 	}
@@ -110,6 +129,8 @@ public class Tarefa implements Serializable {
 		this.inicio = inicio;
 	}
 
+	@Temporal(TemporalType.DATE)
+	@Column(name="data_fim_planejado")
 	public Date getFinalPlanejado() {
 		return finalPlanejado;
 	}
@@ -117,23 +138,47 @@ public class Tarefa implements Serializable {
 	public void setFinalPlanejado(Date finalPlanejado) {
 		this.finalPlanejado = finalPlanejado;
 	}
-	
+
+	@Temporal(TemporalType.DATE)
+	@Column(name="data_fim_efetivo")
 	public Date getFinalEfetivo() {
 		return finalEfetivo;
 	}
-	
+
 	public void setFinalEfetivo(Date finalEfetivo) {
 		this.finalEfetivo = finalEfetivo;
 	}
 
-	public Integer getTotalHoras() {
-		return totalHoras;
+	@Enumerated(EnumType.STRING)
+	@Column(name="status_tarefa", nullable=false, length=80)
+	public Status getStatus() {
+		return status;
 	}
 
-	public void setTotalHoras(Integer totalHoras) {
-		this.totalHoras = totalHoras;
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
+	@Column(name="estimativa_tarefa")
+	public Integer getEstimativa() {
+		return estimativa;
+	}
+
+	public void setEstimativa(Integer estimativa) {
+		this.estimativa = estimativa;
+	}
+
+	@Column(name="replanejado")
+	public Boolean getReplanajado() {
+		return replanajado;
+	}
+
+	public void setReplanajado(Boolean replanajado) {
+		this.replanajado = replanajado;
+	}
+
+	@Lob
+	@Column(name="observacao_tarefa")
 	public String getObservacao() {
 		return observacao;
 	}
@@ -142,70 +187,40 @@ public class Tarefa implements Serializable {
 		this.observacao = observacao;
 	}
 
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-	
+	@ManyToOne
 	public Colaborador getColaborador() {
 		return colaborador;
 	}
-	
+
 	public void setColaborador(Colaborador colaborador) {
 		this.colaborador = colaborador;
 	}
+
+	@ManyToOne
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	@ManyToOne
+	public Equipe getEquipe() {
+		return equipe;
+	}
+
+	public void setEquipe(Equipe equipe) {
+		this.equipe = equipe;
+	}
 	
-	public Long getVersao() {
-		return versao;
+	@ManyToOne
+	public Sistema getSistema() {
+		return sistema;
 	}
 	
-	public void setVersao(Long versao) {
-		this.versao = versao;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Tarefa other = (Tarefa) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return String
-				.format("Tarefa [id=%s, numeroDemanda=%s, titulo=%s, prioridade=%s, inicio=%s, finalPlanejado=%s, finalEfetivo=%s, status=%s, totalHoras=%s, observacao=%s, colaborador=%s]",
-						id, numeroDemanda, titulo, prioridade, inicio,
-						finalPlanejado, finalEfetivo, status,
-						totalHoras, observacao, colaborador);
-	}
-
-	public String getAreaSolicitante() {
-		return areaSolicitante;
-	}
-
-	public void setAreaSolicitante(String areaSolicitante) {
-		this.areaSolicitante = areaSolicitante;
+	public void setSistema(Sistema sistema) {
+		this.sistema = sistema;
 	}
 
 } // fim da classe Tarefa

@@ -23,11 +23,23 @@
 						<p:outputLabel value="#{recurso['label.titulo']}" for="tituloText" />
 						<p:inputText id="tituloText" value="#{TarefaBean.tarefa.titulo}" required="true" requiredMessage="#{erro['message.campoObrigatorio']}" />
 						<p:message for="tituloText" />
-						<p:outputLabel value="#{recurso['label.totalHoras']}" for="totalHorasText" />
-						<p:inputText id="totalHorasText" value="#{TarefaBean.tarefa.totalHoras}" required="false" requiredMessage="#{erro['message.campoObrigatorio']}" />
-						<p:message for="totalHorasText" />
 						<p:outputLabel value="#{recurso['label.dataFinalEfetiva']}" for="finalEfetivoCalendar" />
 						<p:calendar id="finalEfetivoCalendar" pattern="dd/MM/yyyy" value="#{TarefaBean.tarefa.finalEfetivo}" showOn="button" required="true" requiredMessage="#{erro['message.campoObrigatorio']}" locale="pt" />
+						<p:message for="finalEfetivoCalendar" />
+						<p:outputLabel value="#{recurso['label.status']}" for="statusList" />
+						<p:selectOneMenu id="statusList" value="#{TarefaBean.tarefa.status}" required="true" requiredMessage="#{erro['message.campoObrigatorio']}">
+							<f:selectItem noSelectionOption="true" itemLabel="#{recurso['text.selecione']}" />
+							<f:selectItems value="#{TarefaBean.status}" />
+						</p:selectOneMenu>
+						<p:message for="statusList" />
+						<p:outputLabel value="#{recurso['label.colaborador']}" for="colaboradorList" />
+						<p:selectOneMenu id="colaboradorList" value="#{TarefaBean.tarefa.colaborador.id}" required="true" requiredMessage="#{erro['message.campoObrigatorio']}">
+							<f:selectItem noSelectionOption="true" itemLabel="#{recurso['text.selecione']}" />
+							<f:selectItems value="#{ColaboradorBean.colaboradores}" var="colaborador" itemLabel="#{colaborador.nome}" itemValue="#{colaborador.id}" />
+						</p:selectOneMenu>
+						<p:message for="colaboradorList" />
+						<p:outputLabel value="#{recurso['label.replanejado']}" for="replanejadoBooleanCheckBox" />
+						<p:selectBooleanCheckbox id="replanejadoBooleanCheckBox" value="#{TarefaBean.tarefa.replanajado}" />
 					</p:panelGrid>
 					<p:panelGrid columns="1" id="observacaoPanelGrid">
 						<f:facet name="header">#{recurso['header.observacao']}</f:facet>

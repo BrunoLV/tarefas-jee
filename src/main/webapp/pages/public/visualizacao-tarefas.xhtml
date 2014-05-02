@@ -11,24 +11,38 @@
 		<div id="listagemDiv">
 			<h:form id="listagemForm">
 				<p:growl autoUpdate="true" globalOnly="true" showDetail="true" showSummary="false" id="globalMessageGrowl" life="3000" />
-				<p:commandButton id="novoButton" icon="ui-icon-plus" action="/pages/manter/cadastro-tarefas.xhtml?faces-redirect=true" ajax="false" immediate="true" />
+				<p:commandButton id="novoButton" icon="ui-icon-plus" action="/pages/manter/cadastro-tarefas.xhtml?faces-redirect=true" ajax="false" immediate="true" rendered="#{LoginBean.lider}" />
 				<p:tooltip for="novoButton" value="#{recurso['tooltip.novo']}" showEffect="fade" hideEffect="fade" />
 				<p:separator />
-				<p:tabView id="listagemTabView" dynamic="true" cache="true">
-					<c:forEach var="colaborador" items="#{ColaboradorBean.colaboradores}">
-						<p:tab title="#{colaborador.nome}">
-							<p:dataTable value="#{TarefaBean.listarPorColaborador(colaborador)}" var="tarefa" emptyMessage="#{erro['message.emptyTable']}">
+				<p:tabView id="listagemTabView" dynamic="true" cache="true" effect="fade">
+				
+					<p:tab title="#{recurso['tab.todos']}">
+							<p:dataTable value="#{TarefaBean.tarefasNaoConcluidas}" var="tarefa" emptyMessage="#{erro['message.emptyTable']}">
 								<p:column headerText="#{recurso['column.id']}">
 									<h:outputText value="#{tarefa.id}" />
 								</p:column>
 								<p:column headerText="#{recurso['column.numDemanda']}">
 									<h:outputText value="#{tarefa.numeroDemanda}" />
 								</p:column>
+								<p:column headerText="#{recurso['column.areaSolicitante']}">
+									<h:outputText value="#{tarefa.cliente.nome}" />
+								</p:column>
 								<p:column headerText="#{recurso['column.titulo']}">
 									<h:outputText value="#{tarefa.titulo}" />
 								</p:column>
+								<p:column headerText="#{recurso['column.sistema']}">
+									<h:outputText value="#{tarefa.sistema.nome}" />
+								</p:column>
 								<p:column headerText="#{recurso['column.status']}">
 									<h:outputText value="#{tarefa.status}" />
+								</p:column>
+								<p:column headerText="#{recurso['column.prioridade']}">
+									<h:outputText value="#{tarefa.prioridade}" />
+								</p:column>
+								<p:column headerText="#{recurso['column.dataAbertura']}">
+									<h:outputFormat value="#{tarefa.abertura}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputFormat>
 								</p:column>
 								<p:column headerText="#{recurso['column.dataInicio']}">
 									<h:outputFormat value="#{tarefa.inicio}">
@@ -40,10 +54,64 @@
 										<f:convertDateTime pattern="dd/MM/yyyy" />
 									</h:outputFormat>
 								</p:column>
+								<p:column headerText="#{recurso['column.replanejado']}">
+									<p:selectBooleanCheckbox value="#{tarefa.replanajado}" disabled="true" />
+								</p:column>
 								<p:column>
 									<p:commandButton id="editarCommandButton" icon="ui-icon-pencil" action="#{TarefaBean.enviarTarefaParaEdicao(tarefa.id)}" immediate="true" ajax="false" process="@this" rendered="#{tarefa.colaborador.id == sessionScope['USUARIO_LOGADO'].id || LoginBean.lider}" />
 									<p:tooltip for="editarCommandButton" value="#{recurso['tooltip.editar']}" showEffect="fade" hideEffect="fade" />
-									<p:commandButton id="deletarCommandButton" icon="ui-icon-trash" actionListener="#{TarefaBean.removerTarefa(tarefa.id)}" immediate="true" ajax="true" process="@this" update="@form" rendered="#{tarefa.colaborador.id == sessionScope['USUARIO_LOGADO'].id || LoginBean.lider}" />
+									<p:commandButton id="deletarCommandButton" icon="ui-icon-trash" actionListener="#{TarefaBean.removerTarefa(tarefa.id)}" immediate="true" ajax="true" process="@this" update="@form" rendered="#{LoginBean.lider}" />
+									<p:tooltip for="deletarCommandButton" value="#{recurso['tooltip.remover']}" showEffect="fade" hideEffect="fade" />
+								</p:column>
+							</p:dataTable>
+						</p:tab>
+				
+					<c:forEach var="colaborador" items="#{ColaboradorBean.colaboradores}">
+						<p:tab title="#{colaborador.nome}">
+							<p:dataTable value="#{TarefaBean.listarPorColaborador(colaborador)}" var="tarefa" emptyMessage="#{erro['message.emptyTable']}">
+								<p:column headerText="#{recurso['column.id']}">
+									<h:outputText value="#{tarefa.id}" />
+								</p:column>
+								<p:column headerText="#{recurso['column.numDemanda']}">
+									<h:outputText value="#{tarefa.numeroDemanda}" />
+								</p:column>
+								<p:column headerText="#{recurso['column.areaSolicitante']}">
+									<h:outputText value="#{tarefa.cliente.nome}" />
+								</p:column>
+								<p:column headerText="#{recurso['column.titulo']}">
+									<h:outputText value="#{tarefa.titulo}" />
+								</p:column>
+								<p:column headerText="#{recurso['column.sistema']}">
+									<h:outputText value="#{tarefa.sistema.nome}" />
+								</p:column>
+								<p:column headerText="#{recurso['column.status']}">
+									<h:outputText value="#{tarefa.status}" />
+								</p:column>
+								<p:column headerText="#{recurso['column.prioridade']}">
+									<h:outputText value="#{tarefa.prioridade}" />
+								</p:column>
+								<p:column headerText="#{recurso['column.dataAbertura']}">
+									<h:outputFormat value="#{tarefa.abertura}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputFormat>
+								</p:column>
+								<p:column headerText="#{recurso['column.dataInicio']}">
+									<h:outputFormat value="#{tarefa.inicio}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputFormat>
+								</p:column>
+								<p:column headerText="#{recurso['column.dataFinalPlanejado']}">
+									<h:outputFormat value="#{tarefa.finalPlanejado}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputFormat>
+								</p:column>
+								<p:column headerText="#{recurso['column.replanejado']}">
+									<p:selectBooleanCheckbox value="#{tarefa.replanajado}" disabled="true" />
+								</p:column>
+								<p:column>
+									<p:commandButton id="editarCommandButton" icon="ui-icon-pencil" action="#{TarefaBean.enviarTarefaParaEdicao(tarefa.id)}" immediate="true" ajax="false" process="@this" rendered="#{tarefa.colaborador.id == sessionScope['USUARIO_LOGADO'].id || LoginBean.lider}" />
+									<p:tooltip for="editarCommandButton" value="#{recurso['tooltip.editar']}" showEffect="fade" hideEffect="fade" />
+									<p:commandButton id="deletarCommandButton" icon="ui-icon-trash" actionListener="#{TarefaBean.removerTarefa(tarefa.id)}" immediate="true" ajax="true" process="@this" update="@form" rendered="#{LoginBean.lider}" />
 									<p:tooltip for="deletarCommandButton" value="#{recurso['tooltip.remover']}" showEffect="fade" hideEffect="fade" />
 								</p:column>
 							</p:dataTable>
@@ -102,22 +170,12 @@
 								</p:column>
 								<p:column>
 									<f:facet name="header">
-										<h:outputText value="#{recurso['column.totalHoras']}" />
-									</f:facet>
-									<h:outputText value="#{tarefa.totalHoras}" />
-								</p:column>
-								<p:column>
-									<f:facet name="header">
 										<h:outputText value="#{recurso['column.colaborador']}" />
 									</f:facet>
 									<h:outputText value="#{tarefa.colaborador.nome}" />
 								</p:column>
-								<p:column exportable="false">
-									<p:commandButton id="editarCommandButton" icon="ui-icon-pencil" action="#{TarefaBean.enviarTarefaParaEdicao(tarefa.id)}" immediate="true" ajax="false" process="@this" rendered="#{LoginBean.lider}" />
-									<p:tooltip for="editarCommandButton" value="#{recurso['tooltip.editar']}" showEffect="fade" hideEffect="fade" />
-									<p:commandButton id="deletarCommandButton" icon="ui-icon-trash" actionListener="#{TarefaBean.removerTarefa(tarefa.id)}" immediate="true" ajax="true" process="@this" update="@form" rendered="#{LoginBean.lider}" />
-									<p:tooltip for="deletarCommandButton" value="#{recurso['tooltip.remover']}" showEffect="fade" hideEffect="fade" />
-									<p:commandButton id="ajustarCommandButton" icon="ui-icon-wrench" action="#{TarefaBean.enviarTarefaParaAjusteAdministrativo(tarefa.id)}" immediate="true" ajax="false" process="@this" rendered="#{LoginBean.lider}" />
+								<p:column exportable="false" rendered="#{LoginBean.lider}">
+									<p:commandButton id="ajustarCommandButton" icon="ui-icon-wrench" action="#{TarefaBean.enviarTarefaParaAjusteAdministrativo(tarefa.id)}" immediate="true" ajax="false" process="@this" />
 									<p:tooltip for="ajustarCommandButton" value="#{recurso['tooltip.ajustar']}" showEffect="fade" hideEffect="fade" />
 								</p:column>
 							</p:dataTable>
@@ -132,8 +190,15 @@
 							</h:commandLink>
 						</p:tab>
 						<p:tab id="calendarTab" title="Calendario">
-							<p:schedule id="schedule" value="#{TarefaBean.scheduleTarefas}" locale="pt">
-							</p:schedule>
+							<p:panelGrid columns="2">
+								<p:outputLabel for="colaboradoresSelectOneMenu" value="#{recurso['label.filtroSchedule']}" />
+								<p:selectOneMenu id="colaboradoresSelectOneMenu" value="#{TarefaBean.idConsultaSchedule}">
+									<f:selectItem itemLabel="#{recurso['text.todos']}" itemValue="0" />
+									<f:selectItems value="#{TarefaBean.colaboradores}" var="colaborador" itemLabel="#{colaborador.nome}" itemValue="#{colaborador.id}"/>
+									<p:ajax event="change" listener="#{TarefaBean.filtrarSchedule}" process="colaboradoresSelectOneMenu" update="schedule" />
+								</p:selectOneMenu>
+							</p:panelGrid>
+							<p:schedule id="schedule" value="#{TarefaBean.scheduleModel}" locale="pt" />
 						</p:tab>
 				</p:tabView>
 			</h:form>

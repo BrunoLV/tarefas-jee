@@ -4,21 +4,19 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="tarefas-PU" transaction-type="JTA">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<jta-data-source>java:/tarefas</jta-data-source>
-		
-		<class>com.valhala.tarefa.model.Revisao</class>
+		<jta-data-source>java:/tarefasGerencia</jta-data-source>
 		<class>com.valhala.tarefa.model.Tarefa</class>
 		<class>com.valhala.tarefa.model.Colaborador</class>
+		<class>com.valhala.tarefa.model.Equipe</class>
+		<class>com.valhala.tarefa.model.Sistema</class>
+		<class>com.valhala.tarefa.model.Cliente</class>
 
 		<properties>
 			<!-- propriedades do hibernate -->
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
-			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.format_sql" value="true"/>
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="false"/>
 			<property name="hibernate.hbm2ddl.auto" value="none" />
-				
-			<property name="org.hibernate.envers.revision_field_name" value="codigoRevisao"/>
-			<property name="org.hibernate.envers.revision_type_field_name" value="tipoRevisao"/>
 		</properties>
 	</persistence-unit>
 </persistence>

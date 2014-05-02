@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
 /**
@@ -23,7 +26,7 @@ import javax.persistence.Version;
  * @since 23/02/2014
  *
  */
-@Entity
+@Entity @Table(name="tb_colaborador")
 @NamedQueries({
 	@NamedQuery(name=Colaborador.NAMEDQUERY_BUSCAR_TODOS, query="select c from Colaborador c"),
 	@NamedQuery(name=Colaborador.NAMEDQUERY_BUSCAR_POR_MATRICULA, query="select c from Colaborador c where c.matricula = :matricula")})
@@ -34,20 +37,14 @@ public class Colaborador implements Serializable {
 	public static final String NAMEDQUERY_BUSCAR_TODOS = "buscarTodosColaboradores";
 	public static final String NAMEDQUERY_BUSCAR_POR_MATRICULA = "buscarPorMatricula";
 	
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
 	private String matricula;
 	private String senha;
-	
-	@ElementCollection(targetClass = Atribuicao.class, fetch = FetchType.EAGER)
-	@Enumerated(EnumType.STRING)
 	private List<Atribuicao> atribuicoes = new ArrayList<>();
 	
-	@Version
-	private Long versao;
-	
 	public Colaborador() {
+		super();
 	}
 	
 	public Colaborador(Long id, String nome, String matricula, String senha) {
@@ -58,6 +55,8 @@ public class Colaborador implements Serializable {
 		this.senha = senha;
 	}
 
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_colaborador")
 	public Long getId() {
 		return id;
 	}
@@ -66,6 +65,7 @@ public class Colaborador implements Serializable {
 		this.id = id;
 	}
 
+	@Column(name="nome_colaborador", length=100, nullable=false)
 	public String getNome() {
 		return nome;
 	}
@@ -74,6 +74,7 @@ public class Colaborador implements Serializable {
 		this.nome = nome;
 	}
 
+	@Column(name="matricula_colaborador", length=15, unique=true, nullable=false)
 	public String getMatricula() {
 		return matricula;
 	}
@@ -82,6 +83,7 @@ public class Colaborador implements Serializable {
 		this.matricula = matricula;
 	}
 
+	@Column(name="senha_colaborador", length=255, unique=true, nullable=false)
 	public String getSenha() {
 		return senha;
 	}
@@ -90,14 +92,8 @@ public class Colaborador implements Serializable {
 		this.senha = senha;
 	}
 	
-	public Long getVersao() {
-		return versao;
-	}
-	
-	public void setVersao(Long versao) {
-		this.versao = versao;
-	}
-	
+	@ElementCollection(targetClass = Atribuicao.class, fetch = FetchType.EAGER)
+	@Enumerated(EnumType.STRING)
 	public List<Atribuicao> getAtribuicoes() {
 		return atribuicoes;
 	}
@@ -106,35 +102,4 @@ public class Colaborador implements Serializable {
 		this.atribuicoes = atribuicoes;
 	}
 
-	@Override
-	public String toString() {
-		return "Colaborador [id=" + id + ", nome=" + nome + ", matricula="
-				+ matricula + ", senha=" + senha + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Colaborador other = (Colaborador) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-	
 } // fim da classe Colaborador
