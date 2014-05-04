@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<ui:composition template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<h:form id="mudancaSenhaForm">
+			<p:messages autoUpdate="true" globalOnly="true" closable="true" />
+			<p:panel header="#{recurso['header.redefinirSenha']}">
+				<p:panelGrid columns="3">
+					<p:outputLabel id="novaSenhaLabel" for="novaSenhaPassword" value="#{recurso['label.senhaNova']}" />
+					<p:password id="novaSenhaPassword" feedback="false" value="#{LoginBean.senha}" required="true" requiredMessage="#{erro['message.campoObrigatorio']}" />
+					<p:message for="novaSenhaPassword" />
+					<p:outputLabel id="confirmeSenhaLabel" for="confirmeSenhaPassword" value="#{recurso['label.confirmaSenha']}" />
+					<p:password id="confirmeSenhaPassword" feedback="false" value="#{LoginBean.confirmeSenha}" required="true" requiredMessage="#{erro['message.campoObrigatorio']}" />
+					<p:message for="confirmeSenhaPassword" />
+				</p:panelGrid>
+				<p:commandButton id="redifirSenhaCommandButton" actionListener="#{LoginBean.redefinirSenha()}" ajax="true" update="@form" value="#{recurso['button.redefinir']}" />
+			</p:panel>
+		</h:form>
+	</ui:define>
+	</ui:composition>
+</html>

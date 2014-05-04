@@ -14,6 +14,9 @@
 					<p:menuitem value="#{recurso['menu.carga']}" url="/pages/lider/cargas_administrativas.xhtml" />
 				</p:submenu>
 				<p:menuitem value="#{recurso['menu.tarefas']}" url="/pages/public/visualizacao-tarefas.xhtml" />
+				
+				<p:menuitem value="#{recurso['menu.mudar.senha']}" url="/pages/public/mudanca-senha.xhtml" rendered="#{not empty sessionScope['USUARIO_LOGADO']}" />
+				
 				<f:facet name="options">
 					<h:outputText value="#{sessionScope['USUARIO_LOGADO'].nome}" />
 					<c:choose>

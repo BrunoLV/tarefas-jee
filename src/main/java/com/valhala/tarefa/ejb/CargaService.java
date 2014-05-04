@@ -1,12 +1,15 @@
 package com.valhala.tarefa.ejb;
 
 import java.io.InputStream;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
@@ -41,6 +44,7 @@ import com.valhala.tarefa.qualifiers.CargaColaborador;
 import com.valhala.tarefa.qualifiers.CargaEquipe;
 import com.valhala.tarefa.qualifiers.CargaSistema;
 import com.valhala.tarefa.qualifiers.CargaTarefa;
+import com.valhala.tarefa.util.PropertiesUtil;
 import com.valhala.tarefa.util.StreamConverter;
 import com.valhala.tarefa.web.TipoCarga;
 
@@ -50,6 +54,8 @@ public class CargaService {
 	
 	private static final String CHAVE_INSERIDOS = "Sucesso";
 	private static final String CHAVE_NAO_INSERIDOS = "Erro";
+	
+	private Properties properties;
 	
 	@Inject
 	private SistemaDao sistemaDao;
@@ -64,6 +70,11 @@ public class CargaService {
 	
 	@Resource(mappedName="java:jboss/mail/Quadro")
     private Session mailSession;
+	
+	@PostConstruct
+	public void inicializar() {
+		this.properties = PropertiesUtil.getProperties("tarefas-jee.properties");
+	}
 	
 	@Asynchronous
 	public void executarCargaSistema(@Observes @CargaSistema InputStream stream) {
@@ -191,11 +202,11 @@ public class CargaService {
 	private void enviarEmailErroArquivo(TipoCarga carga, String erro) {
 		MimeMessage message = new MimeMessage(mailSession);
 		try {
-			Address[] to = new InternetAddress[] { new InternetAddress("brunolviana22@hotmail.com") };
-			message.setRecipients(Message.RecipientType.TO , to);
-			message.setSubject("Erro no processamento da carga");
+			Address destinatario = new InternetAddress(this.properties.getProperty("email.destinatario"));
+			message.setRecipient(Message.RecipientType.TO , destinatario);
+			message.setSubject(this.properties.getProperty("email.assunto.emailErro"));
 			message.setSentDate(new Date());
-			message.setContent(String.format("Ocorreu um erro com o arquivo de carga %s <br/> Segue erro: %s", carga, erro), "text/html");
+			message.setContent(MessageFormat.format(this.properties.getProperty("email.carga.processamento.erro"), carga, erro), "text/html");
 			Transport.send(message);
 		} catch (MessagingException e) {
 			e.printStackTrace();
@@ -205,12 +216,12 @@ public class CargaService {
 	private void enviarEmailProcessamentoArquivo(TipoCarga tipoCarga, Map<String, List<?>> mapa) {
 		MimeMessage message = new MimeMessage(mailSession);
 		try {
-			Address[] to = new InternetAddress[] { new InternetAddress("brunolviana22@hotmail.com") };
-			message.setRecipients(Message.RecipientType.TO , to);
-			message.setSubject("Processamento de Carga de Dados - Sistema de Gerenciamento de Atividades");
+			Address destinatario = new InternetAddress(this.properties.getProperty("email.destinatario"));
+			message.setRecipient(Message.RecipientType.TO , destinatario);
+			message.setSubject(this.properties.getProperty("email.assunto.emailCarga"));
 			message.setSentDate(new Date());
 			StringBuffer buffer = new StringBuffer();
-			buffer.append("Processamento executado com sucesso.<br/>");
+			buffer.append(this.properties.getProperty("email.carga.titulo.sucesso"));
 			switch (tipoCarga) {
 			case TAREFAS:
 				montarCorpoEmailTarefas(mapa, buffer);
@@ -241,18 +252,18 @@ public class CargaService {
 	private void montarCorpoEmailTarefas(Map<String, List<?>> mapa, StringBuffer buffer) {
 		List<Tarefa> tarefas;
 		tarefas = (List<Tarefa>) mapa.get(CargaService.CHAVE_INSERIDOS);
-		buffer.append("<b>Tarefas Inseridas com sucesso:</b><br/>");
+		buffer.append(MessageFormat.format(this.properties.getProperty("email.corpo.titulo.sucesso"), "Tarefas"));
 		if (!tarefas.isEmpty()) {
 			incluirTarefaNaString(buffer, tarefas);
 		} else {
-			buffer.append("Nenhuma tarefa foi inserida. <br/>");
+			buffer.append(MessageFormat.format(this.properties.getProperty("email.corpo.texto.comerro"), "tarefa"));
 		} // fim do bloco if/else
-		buffer.append("<b>Tarefas que apresentaram erro na inclusão:</b><br/>");
+		buffer.append(MessageFormat.format(this.properties.getProperty("email.corpo.titulo.erro"), "Tarefas"));
 		tarefas = (List<Tarefa>) mapa.get(CargaService.CHAVE_NAO_INSERIDOS);
 		if (!tarefas.isEmpty()) {
 			incluirTarefaNaString(buffer, tarefas);
 		} else {
-			buffer.append("Não houveram tarefas com erro. <br/>");
+			buffer.append(MessageFormat.format(this.properties.getProperty("email.corpo.texto.semerro"), "tarefa"));
 		} // fim do bloco if/else
 	} // fim do método montarCorpoEmailTarefas
 
@@ -266,18 +277,18 @@ public class CargaService {
 	private void montarCorpoEmailSistemas(Map<String, List<?>> mapa, StringBuffer buffer) {
 		List<Sistema> sistemas;
 		sistemas = (List<Sistema>) mapa.get(CargaService.CHAVE_INSERIDOS);
-		buffer.append("<b>Sistemas inseridos com sucesso: </b><br/>");
+		buffer.append(MessageFormat.format(this.properties.getProperty("email.corpo.titulo.sucesso"), "Sistemas"));
 		if (!sistemas.isEmpty()) {
 			incluirSistemaNaString(buffer, sistemas);
 		} else {
-			buffer.append("Nenhum sistema foi inserido. <br/>");
+			buffer.append(MessageFormat.format(this.properties.getProperty("email.corpo.texto.comerro"), "sistema"));
 		} // fim do blovo if/else
-		buffer.append("<br>Sistemas que apresentaram erro na inclusão:</b><br/>");
+		buffer.append(MessageFormat.format(this.properties.getProperty("email.corpo.titulo.erro"), "Sistemas"));
 		sistemas = (List<Sistema>) mapa.get(CargaService.CHAVE_NAO_INSERIDOS);
 		if (!sistemas.isEmpty()) {
 			incluirSistemaNaString(buffer, sistemas);
 		} else {
-			buffer.append("Não houveram sistemas com erro. <br/>");
+			buffer.append(MessageFormat.format(this.properties.getProperty("email.corpo.texto.semerro"), "sistema"));
 		} // fim do bloco try/catch
 	} // fim do método montarCorpoEmailSistemas
 
@@ -292,18 +303,18 @@ public class CargaService {
 	private void montarCorpoEmailClientes(Map<String, List<?>> mapa, StringBuffer buffer) {
 		List<Cliente> clientes;
 		clientes = (List<Cliente>) mapa.get(CargaService.CHAVE_INSERIDOS);
-		buffer.append("<b>Clientes inseridos com sucesso: </b><br/>");
+		buffer.append(MessageFormat.format(this.properties.getProperty("email.corpo.titulo.sucesso"), "Clientes"));
 		if (!clientes.isEmpty()) {
 			incluirClienteNaString(buffer, clientes);
 		} else {
-			buffer.append("Nenhum Cliente foi inserido. <br/>");
+			buffer.append(MessageFormat.format(this.properties.getProperty("email.corpo.texto.comerro"), "cliente"));
 		} // fim do blovo if/else
-		buffer.append("<br>Clientes que apresentaram erro na inclusão:</b><br/>");
+		buffer.append(MessageFormat.format(this.properties.getProperty("email.corpo.titulo.erro"), "Clientes"));
 		clientes = (List<Cliente>) mapa.get(CargaService.CHAVE_NAO_INSERIDOS);
 		if (!clientes.isEmpty()) {
 			incluirClienteNaString(buffer, clientes);
 		} else {
-			buffer.append("Não houveram Clientes com erro. <br/>");
+			buffer.append(MessageFormat.format(this.properties.getProperty("email.corpo.texto.semerro"), "cliente"));
 		} // fim do bloco try/catch
 	} // fim do método montarCorpoEmailClientes
 
@@ -318,18 +329,18 @@ public class CargaService {
 	private void montarCorpoEmailEquipes(Map<String, List<?>> mapa, StringBuffer buffer) {
 		List<Equipe> equipes;
 		equipes = (List<Equipe>) mapa.get(CargaService.CHAVE_INSERIDOS);
-		buffer.append("<b>Equipes inseridos com sucesso: </b><br/>");
+		buffer.append(MessageFormat.format(this.properties.getProperty("email.corpo.titulo.sucesso"), "Equipes"));
 		if (!equipes.isEmpty()) {
 			incluirEquipeNaString(buffer, equipes);
 		} else {
-			buffer.append("Nenhum Equipe foi inserido. <br/>");
-		} // fim do blovo if/else
-		buffer.append("<br>Equipes que apresentaram erro na inclusão:</b><br/>");
+			buffer.append(MessageFormat.format(this.properties.getProperty("email.corpo.texto.comerro"), "equipe"));
+		} // fim do bloco if/else
+		buffer.append(MessageFormat.format(this.properties.getProperty("email.corpo.titulo.erro"), "Equipes"));
 		equipes = (List<Equipe>) mapa.get(CargaService.CHAVE_NAO_INSERIDOS);
 		if (!equipes.isEmpty()) {
 			incluirEquipeNaString(buffer, equipes);
 		} else {
-			buffer.append("Não houveram Equipes com erro. <br/>");
+			buffer.append(MessageFormat.format(this.properties.getProperty("email.corpo.texto.semerro"), "equipe"));
 		} // fim do bloco try/catch
 	} // fim do método montarCorpoEmailEquipes
 
@@ -343,18 +354,18 @@ public class CargaService {
 	private void montarCorpoEmailColaboradores(Map<String, List<?>> mapa, StringBuffer buffer) {
 		List<Colaborador> colaboradores;
 		colaboradores = (List<Colaborador>) mapa.get(CargaService.CHAVE_INSERIDOS);
-		buffer.append("<b>Colaboradors inseridos com sucesso: </b><br/>");
+		buffer.append(MessageFormat.format(this.properties.getProperty("email.corpo.titulo.sucesso"), "Colaboradores"));
 		if (!colaboradores.isEmpty()) {
 			incluirColaboradorNaString(buffer, colaboradores);
 		} else {
-			buffer.append("Nenhum Colaborador foi inserido. <br/>");
-		} // fim do blovo if/else
-		buffer.append("<br>Colaboradors que apresentaram erro na inclusão:</b><br/>");
+			buffer.append(MessageFormat.format(this.properties.getProperty("email.corpo.texto.comerro"), "colaborador"));
+		} // fim do bloco if/else
+		buffer.append(MessageFormat.format(this.properties.getProperty("email.corpo.titulo.erro"), "Colaboradores"));
 		colaboradores = (List<Colaborador>) mapa.get(CargaService.CHAVE_NAO_INSERIDOS);
 		if (!colaboradores.isEmpty()) {
 			incluirColaboradorNaString(buffer, colaboradores);
 		} else {
-			buffer.append("Não houveram Colaboradores com erro. <br/>");
+			buffer.append(MessageFormat.format(this.properties.getProperty("email.corpo.texto.semerro"), "colaborador"));
 		} // fim do bloco try/catch
 	} // fim do método montarCorpoEmailColaboradors
 

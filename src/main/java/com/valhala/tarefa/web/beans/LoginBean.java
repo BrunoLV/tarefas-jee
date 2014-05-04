@@ -10,7 +10,9 @@ import javax.servlet.ServletException;
 
 import com.valhala.tarefa.ejb.ColaboradorService;
 import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
+import com.valhala.tarefa.exceptions.ServiceException;
 import com.valhala.tarefa.model.Atribuicao;
+import com.valhala.tarefa.model.Colaborador;
 
 /**
  * Managed Bean utilizado para as ações de tela relacionadas a login.
@@ -27,6 +29,7 @@ public class LoginBean extends BaseJSFBean implements Serializable {
 	
 	private String matricula;
 	private String senha;
+	private String confirmeSenha;
 	
 	public static final String USUARIO_LOGADO = "USUARIO_LOGADO";
 	
@@ -54,6 +57,22 @@ public class LoginBean extends BaseJSFBean implements Serializable {
 		}
 		return outcome;
 	}
+	
+	public void redefinirSenha() {
+		if (this.senha.equals(this.confirmeSenha)) {
+			try {
+				Colaborador colaborador = (Colaborador) getSession().getAttribute(LoginBean.USUARIO_LOGADO);
+				colaborador.setSenha(this.senha);
+				this.colaboradorService.editarColaborador(colaborador);
+				getSession().setAttribute(LoginBean.USUARIO_LOGADO, colaborador);
+				inserirMensagemDeSucesso("Senha redefinida com sucesso.");
+			} catch (ServiceException e) {
+				inserirMensagemDeErro(String.format("Ocorreu um erro durante a ação: %s", e.getMessage()));
+			} // fim do bloco try/catch
+		} else {
+			inserirMensagemDeErro("As senhas não conferem. Digite novamente.");
+		} // fim do bloco if/else
+	} // fim do método redefinirSenha
 	
 	public boolean isLiderOrManter() {
 		return isLider() || isManter() ? true : false;
@@ -88,6 +107,14 @@ public class LoginBean extends BaseJSFBean implements Serializable {
 	
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public String getConfirmeSenha() {
+		return confirmeSenha;
+	}
+	
+	public void setConfirmeSenha(String confirmeSenha) {
+		this.confirmeSenha = confirmeSenha;
 	}
 
 } // fim da classe TarefaBean
