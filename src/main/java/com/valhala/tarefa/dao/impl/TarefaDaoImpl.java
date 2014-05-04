@@ -69,4 +69,37 @@ public class TarefaDaoImpl extends BaseDao<Tarefa> implements TarefaDao {
 		return tarefas;
 	} // fim do método buscarTodasTarefasPorStatus
 
+	@Override
+	public List<Tarefa> buscarTodasComDatasDefinidades() throws ConsultaSemRetornoException {
+		TypedQuery<Tarefa> query = this.entityManager.createNamedQuery(Tarefa.NAMEDQUERY_BUSCAR_TODOS_DATAS_DEFINIDAS, TarefaDaoImpl.CLASSE_PERSISTENTE);
+		List<Tarefa> tarefas = query.getResultList();
+		if (tarefas.isEmpty()) {
+			throw new ConsultaSemRetornoException("Consulta não trouxe resultados.");
+		} // fim do bloco if
+		return tarefas;
+	} // fim do método buscarTodasPorStatusComDatasDefinidas
+
+	@Override
+	public List<Tarefa> buscarTodasPorColaboradorEStatusComDatasDefinidas(Colaborador colaborador, List<Status> status) throws ConsultaSemRetornoException {
+		TypedQuery<Tarefa> query = this.entityManager.createNamedQuery(Tarefa.NAMEDQUERY_BUSCAR_POR_COLABORADOR_E_STATUS_DATAS_DEFINIDAS, TarefaDaoImpl.CLASSE_PERSISTENTE);
+		query.setParameter("colaborador", colaborador);
+		query.setParameter("status", status);
+		List<Tarefa> tarefas = query.getResultList();
+		if (tarefas.isEmpty()) {
+			throw new ConsultaSemRetornoException("Consulta não trouxe resultados.");
+		} // fim do bloco if
+		return tarefas;
+	} // fim do método buscarTodasPorColaboradorEStatusComDatasDefinidas
+
+	@Override
+	public List<Tarefa> buscarTodasPorStatusComDatasDefinidas(List<Status> status) throws ConsultaSemRetornoException {
+		TypedQuery<Tarefa> query = this.entityManager.createNamedQuery(Tarefa.NAMEDQUERY_BUSCAR_POR_STATUS_DATAS_DEFINIDAS, TarefaDaoImpl.CLASSE_PERSISTENTE);
+		query.setParameter("status", status);
+		List<Tarefa> tarefas = query.getResultList();
+		if (tarefas.isEmpty()) {
+			throw new ConsultaSemRetornoException("Consulta não trouxe resultados.");
+		} // fim do bloco if
+		return tarefas;
+	} // fim do método buscarTodasPorStatusComDatasDefinidas
+
 } // fim da classe TarefaDaoImpl

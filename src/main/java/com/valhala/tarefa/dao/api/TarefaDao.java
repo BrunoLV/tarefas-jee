@@ -41,5 +41,11 @@ public interface TarefaDao extends Dao<Tarefa> {
 	 * @throws ConsultaSemRetornoException
 	 */
 	List<Tarefa> buscarTodasPorStatus(List<Status> status) throws ConsultaSemRetornoException;
+	
+	List<Tarefa> buscarTodasComDatasDefinidades() throws ConsultaSemRetornoException;
+	
+	List<Tarefa> buscarTodasPorColaboradorEStatusComDatasDefinidas(Colaborador colaborador, List<Status> status) throws ConsultaSemRetornoException;
+	
+	List<Tarefa> buscarTodasPorStatusComDatasDefinidas(List<Status> status) throws ConsultaSemRetornoException;
 
 } // fim da interface TarefaDao

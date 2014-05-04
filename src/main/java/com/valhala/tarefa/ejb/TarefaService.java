@@ -142,5 +142,23 @@ public class TarefaService {
 	public List<Tarefa> buscarTarefasPorStatus(List<Status> status) throws ConsultaSemRetornoException {
 		return this.tarefaDao.buscarTodasPorStatus(status);
 	} // fim do método buscarTarefasPorStatus
+	
+	@Auditavel
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+	public List<Tarefa> buscarTodasTarefasComDataDefinidas() throws ConsultaSemRetornoException {
+		return this.tarefaDao.buscarTodasComDatasDefinidades();
+	} // fim do método buscarTodasTarefasComDataDefinidas
+	
+	@Auditavel
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+	public List<Tarefa> buscarTarefasPorColaboradorEStatusComDatasDefinidas(Colaborador colaborador, List<Status> status) throws ConsultaSemRetornoException {
+		return this.tarefaDao.buscarTodasPorColaboradorEStatusComDatasDefinidas(colaborador, status);
+	} // fim do método buscarTodasTarefasComDataDefinidas
+	
+	@Auditavel
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+	public List<Tarefa> buscarTarefasPorStatusComDatasDefinidas(List<Status> status) throws ConsultaSemRetornoException {
+		return this.tarefaDao.buscarTodasPorStatusComDatasDefinidas(status);
+	} // fim do método buscarTarefasPorStatusComDatasDefinidas
 
 } // fim da classe TarefaService

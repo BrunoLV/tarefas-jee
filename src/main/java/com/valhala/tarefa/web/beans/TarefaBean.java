@@ -261,9 +261,9 @@ public class TarefaBean extends BaseJSFBean implements Serializable {
 		status.remove(Status.CONCLUIDO);
 		try {
 			if(id.longValue() == 0) {
-				tarefas = this.tarefaService.buscarTarefasPorStatus(status);
+				tarefas = this.tarefaService.buscarTarefasPorStatusComDatasDefinidas(status);
 			} else {
-				tarefas = this.tarefaService.buscarTarefasPorColaboradorEStatus(this.colaboradorService.buscarPorId(id), status);
+				tarefas = this.tarefaService.buscarTarefasPorColaboradorEStatusComDatasDefinidas(this.colaboradorService.buscarPorId(id), status);
 			}
 			for (Tarefa tarefa : tarefas) {
 				model.addEvent(new DefaultScheduleEvent(String.format("%s - Demanda: %s - %s",  tarefa.getColaborador().getNome(), tarefa.getNumeroDemanda(), tarefa.getTitulo()), 

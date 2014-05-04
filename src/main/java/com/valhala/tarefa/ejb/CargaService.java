@@ -24,6 +24,12 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
+import javax.transaction.UserTransaction;
 
 import com.valhala.tarefa.dao.api.ClienteDao;
 import com.valhala.tarefa.dao.api.ColaboradorDao;
@@ -49,7 +55,7 @@ import com.valhala.tarefa.util.StreamConverter;
 import com.valhala.tarefa.web.TipoCarga;
 
 @Stateless @Auditavel
-@TransactionManagement(TransactionManagementType.CONTAINER)
+@TransactionManagement(TransactionManagementType.BEAN)
 public class CargaService {
 	
 	private static final String CHAVE_INSERIDOS = "Sucesso";
@@ -71,10 +77,13 @@ public class CargaService {
 	@Resource(mappedName="java:jboss/mail/Tarefas")
     private Session mailSession;
 	
+	@Resource
+	private UserTransaction transaction;
+	
 	@PostConstruct
 	public void inicializar() {
 		this.properties = PropertiesUtil.getProperties("tarefas-jee.properties");
-	}
+	} // fim do método inicializar
 	
 	@Asynchronous
 	public void executarCargaSistema(@Observes @CargaSistema InputStream stream) {
@@ -86,9 +95,16 @@ public class CargaService {
 			sistemas = StreamConverter.converterStreamParaListaDeSistema(stream);
 			for (Sistema sistema : sistemas) {
 				try {
+					transaction.begin();
 					this.sistemaDao.persistir(sistema);
+					transaction.commit();
 					inseridos.add(sistema);
-				} catch (DaoException e) {
+				} catch (DaoException | SecurityException | IllegalStateException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SystemException | NotSupportedException e) {
+					try {
+						transaction.rollback();
+					} catch (IllegalStateException | SecurityException | SystemException e1) {
+						e1.printStackTrace();
+					} // fim do bloco try/catch
 					naoInseridos.add(sistema);
 				} // fim do bloco try/catch
 			} // fim do bloco for
@@ -110,9 +126,16 @@ public class CargaService {
 			clientes = StreamConverter.converterStreamParaListaDeClientes(stream);
 			for (Cliente cliente : clientes) {
 				try {
+					this.transaction.begin();
 					this.clienteDao.persistir(cliente);
+					this.transaction.commit();
 					inseridos.add(cliente);
-				} catch (DaoException e) {
+				} catch (DaoException | NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException | HeuristicMixedException | HeuristicRollbackException e) {
+					try {
+						this.transaction.rollback();
+					} catch (IllegalStateException | SecurityException | SystemException e1) {
+						e1.printStackTrace();
+					} // fim do bloco try/catch
 					naoInseridos.add(cliente);
 				} // fim do bloco try/catch
 			} // fim do bloco for
@@ -134,15 +157,22 @@ public class CargaService {
 			equipes = StreamConverter.converterStreamParaListaDeEquipes(stream);
 			for (Equipe equipe : equipes) {
 				try {
+					this.transaction.begin();
 					equipeDao.persistir(equipe);
+					this.transaction.commit();
 					inseridos.add(equipe);
-				} catch (DaoException e) {
+				} catch (DaoException | NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException | HeuristicMixedException | HeuristicRollbackException e) {
+					try {
+						this.transaction.rollback();
+					} catch (IllegalStateException | SecurityException | SystemException e1) {
+						e1.printStackTrace();
+					} // fim do bloco try/catch
 					naoInseridos.add(equipe);
 				} // fim do bloco try/catch
 			} // fim do bloco for
 			map.put(CargaService.CHAVE_INSERIDOS, inseridos);
 			map.put(CargaService.CHAVE_NAO_INSERIDOS, naoInseridos);
-			enviarEmailProcessamentoArquivo(TipoCarga.TAREFAS, map);
+			enviarEmailProcessamentoArquivo(TipoCarga.EQUIPES, map);
 		} catch (StreamConverterException e) {
 			enviarEmailErroArquivo(TipoCarga.EQUIPES, e.getMessage());
 		} // fim do método try/catch
@@ -159,15 +189,22 @@ public class CargaService {
 			for (Colaborador colaborador : colaboradores) {
 				colaborador.setSenha(colaborador.getMatricula());
 				try {
+					this.transaction.begin();
 					this.colaboradorDao.persistir(colaborador);
+					this.transaction.commit();
 					inseridos.add(colaborador);
-				} catch (DaoException e) {
+				} catch (DaoException | NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException | HeuristicMixedException | HeuristicRollbackException e) {
+					try {
+						this.transaction.rollback();
+					} catch (IllegalStateException | SecurityException | SystemException e1) {
+						e1.printStackTrace();
+					} // fim do bloco try/catch
 					naoInseridos.add(colaborador);
 				} // fim do bloco try/catch
-				map.put(CargaService.CHAVE_INSERIDOS, inseridos);
-				map.put(CargaService.CHAVE_NAO_INSERIDOS, naoInseridos);
-				enviarEmailProcessamentoArquivo(TipoCarga.COLABORADORES, map);
 			} // fim do bloco for
+			map.put(CargaService.CHAVE_INSERIDOS, inseridos);
+			map.put(CargaService.CHAVE_NAO_INSERIDOS, naoInseridos);
+			enviarEmailProcessamentoArquivo(TipoCarga.COLABORADORES, map);
 		} catch (StreamConverterException e) {
 			enviarEmailErroArquivo(TipoCarga.COLABORADORES, e.getMessage());
 		} // fim do bloco try/catch
@@ -183,17 +220,24 @@ public class CargaService {
 			tarefas = StreamConverter.converterStreamParaListaDeTarefas(stream);
 			for (Tarefa tarefa : tarefas) {
 				try {
+					this.transaction.begin();
 					tarefa.setColaborador(tarefa.getColaborador() != null ? this.colaboradorDao.buscarPorNome(tarefa.getColaborador().getNome()) : null);
 					tarefa.setEquipe(tarefa.getEquipe() != null ? this.equipeDao.buscarPorNome(tarefa.getEquipe().getNome()) : null);
 					this.tarefaDao.persistir(tarefa);
+					this.transaction.commit();
 					inseridos.add(tarefa);
-				} catch (ConsultaSemRetornoException | DaoException e) {
+				} catch (ConsultaSemRetornoException | DaoException | NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException | HeuristicMixedException | HeuristicRollbackException e) {
+					try {
+						this.transaction.rollback();
+					} catch (IllegalStateException | SecurityException | SystemException e1) {
+						e1.printStackTrace();
+					} // fim do bloco try/catch
 					naoInseridos.add(tarefa);
-				} // fim do bloco try/catch
-				map.put(CargaService.CHAVE_INSERIDOS, inseridos);
-				map.put(CargaService.CHAVE_NAO_INSERIDOS, naoInseridos);
-				enviarEmailProcessamentoArquivo(TipoCarga.TAREFAS, map);	
+				} // fim do bloco try/catch	
 			} // fim do bloco for
+			map.put(CargaService.CHAVE_INSERIDOS, inseridos);
+			map.put(CargaService.CHAVE_NAO_INSERIDOS, naoInseridos);
+			enviarEmailProcessamentoArquivo(TipoCarga.TAREFAS, map);
 		} catch (StreamConverterException e) {
 			enviarEmailErroArquivo(TipoCarga.TAREFAS, e.getMessage());
 		} // fim do bloco try/catch
@@ -345,8 +389,8 @@ public class CargaService {
 	} // fim do método montarCorpoEmailEquipes
 
 	private void incluirEquipeNaString(StringBuffer buffer, List<Equipe> equipes) {
-		for (Equipe Equipe : equipes) {
-			buffer.append(Equipe.getNome()).append("<br/>");
+		for (Equipe equipe : equipes) {
+			buffer.append(equipe.getNome()).append("<br/>");
 		} //fim do bloco for
 	}
 	

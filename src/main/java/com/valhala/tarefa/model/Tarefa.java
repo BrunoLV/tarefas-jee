@@ -34,7 +34,10 @@ import javax.persistence.Version;
 		@NamedQuery(name=Tarefa.NAMEDQUERY_BUSCAR_POR_STATUS, query="select t from Tarefa t where t.status in (:status)"),
 		@NamedQuery(name=Tarefa.NAMEDQUERY_BUSCAR_POR_EQUIPE, query="select t from Tarefa t where t.equipe = :equipe"),
 		@NamedQuery(name=Tarefa.NAMEDQUERY_BUSCAR_POR_CLIENTE, query="select t from Tarefa t where t.cliente = :cliente"),
-		@NamedQuery(name=Tarefa.NAMEDQUERY_BUSCAR_POR_SISTEMA, query="select t from Tarefa t where t.sistema = :sistema")})
+		@NamedQuery(name=Tarefa.NAMEDQUERY_BUSCAR_POR_SISTEMA, query="select t from Tarefa t where t.sistema = :sistema"),
+		@NamedQuery(name=Tarefa.NAMEDQUERY_BUSCAR_POR_STATUS_DATAS_DEFINIDAS, query="select t from Tarefa t where t.status in (:status) and t.inicio is not null and t.finalPlanejado is not null"),
+		@NamedQuery(name=Tarefa.NAMEDQUERY_BUSCAR_TODOS_DATAS_DEFINIDAS, query="select t from Tarefa t where t.inicio is not null and t.finalPlanejado is not null"),
+		@NamedQuery(name=Tarefa.NAMEDQUERY_BUSCAR_POR_COLABORADOR_E_STATUS_DATAS_DEFINIDAS, query="select t from Tarefa t where t.colaborador = :colaborador and t.status in (:status) and t.inicio is not null and t.finalPlanejado is not null")})
 public class Tarefa implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -46,6 +49,9 @@ public class Tarefa implements Serializable {
 	public static final String NAMEDQUERY_BUSCAR_POR_EQUIPE = "buscarTodasTarefasPorEquipe";
 	public static final String NAMEDQUERY_BUSCAR_POR_CLIENTE = "buscarTodasTarefasPorCliente";
 	public static final String NAMEDQUERY_BUSCAR_POR_SISTEMA = "buscarTodasTarefasPorSistema";
+	public static final String NAMEDQUERY_BUSCAR_TODOS_DATAS_DEFINIDAS = "buscarTodasTarefasDatasDefinidas";
+	public static final String NAMEDQUERY_BUSCAR_POR_STATUS_DATAS_DEFINIDAS = "buscarPorStatusDatasDefinidas";
+	public static final String NAMEDQUERY_BUSCAR_POR_COLABORADOR_E_STATUS_DATAS_DEFINIDAS = "buscarTodasTarefasPorColaboradorEStatusDatasDefinidas";
 	
 	private Long id;
 	private String numeroDemanda;

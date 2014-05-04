@@ -81,11 +81,8 @@ public class StreamConverter {
 			while((linha = reader.readLine()) != null) {
 				String[] atributos = linha.split(";");
 				List<Atribuicao> atribuicoes = new ArrayList<Atribuicao>();
-				System.out.println(atributos[2]);
 				String[] atribuicoesArquivo = atributos[2].split(":");
-				System.out.println(atribuicoesArquivo + "Tamanho " + atribuicoesArquivo.length);
 				for (String atribuicao : atribuicoesArquivo) {
-					System.out.println(atribuicao);
 					atribuicoes.add(Atribuicao.valueOf(atribuicao));
 				} // fim do bloco for
 				colaboradores.add(new Colaborador(null, atributos[0], atributos[1], null, atribuicoes));
