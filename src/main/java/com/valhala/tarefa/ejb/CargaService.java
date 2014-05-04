@@ -68,7 +68,7 @@ public class CargaService {
 	@Inject
 	private ColaboradorDao colaboradorDao;
 	
-	@Resource(mappedName="java:jboss/mail/Quadro")
+	@Resource(mappedName="java:jboss/mail/Tarefas")
     private Session mailSession;
 	
 	@PostConstruct
