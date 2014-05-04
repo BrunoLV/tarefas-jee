@@ -27,6 +27,11 @@ public class Cliente implements Serializable {
 	public Cliente() {
 		super();
 	}
+	
+	public Cliente(String nome) {
+		super();
+		this.nome = nome;
+	}
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_cliente")

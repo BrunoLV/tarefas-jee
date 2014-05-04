@@ -23,7 +23,7 @@
 	</repositories>
 
 	<dependencies>
-	
+
 		<!-- Dependencia do Java EE -->
 		<dependency>
 			<groupId>javax</groupId>
@@ -105,6 +105,18 @@
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
 			<version>3.7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
 		</dependency>
 
 		<!-- Log's api's dependency -->

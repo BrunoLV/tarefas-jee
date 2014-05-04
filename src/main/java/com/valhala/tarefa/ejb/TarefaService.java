@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import com.valhala.tarefa.dao.api.TarefaDao;
 import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
 import com.valhala.tarefa.exceptions.CopiaDePropriedadesException;
+import com.valhala.tarefa.exceptions.DaoException;
 import com.valhala.tarefa.exceptions.ServiceException;
 import com.valhala.tarefa.model.Colaborador;
 import com.valhala.tarefa.model.Status;
@@ -62,7 +63,7 @@ public class TarefaService {
 			tarefaPersitente = this.tarefaDao.buscarPorId(tarefa.getId());
 			Copiador.copiar(Tarefa.class, tarefaPersitente, tarefa);
 			this.tarefaDao.atualizar(tarefaPersitente);
-		} catch (ConsultaSemRetornoException | CopiaDePropriedadesException e) {
+		} catch (ConsultaSemRetornoException | CopiaDePropriedadesException | DaoException e) {
 			throw new ServiceException(e.getMessage(), e);
 		} // fim do bloco try/catch
 	} // fim do método editarTarefa
@@ -77,7 +78,7 @@ public class TarefaService {
 	public void removerTarefa(Serializable id) throws ServiceException {
 		try {
 			this.tarefaDao.remover(this.tarefaDao.buscarPorId(id));
-		} catch (ConsultaSemRetornoException e) {
+		} catch (ConsultaSemRetornoException | DaoException e) {
 			throw new ServiceException(e.getMessage(), e);
 		} // fim do bloco try/catch
 	} // fim do método removerTarefa

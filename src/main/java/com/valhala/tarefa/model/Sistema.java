@@ -27,6 +27,11 @@ public class Sistema implements Serializable {
 	public Sistema() {
 		super();
 	}
+	
+	public Sistema(String nome) {
+		super();
+		this.nome = nome;
+	}
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_sistema")

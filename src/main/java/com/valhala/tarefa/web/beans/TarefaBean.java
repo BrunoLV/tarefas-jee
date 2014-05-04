@@ -257,6 +257,7 @@ public class TarefaBean extends BaseJSFBean implements Serializable {
 		ScheduleModel model = new DefaultScheduleModel();
 		List<Tarefa> tarefas;
 		List<Status> status = new ArrayList<>(Arrays.asList(Status.values()));
+		status.remove(Status.NAO_INICIADO);
 		status.remove(Status.CONCLUIDO);
 		try {
 			if(id.longValue() == 0) {
@@ -270,7 +271,7 @@ public class TarefaBean extends BaseJSFBean implements Serializable {
 						tarefa.getFinalPlanejado()));
 			}
 		} catch (ConsultaSemRetornoException e) {
-			inserirMensagemDeErro(e.getMessage());
+			// inserirMensagemDeErro(e.getMessage());
 		}
 		return model;
 	}

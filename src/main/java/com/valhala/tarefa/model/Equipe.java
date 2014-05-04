@@ -13,19 +13,26 @@ import javax.persistence.Table;
 
 @Entity @Table(name="tb_equipe")
 @NamedQueries({
-	@NamedQuery(name=Equipe.NAMEDQUERY_BUSCAR_TODOS, query="select e from Equipe e")
+	@NamedQuery(name=Equipe.NAMEDQUERY_BUSCAR_TODOS, query="select e from Equipe e"),
+	@NamedQuery(name=Equipe.NAMEDQUERY_BUSCAR_POR_NOME, query="select e from Equipe e where e.nome = :nome")
 })
 public class Equipe implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
 	public static final String NAMEDQUERY_BUSCAR_TODOS = "buscarTodasEquipes";
+	public static final String NAMEDQUERY_BUSCAR_POR_NOME = "buscarEquipePorNome";
 	
 	private Long id;
 	private String nome;
 	
 	public Equipe() {
 		super();
+	}
+	
+	public Equipe(String nome) {
+		super();
+		this.nome = nome;
 	}
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)

@@ -9,6 +9,6 @@ package com.valhala.tarefa.model;
  */
 public enum Prioridade {
 	
-	PLANEJADA, BAIXA, MEDIA, ALTA, CRITICA;
+	NAO_DEFINIDA, PLANEJADA, BAIXA, MEDIA, ALTA, CRITICA
 
 } // fim da enum Prioridade

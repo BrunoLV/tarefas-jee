@@ -40,11 +40,24 @@ public class ColaboradorDaoImpl extends BaseDao<Colaborador> implements Colabora
 		query.setParameter("matricula", matricula);
 		Colaborador colaborador;
 		try {
-			colaborador = (Colaborador) query.getSingleResult();
+			colaborador = query.getSingleResult();
 		} catch(NoResultException e) {
 			throw new ConsultaSemRetornoException(e.getMessage(), e);
 		} // fim do bloco try/catch
 		return colaborador;
 	} // fim do método buscarPorMatricula
+
+	@Override
+	public Colaborador buscarPorNome(String nome) throws ConsultaSemRetornoException {
+		TypedQuery<Colaborador> query = this.entityManager.createNamedQuery(Colaborador.NAMEDQUERY_BUSCAR_POR_NOME, ColaboradorDaoImpl.CLASSE_PERSISTENTE);
+		query.setParameter("nome", nome);
+		Colaborador colaborador;
+		try {
+			colaborador = query.getSingleResult();
+		} catch (NoResultException e) {
+			throw new ConsultaSemRetornoException(e.getMessage(), e);
+		} // fim do bloco try/catch
+		return colaborador;
+	} // fim do método buscarPorNome
 
 } // fim da classe ColaboradorDaoImpl

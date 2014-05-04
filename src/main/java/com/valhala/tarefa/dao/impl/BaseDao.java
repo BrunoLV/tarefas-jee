@@ -4,9 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 
 import com.valhala.tarefa.dao.api.Dao;
 import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
+import com.valhala.tarefa.exceptions.DaoException;
 
 /**
  * Implementação básica da interface Dao.
@@ -25,20 +27,32 @@ abstract class BaseDao<T> implements Dao<T> {
 	protected EntityManager entityManager;
 	
 	@Override
-	public T persistir(T entidade) {
-		this.entityManager.persist(entidade);
+	public T persistir(T entidade) throws DaoException {
+		try {
+			this.entityManager.persist(entidade);
+		} catch (PersistenceException e) {
+			throw new DaoException(String.format("Ocorreu um erro ao persistir o registro. Erro: %s", e.getMessage()), e);
+		} // fim do bloco try/catch
 		return entidade;
 	} // fim do método persistir
 
 	@Override
-	public T atualizar(T entidade) {
-		return this.entityManager.merge(entidade);
+	public T atualizar(T entidade) throws DaoException {
+		try {
+			entidade = this.entityManager.merge(entidade);
+		} catch (PersistenceException e) {
+			throw new DaoException(String.format("Ocorreu um erro ao atualizar o registro. Erro: %s", e.getMessage()), e);
+		} // fim do bloco try/catch
+		return entidade;
 	} // fim do método atualizar
 
 	@Override
-	public T remover(T entidade) {
-		this.entityManager.remove(entidade);
-		return entidade;
+	public void remover(T entidade) throws DaoException {
+		try {
+			this.entityManager.remove(entidade);
+		} catch (PersistenceException e) {
+			throw new DaoException(String.format("Ocorreu um erro ao atualizar o registro. Erro: %s", e.getMessage()), e);
+		} // fim do bloco try/catch
 	} // fim do método remover
 
 	@Override

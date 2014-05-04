@@ -9,6 +9,6 @@ package com.valhala.tarefa.model;
  */
 public enum Atribuicao {
 	
-	MANTER, LIDER, CONVIDADO;
+	MANTER, LIDER, CONVIDADO
 
 } // fim da enum Atribuicao

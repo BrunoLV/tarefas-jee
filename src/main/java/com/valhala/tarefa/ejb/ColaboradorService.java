@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import com.valhala.tarefa.dao.api.ColaboradorDao;
 import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
 import com.valhala.tarefa.exceptions.CopiaDePropriedadesException;
+import com.valhala.tarefa.exceptions.DaoException;
 import com.valhala.tarefa.exceptions.ServiceException;
 import com.valhala.tarefa.model.Colaborador;
 import com.valhala.tarefa.qualifiers.Auditavel;
@@ -35,11 +36,16 @@ public class ColaboradorService {
 	/**
 	 * Método utilizado para realizar a ação de cadastro de colaborador.
 	 * @param colaborador
+	 * @throws ServiceException 
 	 */
 	@Auditavel
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void cadastrarColaborador(Colaborador colaborador) {
-		this.colaboradorDao.persistir(colaborador);
+	public void cadastrarColaborador(Colaborador colaborador) throws ServiceException {
+		try {
+			this.colaboradorDao.persistir(colaborador);
+		} catch (DaoException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
 	} // fim do método cadastrarColaborador
 	
 	/**
@@ -55,7 +61,7 @@ public class ColaboradorService {
 			colaboradorPersistente = this.colaboradorDao.buscarPorId(colaborador.getId());
 			Copiador.copiar(Colaborador.class, colaboradorPersistente, colaborador);
 			this.colaboradorDao.atualizar(colaboradorPersistente);
-		} catch (ConsultaSemRetornoException | CopiaDePropriedadesException e) {
+		} catch (ConsultaSemRetornoException | CopiaDePropriedadesException | DaoException e) {
 			throw new ServiceException(e.getMessage(), e);
 		} // fim do bloco try/catch
 	} // fim do método editarColaborador
@@ -70,7 +76,7 @@ public class ColaboradorService {
 	public void removerColaborador(Serializable id) throws ServiceException {
 		try {
 			this.colaboradorDao.remover(this.colaboradorDao.buscarPorId(id));
-		} catch (ConsultaSemRetornoException e) {
+		} catch (ConsultaSemRetornoException | DaoException e) {
 			throw new ServiceException(e.getMessage(), e);
 		} // fim do bloco try/catch
 	} // fim do método removerColaborador

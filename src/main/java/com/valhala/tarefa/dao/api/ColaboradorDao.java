@@ -19,5 +19,13 @@ public interface ColaboradorDao extends Dao<Colaborador> {
 	 * @throws ConsultaSemRetornoException
 	 */
 	Colaborador buscarPorMatricula(String matricula) throws ConsultaSemRetornoException;
+	
+	/**
+	 * Método utilizado para buscar um colaborador no banco de dados utilizando o nome.
+	 * @param nome
+	 * @return
+	 * @throws ConsultaSemRetornoException
+	 */
+	Colaborador buscarPorNome(String nome) throws ConsultaSemRetornoException;
 
 } // fim da interface ColaboradorDao

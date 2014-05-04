@@ -25,13 +25,27 @@
 									<h:outputText value="#{tarefa.numeroDemanda}" />
 								</p:column>
 								<p:column headerText="#{recurso['column.areaSolicitante']}">
-									<h:outputText value="#{tarefa.cliente.nome}" />
+									<c:choose>
+										<c:when test="#{not empty tarefa.cliente.nome}">
+											<h:outputText value="#{tarefa.cliente.nome}" />
+										</c:when>
+										<c:otherwise>
+											<h:outputText value="#{recurso['text.naoInformado']}" />
+										</c:otherwise>
+									</c:choose>
 								</p:column>
 								<p:column headerText="#{recurso['column.titulo']}">
 									<h:outputText value="#{tarefa.titulo}" />
 								</p:column>
 								<p:column headerText="#{recurso['column.sistema']}">
-									<h:outputText value="#{tarefa.sistema.nome}" />
+									<c:choose>
+										<c:when test="#{not empty tarefa.sistema.nome}">
+											<h:outputText value="#{tarefa.sistema.nome}" />
+										</c:when>
+										<c:otherwise>
+											<h:outputText value="#{recurso['text.naoInformado']}" />
+										</c:otherwise>
+									</c:choose>
 								</p:column>
 								<p:column headerText="#{recurso['column.status']}">
 									<h:outputText value="#{tarefa.status}" />
@@ -45,14 +59,28 @@
 									</h:outputFormat>
 								</p:column>
 								<p:column headerText="#{recurso['column.dataInicio']}">
-									<h:outputFormat value="#{tarefa.inicio}">
-										<f:convertDateTime pattern="dd/MM/yyyy" />
-									</h:outputFormat>
+									<c:choose>
+										<c:when test="#{not empty tarefa.inicio}" >
+											<h:outputFormat value="#{tarefa.inicio}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputFormat>
+										</c:when>
+										<c:otherwise>
+											<h:outputText value="#{recurso['text.naoInformado']}" />
+										</c:otherwise>
+									</c:choose>
 								</p:column>
 								<p:column headerText="#{recurso['column.dataFinalPlanejado']}">
-									<h:outputFormat value="#{tarefa.finalPlanejado}">
-										<f:convertDateTime pattern="dd/MM/yyyy" />
-									</h:outputFormat>
+									<c:choose>
+										<c:when test="#{not empty tarefa.finalPlanejado}" >
+											<h:outputFormat value="#{tarefa.finalPlanejado}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputFormat>
+										</c:when>
+										<c:otherwise>
+											<h:outputText value="#{recurso['text.naoInformado']}" />
+										</c:otherwise>
+									</c:choose>
 								</p:column>
 								<p:column headerText="#{recurso['column.replanejado']}">
 									<p:selectBooleanCheckbox value="#{tarefa.replanajado}" disabled="true" />
@@ -76,13 +104,27 @@
 									<h:outputText value="#{tarefa.numeroDemanda}" />
 								</p:column>
 								<p:column headerText="#{recurso['column.areaSolicitante']}">
-									<h:outputText value="#{tarefa.cliente.nome}" />
+									<c:choose>
+										<c:when test="#{not empty tarefa.cliente.nome}">
+											<h:outputText value="#{tarefa.cliente.nome}" />
+										</c:when>
+										<c:otherwise>
+											<h:outputText value="#{recurso['text.naoInformado']}" />
+										</c:otherwise>
+									</c:choose>
 								</p:column>
 								<p:column headerText="#{recurso['column.titulo']}">
 									<h:outputText value="#{tarefa.titulo}" />
 								</p:column>
 								<p:column headerText="#{recurso['column.sistema']}">
-									<h:outputText value="#{tarefa.sistema.nome}" />
+									<c:choose>
+										<c:when test="#{not empty tarefa.sistema.nome}">
+											<h:outputText value="#{tarefa.sistema.nome}" />
+										</c:when>
+										<c:otherwise>
+											<h:outputText value="#{recurso['text.naoInformado']}" />
+										</c:otherwise>
+									</c:choose>
 								</p:column>
 								<p:column headerText="#{recurso['column.status']}">
 									<h:outputText value="#{tarefa.status}" />
@@ -96,14 +138,28 @@
 									</h:outputFormat>
 								</p:column>
 								<p:column headerText="#{recurso['column.dataInicio']}">
-									<h:outputFormat value="#{tarefa.inicio}">
-										<f:convertDateTime pattern="dd/MM/yyyy" />
-									</h:outputFormat>
+									<c:choose>
+										<c:when test="#{not empty tarefa.inicio}" >
+											<h:outputFormat value="#{tarefa.inicio}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputFormat>
+										</c:when>
+										<c:otherwise>
+											<h:outputText value="#{recurso['text.naoInformado']}" />
+										</c:otherwise>
+									</c:choose>
 								</p:column>
 								<p:column headerText="#{recurso['column.dataFinalPlanejado']}">
-									<h:outputFormat value="#{tarefa.finalPlanejado}">
-										<f:convertDateTime pattern="dd/MM/yyyy" />
-									</h:outputFormat>
+									<c:choose>
+										<c:when test="#{not empty tarefa.finalPlanejado}" >
+											<h:outputFormat value="#{tarefa.finalPlanejado}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputFormat>
+										</c:when>
+										<c:otherwise>
+											<h:outputText value="#{recurso['text.naoInformado']}" />
+										</c:otherwise>
+									</c:choose>
 								</p:column>
 								<p:column headerText="#{recurso['column.replanejado']}">
 									<p:selectBooleanCheckbox value="#{tarefa.replanajado}" disabled="true" />

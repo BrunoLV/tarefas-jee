@@ -70,6 +70,43 @@ public class Tarefa implements Serializable {
 	public Tarefa() {
 		super();
 	}
+	
+	public Tarefa(String numeroDemanda, String titulo, Prioridade prioridade,
+			Date abertura, Date inicio, Date finalPlanejado, Date finalEfetivo,
+			Status status, Integer estimativa, Boolean replanajado,
+			String observacao, Colaborador colaborador, Cliente cliente,
+			Equipe equipe, Sistema sistema) {
+		super();
+		this.numeroDemanda = numeroDemanda;
+		this.titulo = titulo;
+		this.prioridade = prioridade;
+		this.abertura = abertura;
+		this.inicio = inicio;
+		this.finalPlanejado = finalPlanejado;
+		this.finalEfetivo = finalEfetivo;
+		this.status = status;
+		this.estimativa = estimativa;
+		this.replanajado = replanajado;
+		this.observacao = observacao;
+		this.colaborador = colaborador;
+		this.cliente = cliente;
+		this.equipe = equipe;
+		this.sistema = sistema;
+	}
+
+
+
+	public Tarefa(String numeroDemanda, String titulo,
+			Prioridade prioridade) {
+		super();
+		this.numeroDemanda = numeroDemanda;
+		this.titulo = titulo;
+		this.prioridade = prioridade;
+		this.colaborador = null;
+		this.cliente = null;
+		this.equipe = null;
+		this.sistema = null;
+	}
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_tarefa")
