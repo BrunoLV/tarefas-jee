@@ -10,7 +10,7 @@
 	<ui:define name="content">
 		<h:form id="mudancaSenhaForm">
 			<p:messages autoUpdate="true" globalOnly="true" closable="true" />
-			<p:panel header="#{recurso['header.redefinirSenha']}">
+			<p:panel header="#{recurso['header.redefinirSenha']}" style="position: absolute; left: 50%; top: 50%; margin-left:-110px; margin-top:-40px;">
 				<p:panelGrid columns="3">
 					<p:outputLabel id="novaSenhaLabel" for="novaSenhaPassword" value="#{recurso['label.senhaNova']}" />
 					<p:password id="novaSenhaPassword" feedback="false" value="#{LoginBean.senha}" required="true" requiredMessage="#{erro['message.campoObrigatorio']}" />
