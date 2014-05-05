@@ -37,7 +37,6 @@ public class Copiador {
 					continue;
 				} // fim do bloco if
 				field.set(objetoDestino, object);
-				System.out.println(object);
 			} catch (SecurityException | IllegalArgumentException | IllegalAccessException | NullPointerException e) {
 				throw new CopiaDePropriedadesException(e.getMessage(), e);
 			}  // fim do bloco try/catch
