@@ -2,27 +2,30 @@
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
  <display-name>tarefas-jee</display-name>
- 
  <context-param>
   <param-name>com.sun.faces.writeStateAtFormEnd</param-name>
   <param-value>false</param-value>
  </context-param>
- 
  <context-param>
-    <param-name>javax.faces.PROJECT_STAGE</param-name>    
-    <param-value>Production</param-value>
-</context-param>
- 
+  <param-name>javax.faces.PROJECT_STAGE</param-name>
+  <param-value>Production</param-value>
+ </context-param>
  <context-param>
   <param-name>primefaces.THEME</param-name>
-  <param-value>south-street</param-value>
+  <param-value>excite-bike</param-value>
  </context-param>
- 
  <context-param>
-	 <param-name>primefaces.UPLOADER</param-name>
-	 <param-value>auto</param-value>
+  <param-name>primefaces.UPLOADER</param-name>
+  <param-value>auto</param-value>
  </context-param>
- 
+ <filter>
+  <filter-name>PrimeFaces FileUpload Filter</filter-name>
+  <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+ </filter>
+ <filter-mapping>
+  <filter-name>PrimeFaces FileUpload Filter</filter-name>
+  <servlet-name>Faces Servlet</servlet-name>
+ </filter-mapping>
  <servlet>
   <servlet-name>Faces Servlet</servlet-name>
   <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -32,27 +35,13 @@
   <servlet-name>Faces Servlet</servlet-name>
   <url-pattern>*.xhtml</url-pattern>
  </servlet-mapping>
- 
  <welcome-file-list>
   <welcome-file>/pages/public/login.xhtml</welcome-file>
  </welcome-file-list>
- 
- <filter>
-	 <filter-name>PrimeFaces FileUpload Filter</filter-name>
- 	 <filter-class>
-	 	 org.primefaces.webapp.filter.FileUploadFilter
-	 </filter-class>
-</filter>	
-<filter-mapping>
-	 <filter-name>PrimeFaces FileUpload Filter</filter-name>
-	 <servlet-name>Faces Servlet</servlet-name>
-</filter-mapping>
- 
  <error-page>
   <error-code>403</error-code>
   <location>/pages/public/error-acesso.xhtml</location>
  </error-page>
- 
  <security-constraint>
   <web-resource-collection>
    <web-resource-name>Acesso Restrito</web-resource-name>
@@ -62,7 +51,6 @@
    <role-name>LIDER</role-name>
   </auth-constraint>
  </security-constraint>
- 
  <security-constraint>
   <web-resource-collection>
    <web-resource-name>Acesso Restrito</web-resource-name>
@@ -73,7 +61,6 @@
    <role-name>MANTER</role-name>
   </auth-constraint>
  </security-constraint>
- 
  <login-config>
   <auth-method>FORM</auth-method>
   <form-login-config>
@@ -81,7 +68,6 @@
    <form-error-page>/pages/public/error.xhtml</form-error-page>
   </form-login-config>
  </login-config>
- 
  <security-role>
   <role-name>MANTER</role-name>
  </security-role>
@@ -91,5 +77,4 @@
  <security-role>
   <role-name>CONVIDADO</role-name>
  </security-role>
- 
 </web-app>

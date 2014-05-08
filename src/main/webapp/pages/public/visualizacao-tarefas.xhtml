@@ -20,6 +20,9 @@
 							<p:dataTable value="#{TarefaBean.tarefasNaoConcluidas}" var="tarefa" emptyMessage="#{erro['message.emptyTable']}" paginator="true" rows="5"  
                  			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                  			rowsPerPageTemplate="5,10,15">
+								<p:column>
+									<p:rowToggler />
+								</p:column>
 								<p:column headerText="#{recurso['column.id']}">
 									<h:outputText value="#{tarefa.id}" />
 								</p:column>
@@ -69,6 +72,14 @@
 									<p:commandButton id="deletarCommandButton" icon="ui-icon-trash" actionListener="#{TarefaBean.removerTarefa(tarefa.id)}" immediate="true" ajax="true" process="@this" update="@form" rendered="#{not empty sessionScope['USUARIO_LOGADO'] and LoginBean.lider}" />
 									<p:tooltip for="deletarCommandButton" value="#{recurso['tooltip.remover']}" showEffect="fade" hideEffect="fade" />
 								</p:column>
+								<p:rowExpansion>
+									<p:panelGrid columns="1">
+										<f:facet name="header">
+											<h:outputText value="#{recurso['label.observacao']}" />
+										</f:facet>
+										<h:outputText value="#{tarefa.observacao}" />
+									</p:panelGrid>
+								</p:rowExpansion>
 							</p:dataTable>
 						</p:tab>
 				

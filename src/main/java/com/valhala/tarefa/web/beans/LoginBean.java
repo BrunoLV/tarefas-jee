@@ -27,9 +27,9 @@ public class LoginBean extends BaseJSFBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String matricula;
-	private String senha;
-	private String confirmeSenha;
+	private String matricula = "";
+	private String senha = "";
+	private String confirmeSenha = "";
 	
 	public static final String USUARIO_LOGADO = "USUARIO_LOGADO";
 	
@@ -41,7 +41,8 @@ public class LoginBean extends BaseJSFBean implements Serializable {
 	private ColaboradorService colaboradorService;
 	
 	public LoginBean() {
-		// TODO Auto-generated constructor stub
+		this.matricula = "";
+		this.senha = "";
 	}
 	
 	public String login() {

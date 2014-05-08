@@ -5,11 +5,7 @@
 	<persistence-unit name="tarefas-PU" transaction-type="JTA">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:/tarefasGerencia</jta-data-source>
-		<class>com.valhala.tarefa.model.Tarefa</class>
 		<class>com.valhala.tarefa.model.Colaborador</class>
-		<class>com.valhala.tarefa.model.Equipe</class>
-		<class>com.valhala.tarefa.model.Sistema</class>
-		<class>com.valhala.tarefa.model.Cliente</class>
 
 		<properties>
 			<!-- propriedades do hibernate -->
