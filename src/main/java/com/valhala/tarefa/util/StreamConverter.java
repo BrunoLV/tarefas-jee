@@ -115,7 +115,7 @@ public class StreamConverter {
 										atributos[4] != null && !atributos[4].trim().equals("") ? Status.valueOf(atributos[4]) : Status.NAO_INICIADO, 
 												null, 
 												null,
-												null, 
+												String.format("Item: %s", atributos[3] != null && !atributos[4].trim().equals("") ? atributos[4] : "Não informado"), 
 												colaborador, 
 												null, 
 												equipe, 

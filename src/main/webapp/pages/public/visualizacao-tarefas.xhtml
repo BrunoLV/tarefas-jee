@@ -66,10 +66,10 @@
 								<p:column headerText="#{recurso['column.replanejado']}">
 									<p:selectBooleanCheckbox value="#{tarefa.replanajado}" disabled="true" />
 								</p:column>
-								<p:column>
-									<p:commandButton id="editarCommandButton" icon="ui-icon-pencil" action="#{TarefaBean.enviarTarefaParaEdicao(tarefa.id)}" immediate="true" ajax="false" process="@this" rendered="#{not empty sessionScope['USUARIO_LOGADO'] and (tarefa.colaborador.id == sessionScope['USUARIO_LOGADO'].id || LoginBean.lider)}" />
+								<p:column rendered="#{not empty sessionScope['USUARIO_LOGADO'] and LoginBean.lider}">
+									<p:commandButton id="editarCommandButton" icon="ui-icon-pencil" action="#{TarefaBean.enviarTarefaParaEdicao(tarefa.id)}" immediate="true" ajax="false" process="@this" />
 									<p:tooltip for="editarCommandButton" value="#{recurso['tooltip.editar']}" showEffect="fade" hideEffect="fade" />
-									<p:commandButton id="deletarCommandButton" icon="ui-icon-trash" actionListener="#{TarefaBean.removerTarefa(tarefa.id)}" immediate="true" ajax="true" process="@this" update="@form" rendered="#{not empty sessionScope['USUARIO_LOGADO'] and LoginBean.lider}" />
+									<p:commandButton id="deletarCommandButton" icon="ui-icon-trash" actionListener="#{TarefaBean.removerTarefa(tarefa.id)}" immediate="true" ajax="true" process="@this" update="@form" />
 									<p:tooltip for="deletarCommandButton" value="#{recurso['tooltip.remover']}" showEffect="fade" hideEffect="fade" />
 								</p:column>
 								<p:rowExpansion>
@@ -88,6 +88,9 @@
 							<p:dataTable value="#{TarefaBean.listarPorColaborador(colaborador)}" var="tarefa" emptyMessage="#{erro['message.emptyTable']}" paginator="true" rows="5"  
                  			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                  			rowsPerPageTemplate="5,10,15">
+                 				<p:column>
+									<p:rowToggler />
+								</p:column>
 								<p:column headerText="#{recurso['column.id']}">
 									<h:outputText value="#{tarefa.id}" />
 								</p:column>
@@ -131,12 +134,20 @@
 								<p:column headerText="#{recurso['column.replanejado']}">
 									<p:selectBooleanCheckbox value="#{tarefa.replanajado}" disabled="true" />
 								</p:column>
-								<p:column>
-									<p:commandButton id="editarCommandButton" icon="ui-icon-pencil" action="#{TarefaBean.enviarTarefaParaEdicao(tarefa.id)}" immediate="true" ajax="false" process="@this" rendered="#{not empty sessionScope['USUARIO_LOGADO'] and (tarefa.colaborador.id == sessionScope['USUARIO_LOGADO'].id || LoginBean.lider)}" />
+								<p:column rendered="#{not empty sessionScope['USUARIO_LOGADO'] and LoginBean.lider}">
+									<p:commandButton id="editarCommandButton" icon="ui-icon-pencil" action="#{TarefaBean.enviarTarefaParaEdicao(tarefa.id)}" immediate="true" ajax="false" process="@this" />
 									<p:tooltip for="editarCommandButton" value="#{recurso['tooltip.editar']}" showEffect="fade" hideEffect="fade" />
-									<p:commandButton id="deletarCommandButton" icon="ui-icon-trash" actionListener="#{TarefaBean.removerTarefa(tarefa.id)}" immediate="true" ajax="true" process="@this" update="@form" rendered="#{not empty sessionScope['USUARIO_LOGADO'] and LoginBean.lider}" />
+									<p:commandButton id="deletarCommandButton" icon="ui-icon-trash" actionListener="#{TarefaBean.removerTarefa(tarefa.id)}" immediate="true" ajax="true" process="@this" update="@form" />
 									<p:tooltip for="deletarCommandButton" value="#{recurso['tooltip.remover']}" showEffect="fade" hideEffect="fade" />
 								</p:column>
+								<p:rowExpansion>
+									<p:panelGrid columns="1">
+										<f:facet name="header">
+											<h:outputText value="#{recurso['label.observacao']}" />
+										</f:facet>
+										<h:outputText value="#{tarefa.observacao}" />
+									</p:panelGrid>
+								</p:rowExpansion>
 							</p:dataTable>
 						</p:tab>
 					</c:forEach>
@@ -145,6 +156,9 @@
 							<p:dataTable id="concluidosDataTable" value="#{TarefaBean.buscarTodosConcluidos()}" var="tarefa" emptyMessage="#{erro['message.emptyTable']}" paginator="true" rows="5"  
                  			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                  			rowsPerPageTemplate="5,10,15">
+                 				<p:column>
+									<p:rowToggler />
+								</p:column>
 								<p:column>
 									<f:facet name="header">
 										<h:outputText value="#{recurso['column.id']}" />
@@ -203,6 +217,14 @@
 									<p:commandButton id="ajustarCommandButton" icon="ui-icon-wrench" action="#{TarefaBean.enviarTarefaParaAjusteAdministrativo(tarefa.id)}" immediate="true" ajax="false" process="@this" />
 									<p:tooltip for="ajustarCommandButton" value="#{recurso['tooltip.ajustar']}" showEffect="fade" hideEffect="fade" />
 								</p:column>
+								<p:rowExpansion>
+									<p:panelGrid columns="1">
+										<f:facet name="header">
+											<h:outputText value="#{recurso['label.observacao']}" />
+										</f:facet>
+										<h:outputText value="#{tarefa.observacao}" />
+									</p:panelGrid>
+								</p:rowExpansion>
 							</p:dataTable>
 							<br />
 							<h:commandLink ajax="true">

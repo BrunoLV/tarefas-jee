@@ -247,7 +247,9 @@ public class CargaService {
 		MimeMessage message = new MimeMessage(mailSession);
 		try {
 			Address destinatario = new InternetAddress(this.properties.getProperty("email.destinatario"));
+			//Address remetente = new InternetAddress(this.properties.getProperty("email.remetente"));
 			message.setRecipient(Message.RecipientType.TO , destinatario);
+			//message.setFrom(remetente);
 			message.setSubject(this.properties.getProperty("email.assunto.emailErro"));
 			message.setSentDate(new Date());
 			message.setContent(MessageFormat.format(this.properties.getProperty("email.carga.processamento.erro"), carga, erro), "text/html");

@@ -98,6 +98,7 @@ public class Tarefa implements Serializable {
 		this.cliente = cliente;
 		this.equipe = equipe;
 		this.sistema = sistema;
+		this.observacao = observacao;
 	}
 
 
