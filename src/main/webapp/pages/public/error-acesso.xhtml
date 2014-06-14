@@ -1,28 +1,29 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns="http://www.w3.org/1999/xhtml">
 
 <ui:composition template="/pages/template/layout-sem-menu.xhtml">
-	<ui:define name="content">
-		<div id="erroDiv">
-			<p:panel>
-				<f:facet name="header">
-					#{recurso['header.geral']}
-				</f:facet>
-				<h1>#{erro['message.accessDenied']}</h1>
-				<f:facet name="footer">
-					<p:button id="backButton"
-						outcome="/pages/public/visualizacao-tarefas.xhtml?faces-redirect=true"
-						icon="ui-icon-arrowreturn-1-w"
-						 />
-					<p:tooltip for="backButton"
-						value="#{recurso['tooltip.voltar']}" />
-				</f:facet>
-			</p:panel>
-		</div>
-	</ui:define>
+    <ui:define name="content">
+        <div id="erroDiv">
+            <p:panel>
+                <f:facet name="header">
+                    #{recurso['header.geral']}
+                </f:facet>
+
+                <h1>#{erro['message.accessDenied']}</h1>
+                <f:facet name="footer">
+                    <p:button id="backButton"
+                              outcome="/pages/public/visualizacao-tarefas.xhtml?faces-redirect=true"
+                              icon="ui-icon-arrowreturn-1-w"
+                            />
+                    <p:tooltip for="backButton"
+                               value="#{recurso['tooltip.voltar']}"/>
+                </f:facet>
+            </p:panel>
+        </div>
+    </ui:define>
 </ui:composition>
 </html>

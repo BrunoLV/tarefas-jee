@@ -1,84 +1,125 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns="http://www.w3.org/1999/xhtml">
 
 <ui:composition template="/pages/template/layout.xhtml">
-	<ui:define name="content">
-		<div id="cadastroDiv">
-			<h:form id="cadastroForm">
-				<p:growl autoUpdate="true" globalOnly="true" showDetail="true" showSummary="false" id="globalMessageGrowl" life="3000" />
-				<h:inputHidden value="#{TarefaBean.tarefa.id}" />
-				<p:panelGrid columns="1" id="geralDataGrid">
-					<f:facet name="header">#{recurso['header.cadastroTarefa']}</f:facet>
-					<p:panelGrid columns="3" id="cadastroPanelGrid">
-						<f:facet name="header">#{recurso['header.dadosGerais']}</f:facet>
-						<p:outputLabel value="#{recurso['label.numDemanda']}" for="numDemandaText" />
-						<p:inputText id="numDemandaText" value="#{TarefaBean.tarefa.numeroDemanda}" required="true" requiredMessage="#{erro['message.campoObrigatorio']}" />
-						<p:message for="numDemandaText" />
-						<p:outputLabel value="#{recurso['label.titulo']}" for="tituloText" />
-						<p:inputText id="tituloText" value="#{TarefaBean.tarefa.titulo}" required="true" requiredMessage="#{erro['message.campoObrigatorio']}" />
-						<p:message for="tituloText" />
-						<p:outputLabel value="#{recurso['label.areaSolicitante']}" for="areaSolicitanteOneMenu" />
-						<p:selectOneMenu id="areaSolicitanteOneMenu" value="#{TarefaBean.tarefa.cliente.id}" required="true" requiredMessage="#{erro['message.campoObrigatorio']}">
-							<f:selectItem itemLabel="#{recurso['text.selecione']}" noSelectionOption="true" />
-							<f:selectItems value="#{TarefaBean.clientes}" var="cliente" itemLabel="#{cliente.nome}" itemValue="#{cliente.id}" />
-						</p:selectOneMenu>
-						<p:message for="areaSolicitanteOneMenu" />
-						<p:outputLabel value="#{recurso['label.equipe']}" for="equipeOneMenu" />
-						<p:selectOneMenu id="equipeOneMenu" value="#{TarefaBean.tarefa.equipe.id}" required="true" requiredMessage="#{erro['message.campoObrigatorio']}">
-							<f:selectItem itemLabel="#{recurso['text.selecione']}" noSelectionOption="true" />
-							<f:selectItems value="#{TarefaBean.equipes}" var="equipe" itemLabel="#{equipe.nome}" itemValue="#{equipe.id}" />
-						</p:selectOneMenu>
-						<p:message for="equipeOneMenu" />
-						<p:outputLabel value="#{recurso['label.sistema']}" for="sistemaOneMenu" />
-						<p:selectOneMenu id="sistemaOneMenu" value="#{TarefaBean.tarefa.sistema.id}" required="true" requiredMessage="#{erro['message.campoObrigatorio']}">
-							<f:selectItem itemLabel="#{recurso['text.selecione']}" noSelectionOption="true" />
-							<f:selectItems value="#{TarefaBean.sistemas}" var="sistema" itemLabel="#{sistema.nome}" itemValue="#{sistema.id}" />
-						</p:selectOneMenu>
-						<p:message for="sistemaOneMenu" />
-						<p:outputLabel value="#{recurso['label.prioridade']}" for="prioridadeList" />
-						<p:selectOneMenu id="prioridadeList" value="#{TarefaBean.tarefa.prioridade}" required="true" requiredMessage="#{erro['message.campoObrigatorio']}">
-							<f:selectItem noSelectionOption="true" itemLabel="#{recurso['text.selecione']}" />
-							<f:selectItems value="#{TarefaBean.prioridades}" />
-						</p:selectOneMenu>
-						<p:message for="prioridadeList" />
-						<p:outputLabel value="#{recurso['label.dataInicio']}" for="inicioCalendar" />
-						<p:calendar id="inicioCalendar" pattern="dd/MM/yyyy" value="#{TarefaBean.tarefa.inicio}" showOn="button" required="true" requiredMessage="#{erro['message.campoObrigatorio']}" locale="pt" />
-						<p:message for="inicioCalendar" />
-						<p:outputLabel value="#{recurso['label.dataFinalPlanejado']}" for="finalPlanejadoCalendar" />
-						<p:calendar id="finalPlanejadoCalendar" pattern="dd/MM/yyyy" value="#{TarefaBean.tarefa.finalPlanejado}" showOn="button" required="true" requiredMessage="#{erro['message.campoObrigatorio']}" locale="pt" />
-						<p:message for="finalPlanejadoCalendar" />
-						<p:outputLabel value="#{recurso['label.status']}" for="statusList" />
-						<p:selectOneMenu id="statusList" value="#{TarefaBean.tarefa.status}" required="true" requiredMessage="#{erro['message.campoObrigatorio']}">
-							<f:selectItem noSelectionOption="true" itemLabel="#{recurso['text.selecione']}" />
-							<f:selectItems value="#{TarefaBean.status}" />
-						</p:selectOneMenu>
-						<p:message for="statusList" />
-						<p:outputLabel value="#{recurso['label.colaborador']}" for="colaboradorList" />
-						<p:selectOneMenu id="colaboradorList" value="#{TarefaBean.tarefa.colaborador.id}" required="true" requiredMessage="#{erro['message.campoObrigatorio']}">
-							<f:selectItem noSelectionOption="true" itemLabel="#{recurso['text.selecione']}" />
-							<f:selectItems value="#{ColaboradorBean.colaboradores}" var="colaborador" itemLabel="#{colaborador.nome}" itemValue="#{colaborador.id}" />
-						</p:selectOneMenu>
-						<p:message for="colaboradorList" />
-						<p:outputLabel value="#{recurso['label.replanejado']}" for="replanejadoBooleanCheckBox" />
-						<p:selectBooleanCheckbox id="replanejadoBooleanCheckBox" value="#{TarefaBean.tarefa.replanajado}" />
-					</p:panelGrid>
-					<p:panelGrid columns="1" id="observacaoPanelGrid">
-						<f:facet name="header">#{recurso['header.observacao']}</f:facet>
-						<p:inputTextarea cols="60" rows="10" id="observacaoInputTextArea" value="#{TarefaBean.tarefa.observacao}" />
-					</p:panelGrid>
-					<f:facet name="footer">
-						<p:commandButton id="salvarCommandButton" icon="ui-icon-disk" ajax="true" update="@form" actionListener="#{TarefaBean.salvarTarefa()}" />
-						<p:tooltip for="salvarCommandButton" value="#{recurso['tooltip.gravar']}" showEffect="fade"	hideEffect="fade" />
-						<p:commandButton id="cancelarCommandButton" icon="ui-icon-close" action="/pages/public/visualizacao-tarefas.xhtml?faces-redirect=true" ajax="false" immediate="true" />
-						<p:tooltip for="cancelarCommandButton" value="#{recurso['tooltip.cancelar']}" showEffect="fade" hideEffect="fade" />
-					</f:facet>
-				</p:panelGrid>
-			</h:form>
-		</div>
-	</ui:define>
+    <ui:define name="content">
+        <div id="cadastroDiv">
+            <h:form id="cadastroForm">
+                <p:growl autoUpdate="true" globalOnly="true" showDetail="true" showSummary="false"
+                         id="globalMessageGrowl" life="3000"/>
+                <h:inputHidden value="#{TarefaBean.tarefa.id}"/>
+                <p:panelGrid columns="1" id="geralDataGrid">
+                    <f:facet name="header">#{recurso['header.cadastroTarefa']}</f:facet>
+                    <p:panelGrid columns="3" id="cadastroPanelGrid">
+                        <f:facet name="header">#{recurso['header.dadosGerais']}</f:facet>
+                        <p:outputLabel value="#{recurso['label.numDemanda']}" for="numDemandaText"/>
+                        <p:inputText id="numDemandaText" value="#{TarefaBean.tarefa.numeroDemanda}" required="true"
+                                     requiredMessage="#{erro['message.campoObrigatorio']}"/>
+                        <p:message for="numDemandaText"/>
+                        <p:outputLabel value="#{recurso['label.titulo']}" for="tituloText"/>
+                        <p:inputText id="tituloText" value="#{TarefaBean.tarefa.titulo}" required="true"
+                                     requiredMessage="#{erro['message.campoObrigatorio']}"/>
+                        <p:message for="tituloText"/>
+                        <p:outputLabel value="#{recurso['label.tipoDemanda']}" for="tipoDemandaList"/>
+                        <p:selectOneMenu id="tipoDemandaList" value="#{TarefaBean.tarefa.tipoDemanda}" required="true"
+                                         requiredMessage="#{erro['message.campoObrigatorio']}">
+                            <f:selectItem itemLabel="#{recurso['text.selecione']}" noSelectionOption="true"/>
+                            <f:selectItems value="#{TarefaBean.tiposDemanda}" var="tipoDemanda"
+                                           itemLabel="#{tipoDemanda.nomeExibicao}"/>
+                        </p:selectOneMenu>
+                        <p:message for="tipoDemandaList"/>
+                        <p:outputLabel value="#{recurso['label.areaSolicitante']}" for="areaSolicitanteOneMenu"/>
+                        <p:selectOneMenu id="areaSolicitanteOneMenu" value="#{TarefaBean.tarefa.cliente.id}"
+                                         required="false" requiredMessage="#{erro['message.campoObrigatorio']}">
+                            <f:selectItem itemLabel="#{recurso['text.selecione']}" noSelectionOption="true"/>
+                            <f:selectItems value="#{TarefaBean.clientes}" var="cliente" itemLabel="#{cliente.nome}"
+                                           itemValue="#{cliente.id}"/>
+                        </p:selectOneMenu>
+                        <p:message for="areaSolicitanteOneMenu"/>
+                        <p:outputLabel value="#{recurso['label.equipe']}" for="equipeOneMenu"/>
+                        <p:selectOneMenu id="equipeOneMenu" value="#{TarefaBean.tarefa.equipe.id}" required="true"
+                                         requiredMessage="#{erro['message.campoObrigatorio']}">
+                            <f:selectItem itemLabel="#{recurso['text.selecione']}" noSelectionOption="true"/>
+                            <f:selectItems value="#{TarefaBean.equipes}" var="equipe" itemLabel="#{equipe.nome}"
+                                           itemValue="#{equipe.id}"/>
+                        </p:selectOneMenu>
+                        <p:message for="equipeOneMenu"/>
+                        <p:outputLabel value="#{recurso['label.sistema']}" for="sistemaOneMenu"/>
+                        <p:selectOneMenu id="sistemaOneMenu" value="#{TarefaBean.tarefa.sistema.id}" required="false"
+                                         requiredMessage="#{erro['message.campoObrigatorio']}">
+                            <f:selectItem itemLabel="#{recurso['text.selecione']}" noSelectionOption="true"/>
+                            <f:selectItems value="#{TarefaBean.sistemas}" var="sistema" itemLabel="#{sistema.nome}"
+                                           itemValue="#{sistema.id}"/>
+                        </p:selectOneMenu>
+                        <p:message for="sistemaOneMenu"/>
+                        <p:outputLabel value="#{recurso['label.prioridade']}" for="prioridadeList"/>
+                        <p:selectOneMenu id="prioridadeList" value="#{TarefaBean.tarefa.prioridade}" required="false"
+                                         requiredMessage="#{erro['message.campoObrigatorio']}">
+                            <f:selectItem noSelectionOption="true" itemLabel="#{recurso['text.selecione']}"/>
+                            <f:selectItems value="#{TarefaBean.prioridades}" var="prioridade"
+                                           itemLabel="#{prioridade.nomeExibicao}"/>
+                        </p:selectOneMenu>
+                        <p:message for="prioridadeList"/>
+                        <p:outputLabel value="#{recurso['label.dataInicio']}" for="inicioCalendar"/>
+                        <p:calendar id="inicioCalendar" pattern="dd/MM/yyyy" value="#{TarefaBean.tarefa.inicio}"
+                                    showOn="button" required="false"
+                                    requiredMessage="#{erro['message.campoObrigatorio']}" locale="pt"/>
+                        <p:message for="inicioCalendar"/>
+                        <p:outputLabel value="#{recurso['label.dataFinalPlanejado']}" for="finalPlanejadoCalendar"/>
+                        <p:calendar id="finalPlanejadoCalendar" pattern="dd/MM/yyyy"
+                                    value="#{TarefaBean.tarefa.finalPlanejado}" showOn="button" required="false"
+                                    requiredMessage="#{erro['message.campoObrigatorio']}" locale="pt"/>
+                        <p:message for="finalPlanejadoCalendar"/>
+                        <p:outputLabel value="#{recurso['label.status']}" for="statusList"/>
+                        <p:selectOneMenu id="statusList" value="#{TarefaBean.tarefa.status}" required="false"
+                                         requiredMessage="#{erro['message.campoObrigatorio']}">
+                            <f:selectItem noSelectionOption="true" itemLabel="#{recurso['text.selecione']}"/>
+                            <f:selectItems value="#{TarefaBean.status}" var="status"
+                                           itemLabel="#{status.nomeExibicao}"/>
+                        </p:selectOneMenu>
+                        <p:message for="statusList"/>
+                        <p:outputLabel value="#{recurso['label.totalHoras']}" for="totalHorasText"/>
+                        <p:inputText id="totalHorasText" value="#{TarefaBean.tarefa.totalHoras}"
+                                     required="false" requiredMessage="#{erro['message.campoObrigatorio']}"/>
+                        <p:message for="totalHorasText"/>
+                        <p:outputLabel value="#{recurso['label.colaborador']}" for="colaboradorList"/>
+                        <p:selectOneMenu id="colaboradorList" value="#{TarefaBean.tarefa.colaborador.id}"
+                                         required="true" requiredMessage="#{erro['message.campoObrigatorio']}">
+                            <f:selectItem noSelectionOption="true" itemLabel="#{recurso['text.selecione']}"/>
+                            <f:selectItems value="#{ColaboradorBean.colaboradores}" var="colaborador"
+                                           itemLabel="#{colaborador.nome}" itemValue="#{colaborador.id}"/>
+                        </p:selectOneMenu>
+                        <p:message for="colaboradorList"/>
+                        <p:outputLabel value="#{recurso['label.replanejado']}" for="replanejadoBooleanCheckBox"/>
+                        <p:selectBooleanCheckbox id="replanejadoBooleanCheckBox"
+                                                 value="#{TarefaBean.tarefa.replanajado}" required="false"
+                                                 requiredMessage="#{erro['message.campoObrigatorio']}"/>
+                        <p:message for="colaboradorList"/>
+                    </p:panelGrid>
+                    <p:panelGrid columns="1" id="observacaoPanelGrid">
+                        <f:facet name="header">#{recurso['header.observacao']}</f:facet>
+                        <p:inputTextarea cols="60" rows="10" id="observacaoInputTextArea"
+                                         value="#{TarefaBean.tarefa.observacao}"/>
+                    </p:panelGrid>
+                    <f:facet name="footer">
+                        <p:commandButton id="salvarCommandButton" icon="ui-icon-disk" ajax="true" update="@form"
+                                         actionListener="#{TarefaBean.salvarTarefa()}"/>
+                        <p:tooltip for="salvarCommandButton" value="#{recurso['tooltip.gravar']}" showEffect="fade"
+                                   hideEffect="fade"/>
+                        <p:commandButton id="cancelarCommandButton" icon="ui-icon-close"
+                                         action="/pages/public/visualizacao-tarefas.xhtml?faces-redirect=true"
+                                         ajax="false" immediate="true"/>
+                        <p:tooltip for="cancelarCommandButton" value="#{recurso['tooltip.cancelar']}" showEffect="fade"
+                                   hideEffect="fade"/>
+                    </f:facet>
+                </p:panelGrid>
+            </h:form>
+        </div>
+    </ui:define>
 </ui:composition>
 </html>

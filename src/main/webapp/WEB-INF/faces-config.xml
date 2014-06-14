@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
-	version="2.1">
+<faces-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns="http://java.sun.com/xml/ns/javaee"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
+              version="2.1">
 
-	<application>
+    <application>
 
-		<locale-config>
-			<default-locale>pt_BR</default-locale>
-			<supported-locale>pt_BR</supported-locale>
-			<supported-locale>en_US</supported-locale>
-		</locale-config>
-		
-		<resource-bundle>
-			<base-name>i18n.recursos</base-name>
-			<var>recurso</var>
-		</resource-bundle>
-		<resource-bundle>
-			<base-name>i18n.erros</base-name>
-			<var>erro</var>
-		</resource-bundle>
+        <locale-config>
+            <default-locale>pt_BR</default-locale>
+            <supported-locale>pt_BR</supported-locale>
+            <supported-locale>en_US</supported-locale>
+        </locale-config>
 
-	</application>
+        <resource-bundle>
+            <base-name>i18n.recursos</base-name>
+            <var>recurso</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>i18n.erros</base-name>
+            <var>erro</var>
+        </resource-bundle>
 
+    </application>
 
 </faces-config>
