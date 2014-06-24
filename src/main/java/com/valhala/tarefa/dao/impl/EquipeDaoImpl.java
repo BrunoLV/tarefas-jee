@@ -8,6 +8,13 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+/**
+ * Classe que implementa EquipeDao.
+ *
+ * @author Bruno Luiz Viana
+ * @version 1.0
+ * @since 23/06/2014
+ */
 public class EquipeDaoImpl extends BaseDao<Equipe> implements EquipeDao {
 
     public static final Class<Equipe> CLASSE_PERSISTENTE = Equipe.class;

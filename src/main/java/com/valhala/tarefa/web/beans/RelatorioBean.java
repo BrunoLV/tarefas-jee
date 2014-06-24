@@ -14,7 +14,11 @@ import java.io.*;
 import java.util.Properties;
 
 /**
- * Created by Bruno Luiz Viana on 07/06/2014.
+ * ManagedBean reponsavel pela interação de tela que envolve a emissão de relatórios.
+ *
+ * @author Bruno Luiz Viana
+ * @version 1.0
+ * @since 23/06/2014
  */
 @Named("RelatorioBean")
 @RequestScoped
@@ -29,11 +33,19 @@ public class RelatorioBean extends BaseJSFBean implements Serializable {
     private RelatorioService relatorioService;
 
     public RelatorioBean() {
-    }
+    } // fim do método construtor
 
     @PostConstruct
     public void init() {
         properties = PropertiesUtil.getProperties("tarefas-jee.properties");
+    } // fim do método init
+
+    /**
+     * Método utilizado para emissão do relatório de tarefas completo.
+     *
+     * @return
+     */
+    public StreamedContent gerarRelatorioTarefasCompleto() {
         try {
             String nome = this.relatorioService.gerarRelatorioTarefasCompleto();
             InputStream inputStream = null;
@@ -42,10 +54,11 @@ public class RelatorioBean extends BaseJSFBean implements Serializable {
         } catch (ServiceException | FileNotFoundException e) {
             inserirMensagemDeErro(e.getMessage());
         } // fim do bloco try/catch
-    } // fim do método init
+        return content;
+    } // fim do método gerarRelatorioTarefasCompleto
 
     public StreamedContent getContent() {
         return content;
     }
 
-}
+} // fim da classe RelatorioBean

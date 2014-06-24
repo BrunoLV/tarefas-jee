@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-web>
-    <security-domain>java:/jaas/tarefasJaas</security-domain>
+    <!--
+        Definindo qual dominio de segurança a
+        aplicação utilizará no ambiente
+    -->
+    <security-domain>java:/jaas/TarefasJaas</security-domain>
 </jboss-web>

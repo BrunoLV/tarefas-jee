@@ -13,7 +13,11 @@ import javax.inject.Inject;
 import java.util.*;
 
 /**
- * Created by Bruno Luiz Viana on 07/06/2014.
+ * Classe responsavel pela emissão dos relatórios dentro da aplicação.
+ *
+ * @author Bruno Luiz Viana
+ * @version 1.0
+ * @since 23/06/2014
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -21,11 +25,20 @@ public class RelatorioService {
 
     private static final String CHAVE_ABERTAS = "ABERTAS";
     private static final String CHAVE_FECHADAS = "FECHADAS";
+
     @Inject
     private TarefaDao tarefaDao;
     @Inject
     private MontadorRelatorio montadorRelatorio;
 
+    /**
+     * Método utilizado para gerar o relatório de tarefas completo que contém todas as tarefas concluídas e em andamento
+     * registradas no sistema.
+     * Retorna o nome do arquivo que foi gerado em caso de sucesso.
+     *
+     * @return
+     * @throws ServiceException
+     */
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public String gerarRelatorioTarefasCompleto() throws ServiceException {
 
@@ -36,19 +49,21 @@ public class RelatorioService {
 
         List<Tarefa> tarefasAbertas = null;
         List<Tarefa> tarefasConcluidas = null;
-        Map<String, List<Tarefa>> tarefas = new HashMap<>();
+        Map<String, List> tarefas = new HashMap<>();
 
         try {
             tarefasAbertas = this.tarefaDao.buscarTodasPorStatus(listaStatus);
         } catch (ConsultaSemRetornoException e) {
-        }
+            // nesse caso não tem problema
+        } // fim do bloco try/catch
 
         listaStatus.removeAll(Arrays.asList(Status.values()));
         listaStatus.add(Status.CONCLUIDO);
         try {
             tarefasConcluidas = this.tarefaDao.buscarTodasPorStatus(listaStatus);
         } catch (ConsultaSemRetornoException e) {
-        }
+            // nesse caso não tem problema
+        } // fim do bloco try/catch
 
         tarefas.put(CHAVE_ABERTAS, tarefasAbertas);
         tarefas.put(CHAVE_FECHADAS, tarefasConcluidas);
@@ -57,9 +72,9 @@ public class RelatorioService {
             caminhoArquivoGerado = montadorRelatorio.montarRelatorioTarefaCompleto(tarefas);
         } catch (MontagemRelatorioException e) {
             throw new ServiceException(e.getMessage(), e);
-        }
+        } // fim do bloco try/catch
 
         return caminhoArquivoGerado;
-    }
+    } // fim do método gerarRelatorioTarefasCompleto
 
-}
+} // fim da classe RelatorioService

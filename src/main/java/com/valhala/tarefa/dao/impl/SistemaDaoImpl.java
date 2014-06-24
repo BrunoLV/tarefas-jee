@@ -7,13 +7,20 @@ import com.valhala.tarefa.model.Sistema;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+/**
+ * Classe que implementa SistemaDao.
+ *
+ * @author Bruno Luiz Viana
+ * @version 1.0
+ * @since 23/06/2014
+ */
 public class SistemaDaoImpl extends BaseDao<Sistema> implements SistemaDao {
 
     public static final Class<Sistema> CLASSE_PERSISTENTE = Sistema.class;
 
     public SistemaDaoImpl() {
         this.classePersistente = SistemaDaoImpl.CLASSE_PERSISTENTE;
-    }
+    } // fim do método construtor
 
     @Override
     public List<Sistema> listarTudo() throws ConsultaSemRetornoException {
@@ -23,6 +30,6 @@ public class SistemaDaoImpl extends BaseDao<Sistema> implements SistemaDao {
             throw new ConsultaSemRetornoException("Consulta não trouxe resultados.");
         } // fim do bloco if
         return sistemas;
-    }
+    } // fim do método listarTudo
 
-}
+} // fim da classe SistemaDaoImpl

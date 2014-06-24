@@ -13,10 +13,24 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Classe utilizada para converter Streams em objetos de tipos definidos.
+ *
+ * @author Bruno Luiz Viana
+ * @version 1.0
+ * @since 23/06/2014
+ */
 public class StreamConverter {
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 
+    /**
+     * Método utiliza para converter uma linha de um stream em um objeto do tipo Sistema e coloca-lo em uma lista.
+     *
+     * @param stream
+     * @return
+     * @throws StreamConverterException
+     */
     public static List<Sistema> converterStreamParaListaDeSistema(InputStream stream) throws StreamConverterException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
         List<Sistema> sistemas = new ArrayList<Sistema>();
@@ -33,6 +47,13 @@ public class StreamConverter {
         return sistemas;
     } // fim do método converterStreamParaListaDeSistema
 
+    /**
+     * Método utiliza para converter uma linha de um stream em um objeto do tipo Cliente e coloca-lo em uma lista.
+     *
+     * @param stream
+     * @return
+     * @throws StreamConverterException
+     */
     public static List<Cliente> converterStreamParaListaDeClientes(InputStream stream) throws StreamConverterException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
         List<Cliente> clientes = new ArrayList<Cliente>();
@@ -49,6 +70,13 @@ public class StreamConverter {
         return clientes;
     } // fim do método converterStreamParaListaDeClientes
 
+    /**
+     * Método utiliza para converter uma linha de um stream em um objeto do tipo Equipe e coloca-lo em uma lista.
+     *
+     * @param stream
+     * @return
+     * @throws StreamConverterException
+     */
     public static List<Equipe> converterStreamParaListaDeEquipes(InputStream stream) throws StreamConverterException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
         List<Equipe> equipes = new ArrayList<Equipe>();
@@ -65,6 +93,13 @@ public class StreamConverter {
         return equipes;
     } // fim do método converterStreamParaListaDeEquipes
 
+    /**
+     * Método utiliza para converter uma linha de um stream em um objeto do tipo Colaborador e coloca-lo em uma lista.
+     *
+     * @param stream
+     * @return
+     * @throws StreamConverterException
+     */
     public static List<Colaborador> converterStreamParaListaDeColaboradores(InputStream stream) throws StreamConverterException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
         List<Colaborador> colaboradores = new ArrayList<Colaborador>();
@@ -87,6 +122,13 @@ public class StreamConverter {
         return colaboradores;
     } // fim do método converterStreamParaListaDeColaboradores
 
+    /**
+     * Método utiliza para converter uma linha de um stream em um objeto do tipo Tarefa e coloca-lo em uma lista.
+     *
+     * @param stream
+     * @return
+     * @throws StreamConverterException
+     */
     public static List<Tarefa> converterStreamParaListaDeTarefas(InputStream stream) throws StreamConverterException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
         List<Tarefa> tarefas = new ArrayList<Tarefa>();

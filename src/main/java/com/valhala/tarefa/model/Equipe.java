@@ -3,6 +3,13 @@ package com.valhala.tarefa.model;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Classe que mapeia a tabela de equipes dentro da aplicação.
+ *
+ * @author Bruno Luiz Viana
+ * @version 1.0
+ * @since 23/06/2014
+ */
 @Entity
 @Table(name = "tb_equipe")
 @NamedQueries({
@@ -19,12 +26,12 @@ public class Equipe implements Serializable {
 
     public Equipe() {
         super();
-    }
+    } // fim do método construtor
 
     public Equipe(String nome) {
         super();
         this.nome = nome;
-    }
+    } // fim do método construtor
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,4 +53,4 @@ public class Equipe implements Serializable {
         this.nome = nome;
     }
 
-}
+} // fim da classe Equipe

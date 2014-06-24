@@ -21,9 +21,10 @@
                 </p:submenu>
                 <p:menuitem value="#{recurso['menu.tarefas']}" url="/pages/public/visualizacao-tarefas.xhtml"/>
                 <p:menuitem value="#{recurso['menu.calendario']}" url="/pages/public/visualizacao-calendario.xhtml"/>
-                <p:menuitem value="#{recurso['menu.relatorio.tarefas']}" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);"
+                <p:menuitem value="#{recurso['menu.relatorio.tarefas']}" ajax="false"
+                            onclick="PrimeFaces.monitorDownload(start, stop);"
                             icon="ui-icon-arrowthick-1-s">
-                    <p:fileDownload value="#{RelatorioBean.content}"/>
+                    <p:fileDownload value="#{RelatorioBean.gerarRelatorioTarefasCompleto()}"/>
                 </p:menuitem>
 
                 <p:menuitem value="#{recurso['menu.mudar.senha']}" url="/pages/public/mudanca-senha.xhtml"

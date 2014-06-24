@@ -69,7 +69,7 @@ public class TarefaDaoImpl extends BaseDao<Tarefa> implements TarefaDao {
     } // fim do método buscarTodasTarefasPorStatus
 
     @Override
-    public List<Tarefa> buscarTodasComDatasDefinidades() throws ConsultaSemRetornoException {
+    public List<Tarefa> buscarTodasComDatasDefinidas() throws ConsultaSemRetornoException {
         TypedQuery<Tarefa> query = this.entityManager.createNamedQuery(Tarefa.NAMEDQUERY_BUSCAR_TODOS_DATAS_DEFINIDAS, TarefaDaoImpl.CLASSE_PERSISTENTE);
         List<Tarefa> tarefas = query.getResultList();
         if (tarefas.isEmpty()) {

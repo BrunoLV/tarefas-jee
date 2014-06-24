@@ -245,6 +245,12 @@ public class TarefaBean extends BaseJSFBean implements Serializable {
         inserirObjetoNaSession(TarefaBean.CHAVE_ID_CONSULTA_SCHEDULE, this.idConsultaSchedule);
     }
 
+    /**
+     * Método utilizado para montar o Schedule que será mostrado na tela.
+     *
+     * @param id
+     * @return
+     */
     public ScheduleModel montarScheduleTarefas(Long id) {
         ScheduleModel model = new DefaultScheduleModel();
         List<Tarefa> tarefas;
@@ -256,20 +262,20 @@ public class TarefaBean extends BaseJSFBean implements Serializable {
                 tarefas = this.tarefaService.buscarTarefasPorStatusComDatasDefinidas(status);
             } else {
                 tarefas = this.tarefaService.buscarTarefasPorColaboradorEStatusComDatasDefinidas(this.colaboradorService.buscarPorId(id), status);
-            }
+            } // fim do bloco if/else
             for (Tarefa tarefa : tarefas) {
                 model.addEvent(new DefaultScheduleEvent(String.format("%s - Demanda: %s - %s", tarefa.getColaborador().getNome(), tarefa.getNumeroDemanda(), tarefa.getTitulo()),
                         tarefa.getInicio(),
                         tarefa.getFinalPlanejado()));
-            }
+            } // fim do bloco for
         } catch (ConsultaSemRetornoException e) {
             // inserirMensagemDeErro(e.getMessage());
-        }
+        } // fim do bloco try/catch
         return model;
-    }
+    } // fim do método montarScheduleTarefas
 
     public void setarObservacao(String observacao) {
         this.tarefa.setObservacao(observacao);
-    }
+    } // fim do método setarObservação
 
 } // fim da classe TarefaBean

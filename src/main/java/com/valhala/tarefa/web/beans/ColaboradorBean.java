@@ -35,10 +35,10 @@ public class ColaboradorBean implements Serializable {
     }
 
     @PostConstruct
-    public void inicializarBean() {
+    public void init() {
         this.colaborador = new Colaborador();
         this.inicializarColaboradores();
-    }
+    } // fim do método init
 
     public Colaborador getColaborador() {
         return colaborador;
@@ -61,7 +61,7 @@ public class ColaboradorBean implements Serializable {
             this.colaboradores = this.colaboradorService.buscarTodosColaboradores();
         } catch (ConsultaSemRetornoException e) {
             this.colaboradores = new ArrayList<>();
-        }
-    }
+        } // fim do bloco try/catch
+    } // fim do método inicializarColaboradores
 
 } // fim da classe ColaboradorBean

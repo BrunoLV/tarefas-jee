@@ -20,8 +20,10 @@ import java.io.Serializable;
  */
 abstract class BaseDao<T> implements Dao<T> {
 
+    // Propriedade que representa a entidade persistente.
     protected Class<T> classePersistente;
 
+    // Injeção do EntityManager que será utilizado para as operações com banco de dados.
     @PersistenceContext(name = "tarefas-PU")
     protected EntityManager entityManager;
 

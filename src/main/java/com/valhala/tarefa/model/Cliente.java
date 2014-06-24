@@ -3,6 +3,13 @@ package com.valhala.tarefa.model;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Classe que mapeia a tabela de Clientes no banco de dados.
+ *
+ * @author Bruno Luiz Viana
+ * @version 1.0
+ * @since 23/06/2014
+ */
 @Entity
 @Table(name = "tb_cliente")
 @NamedQueries({
@@ -17,12 +24,12 @@ public class Cliente implements Serializable {
 
     public Cliente() {
         super();
-    }
+    } // fim do método construtor
 
     public Cliente(String nome) {
         super();
         this.nome = nome;
-    }
+    } // fim do método construtor
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,4 +51,4 @@ public class Cliente implements Serializable {
         this.nome = nome;
     }
 
-}
+} // fim da classe Cliente

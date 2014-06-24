@@ -3,9 +3,17 @@
 <jboss-deployment-structure>
 
     <deployment>
+        <!--
+            Declarando a dependencia do arquivo de propriedades
+            que foi mapeado como um módulo na aplicação.
+         -->
         <dependencies>
             <module name="com.valhala"/>
         </dependencies>
+        <!--
+            Se faz necessário pois estamos utilizando a biblioteca
+            logback que utiliza libs diferentes da do ambiente JBoss.
+        -->
         <exclusions>
             <module name="org.slf4j"/>
             <module name="org.slf4j.impl"/>

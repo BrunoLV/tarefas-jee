@@ -3,6 +3,13 @@ package com.valhala.tarefa.model;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Classe que mapeia a tabela de sistemas dentro da aplicação.
+ *
+ * @author Bruno Luiz Viana
+ * @version 1.0
+ * @since 23/06/2014
+ */
 @Entity
 @Table(name = "tb_sistema")
 @NamedQueries({
@@ -17,12 +24,12 @@ public class Sistema implements Serializable {
 
     public Sistema() {
         super();
-    }
+    } // fim do método construtor
 
     public Sistema(String nome) {
         super();
         this.nome = nome;
-    }
+    } // fim do método construtor
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,4 +51,4 @@ public class Sistema implements Serializable {
         this.nome = nome;
     }
 
-}
+} // fim da classe Sistema

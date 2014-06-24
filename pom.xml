@@ -9,7 +9,7 @@
     <properties>
         <java.version>1.7</java.version>
         <javaee.version>6.0</javaee.version>
-        <hibernate.version>4.1.0.Final</hibernate.version>
+        <hibernate.version>4.0.1.Final</hibernate.version>
         <encode>UTF-8</encode>
     </properties>
 
@@ -152,21 +152,6 @@
                     <encoding>${encode}</encoding>
                     <target>${java.version}</target>
                     <source>${java.version}</source>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
-                    <docletArtifact>
-                        <groupId>org.umlgraph</groupId>
-                        <artifactId>doclet</artifactId>
-                        <version>5.1</version>
-                    </docletArtifact>
-                    <additionalparam>-views</additionalparam>
-                    <destDir>target/uml</destDir>
-                    <show>private</show>
                 </configuration>
             </plugin>
         </plugins>

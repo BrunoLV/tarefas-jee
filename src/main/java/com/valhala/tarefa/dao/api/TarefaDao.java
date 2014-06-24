@@ -45,10 +45,31 @@ public interface TarefaDao extends Dao<Tarefa> {
      */
     List<Tarefa> buscarTodasPorStatus(List<Status> status) throws ConsultaSemRetornoException;
 
-    List<Tarefa> buscarTodasComDatasDefinidades() throws ConsultaSemRetornoException;
+    /**
+     * Método utilizado para buscar todas tarefas com datas já definidas.
+     *
+     * @return
+     * @throws ConsultaSemRetornoException
+     */
+    List<Tarefa> buscarTodasComDatasDefinidas() throws ConsultaSemRetornoException;
 
+    /**
+     * Método utilizado para buscar todas as tarefas com datas já definidas de um determinado colaborador.
+     *
+     * @param colaborador
+     * @param status
+     * @return
+     * @throws ConsultaSemRetornoException
+     */
     List<Tarefa> buscarTodasPorColaboradorEStatusComDatasDefinidas(Colaborador colaborador, List<Status> status) throws ConsultaSemRetornoException;
 
+    /**
+     * Método utilizado para buscar todas as tarefas com datas já definidas dentro de determinados Status.
+     *
+     * @param status
+     * @return
+     * @throws ConsultaSemRetornoException
+     */
     List<Tarefa> buscarTodasPorStatusComDatasDefinidas(List<Status> status) throws ConsultaSemRetornoException;
 
 } // fim da interface TarefaDao

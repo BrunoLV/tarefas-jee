@@ -150,7 +150,7 @@ public class TarefaService {
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<Tarefa> buscarTodasTarefasComDataDefinidas() throws ConsultaSemRetornoException {
-        return this.tarefaDao.buscarTodasComDatasDefinidades();
+        return this.tarefaDao.buscarTodasComDatasDefinidas();
     } // fim do método buscarTodasTarefasComDataDefinidas
 
     @Auditavel

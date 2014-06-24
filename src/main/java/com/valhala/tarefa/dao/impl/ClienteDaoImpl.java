@@ -7,13 +7,20 @@ import com.valhala.tarefa.model.Cliente;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+/**
+ * Classe que implementa ClienteDao
+ *
+ * @author Bruno Luiz Viana
+ * @version 1.0
+ * @since 23/06/2014
+ */
 public class ClienteDaoImpl extends BaseDao<Cliente> implements ClienteDao {
 
     public static final Class<Cliente> CLASSE_PERSISTENTE = Cliente.class;
 
     public ClienteDaoImpl() {
         this.classePersistente = ClienteDaoImpl.CLASSE_PERSISTENTE;
-    }
+    } // fim do método construtor
 
     @Override
     public List<Cliente> listarTudo() throws ConsultaSemRetornoException {
@@ -23,6 +30,6 @@ public class ClienteDaoImpl extends BaseDao<Cliente> implements ClienteDao {
             throw new ConsultaSemRetornoException("Consulta não trouxe resultados.");
         } // fim do bloco if
         return clientes;
-    }
+    } // fim do método listaTudo
 
-}
+}// fim da classe ClienteDaoImpl

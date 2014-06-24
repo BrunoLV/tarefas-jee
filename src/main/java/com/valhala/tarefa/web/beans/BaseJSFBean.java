@@ -127,7 +127,6 @@ public class BaseJSFBean {
      * Método uitilizado para remover um objeto no SessionScope
      *
      * @param chave
-     * @param valor
      */
     protected void removerObjetoDaSession(String chave) {
         getSession().removeAttribute(chave);

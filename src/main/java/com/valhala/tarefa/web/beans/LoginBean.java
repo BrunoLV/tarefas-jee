@@ -32,14 +32,20 @@ public class LoginBean extends BaseJSFBean implements Serializable {
     private String matricula = "";
     private String senha = "";
     private String confirmeSenha = "";
+
     @EJB
     private ColaboradorService colaboradorService;
 
     public LoginBean() {
         this.matricula = "";
         this.senha = "";
-    }
+    } // fim do método construtor
 
+    /**
+     * Método utilizado para execução da ação de login dentro do sistema.
+     *
+     * @return
+     */
     public String login() {
         String outcome;
         try {
@@ -50,10 +56,13 @@ public class LoginBean extends BaseJSFBean implements Serializable {
         } catch (ServletException | ConsultaSemRetornoException e) {
             System.out.println(e.getMessage());
             outcome = LoginBean.OUTCOME_FALHA;
-        }
+        } // fim do bloco try/catch
         return outcome;
-    }
+    } // fim do método login
 
+    /**
+     * Método utilizado para ação de redefinição de senha.
+     */
     public void redefinirSenha() {
         if (this.senha.equals(this.confirmeSenha)) {
             try {
@@ -72,22 +81,27 @@ public class LoginBean extends BaseJSFBean implements Serializable {
 
     public boolean isLiderOrManter() {
         return isLider() || isManter() ? true : false;
-    }
+    }// fim do método isLiderOrManter
 
     public boolean isLider() {
         return getRequest().isUserInRole(Atribuicao.LIDER.toString()) ? true : false;
-    }
+    } // fim do método isLider
 
     public boolean isManter() {
         return getRequest().isUserInRole(Atribuicao.MANTER.toString()) ? true : false;
-    }
+    } // fim do método isManter
 
+    /**
+     * Método utilizado para execução da ação de logout do sistema.
+     *
+     * @return
+     */
     public String logout() {
         if (getSession() != null) {
             getSession().invalidate();
-        }
+        } // fim do bloco if
         return LoginBean.OUTCOME_LOGOUT;
-    }
+    } // fim do método logout
 
     public String getMatricula() {
         return matricula;

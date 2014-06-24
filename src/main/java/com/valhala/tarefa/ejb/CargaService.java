@@ -249,7 +249,7 @@ public class CargaService {
         } catch (StreamConverterException e) {
             //enviarEmailErroArquivo(TipoCarga.TAREFAS, e.getMessage());
         } // fim do bloco try/catch
-    }
+    } // fim do método executarCargaTarefas
 
     /*
     Método utilizado para enviar email de erro de arquivo.
@@ -308,6 +308,9 @@ public class CargaService {
         } // fim do bloco try/catch
     } // fim do método enviarEmailProcessamentoArquivo
 
+    /*
+    Método utilizado para montar o email do processamento de Tarefas.
+     */
     @SuppressWarnings("unchecked")
     private void montarCorpoEmailTarefas(Map<String, List<?>> mapa, StringBuffer buffer) {
         List<Tarefa> tarefas;
@@ -327,11 +330,14 @@ public class CargaService {
         } // fim do bloco if/else
     } // fim do método montarCorpoEmailTarefas
 
+    /*
+    Método utilizado para incluir a tarefa na String que será inserida no texto.
+     */
     private void incluirTarefaNaString(StringBuffer buffer, List<Tarefa> tarefas) {
         for (Tarefa tarefa : tarefas) {
             buffer.append(tarefa.getNumeroDemanda()).append("<br/>");
         } // fim do for
-    }
+    } // fim do método incluirTarefaNaString
 
     @SuppressWarnings("unchecked")
     private void montarCorpoEmailSistemas(Map<String, List<?>> mapa, StringBuffer buffer) {
@@ -357,8 +363,11 @@ public class CargaService {
         for (Sistema sistema : sistemas) {
             buffer.append(sistema.getNome()).append("<br/>");
         } //fim do bloco for
-    }
+    } // fim da classe incluirSistemaNaString
 
+    /*
+    Método utilizado para montar o email do processamento de clientes.
+     */
     @SuppressWarnings("unchecked")
     private void montarCorpoEmailClientes(Map<String, List<?>> mapa, StringBuffer buffer) {
         List<Cliente> clientes;
@@ -378,13 +387,18 @@ public class CargaService {
         } // fim do bloco try/catch
     } // fim do método montarCorpoEmailClientes
 
-    private void incluirClienteNaString(StringBuffer buffer,
-                                        List<Cliente> clientes) {
+    /*
+    Método utilizado para incluir cliente na String que será inserida no texto.
+     */
+    private void incluirClienteNaString(StringBuffer buffer, List<Cliente> clientes) {
         for (Cliente Cliente : clientes) {
             buffer.append(Cliente.getNome()).append("<br/>");
         } //fim do bloco for
-    }
+    } // fim do método incluirClienteNaString
 
+    /*
+    Método utilizado para monstar o corpo do email do processamento de equipes.
+     */
     @SuppressWarnings("unchecked")
     private void montarCorpoEmailEquipes(Map<String, List<?>> mapa, StringBuffer buffer) {
         List<Equipe> equipes;
@@ -404,14 +418,17 @@ public class CargaService {
         } // fim do bloco try/catch
     } // fim do método montarCorpoEmailEquipes
 
+    /*
+    Método utilizado para incluir uma equipe na String que será inserida no texto.
+     */
     private void incluirEquipeNaString(StringBuffer buffer, List<Equipe> equipes) {
         for (Equipe equipe : equipes) {
             buffer.append(equipe.getNome()).append("<br/>");
         } //fim do bloco for
-    }
+    } // fim do método incluirEquipeNaString
 
     /*
-    Método utilizado para montat o email do processamento de colaboradores.
+    Método utilizado para montar o email do processamento de colaboradores.
      */
     @SuppressWarnings("unchecked")
     private void montarCorpoEmailColaboradores(Map<String, List<?>> mapa, StringBuffer buffer) {

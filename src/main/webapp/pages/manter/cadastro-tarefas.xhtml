@@ -35,7 +35,7 @@
                         <p:message for="tipoDemandaList"/>
                         <p:outputLabel value="#{recurso['label.areaSolicitante']}" for="areaSolicitanteOneMenu"/>
                         <p:selectOneMenu id="areaSolicitanteOneMenu" value="#{TarefaBean.tarefa.cliente.id}"
-                                         required="false" requiredMessage="#{erro['message.campoObrigatorio']}">
+                                         required="true" requiredMessage="#{erro['message.campoObrigatorio']}">
                             <f:selectItem itemLabel="#{recurso['text.selecione']}" noSelectionOption="true"/>
                             <f:selectItems value="#{TarefaBean.clientes}" var="cliente" itemLabel="#{cliente.nome}"
                                            itemValue="#{cliente.id}"/>
@@ -50,7 +50,7 @@
                         </p:selectOneMenu>
                         <p:message for="equipeOneMenu"/>
                         <p:outputLabel value="#{recurso['label.sistema']}" for="sistemaOneMenu"/>
-                        <p:selectOneMenu id="sistemaOneMenu" value="#{TarefaBean.tarefa.sistema.id}" required="false"
+                        <p:selectOneMenu id="sistemaOneMenu" value="#{TarefaBean.tarefa.sistema.id}" required="true"
                                          requiredMessage="#{erro['message.campoObrigatorio']}">
                             <f:selectItem itemLabel="#{recurso['text.selecione']}" noSelectionOption="true"/>
                             <f:selectItems value="#{TarefaBean.sistemas}" var="sistema" itemLabel="#{sistema.nome}"
@@ -58,7 +58,7 @@
                         </p:selectOneMenu>
                         <p:message for="sistemaOneMenu"/>
                         <p:outputLabel value="#{recurso['label.prioridade']}" for="prioridadeList"/>
-                        <p:selectOneMenu id="prioridadeList" value="#{TarefaBean.tarefa.prioridade}" required="false"
+                        <p:selectOneMenu id="prioridadeList" value="#{TarefaBean.tarefa.prioridade}" required="true"
                                          requiredMessage="#{erro['message.campoObrigatorio']}">
                             <f:selectItem noSelectionOption="true" itemLabel="#{recurso['text.selecione']}"/>
                             <f:selectItems value="#{TarefaBean.prioridades}" var="prioridade"
@@ -97,7 +97,7 @@
                         <p:message for="colaboradorList"/>
                         <p:outputLabel value="#{recurso['label.replanejado']}" for="replanejadoBooleanCheckBox"/>
                         <p:selectBooleanCheckbox id="replanejadoBooleanCheckBox"
-                                                 value="#{TarefaBean.tarefa.replanajado}" required="false"
+                                                 value="#{TarefaBean.tarefa.replanajado}" required="true"
                                                  requiredMessage="#{erro['message.campoObrigatorio']}"/>
                         <p:message for="colaboradorList"/>
                     </p:panelGrid>

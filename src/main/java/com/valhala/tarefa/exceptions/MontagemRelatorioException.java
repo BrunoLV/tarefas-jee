@@ -1,7 +1,11 @@
 package com.valhala.tarefa.exceptions;
 
 /**
- * Created by Bruno Luiz Viana on 07/06/2014.
+ * Exception customizada para os erros na montagem de relatórios.
+ *
+ * @author Bruno Luiz Viana
+ * @version 1.0
+ * @since 23/06/2014
  */
 public class MontagemRelatorioException extends Exception {
 
@@ -23,4 +27,4 @@ public class MontagemRelatorioException extends Exception {
         super(cause);
     }
 
-}
+} // fim da classe MontagemRelatorioException
