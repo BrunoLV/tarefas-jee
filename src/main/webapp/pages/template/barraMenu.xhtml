@@ -26,6 +26,7 @@
                             icon="ui-icon-arrowthick-1-s">
                     <p:fileDownload value="#{RelatorioBean.gerarRelatorioTarefasCompleto()}"/>
                 </p:menuitem>
+                <p:menuitem value="#{recurso['menu.graficos']}" url="/pages/public/visualizacao-graficos.xhtml"/>
 
                 <p:menuitem value="#{recurso['menu.mudar.senha']}" url="/pages/public/mudanca-senha.xhtml"
                             rendered="#{not empty sessionScope['USUARIO_LOGADO']}"/>

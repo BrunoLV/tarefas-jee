@@ -13,41 +13,54 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "tb_tarefa")
+@SqlResultSetMappings({
+        @SqlResultSetMapping(name = Tarefa.MAPPING_TOTAL_TAREFA_POR_EQUIPE,
+                columns = {@ColumnResult(name = "nome"), @ColumnResult(name = "total")}) //fim da declaracao dos ColumnResults
+}) // fim da declaracao dos SqlResultSetMappings
 @NamedQueries({
-        @NamedQuery(name = Tarefa.NAMEDQUERY_BUSCAR_TODOS, query = "select t from Tarefa as t"),
-        @NamedQuery(name = Tarefa.NAMEDQUERY_BUSCAR_POR_COLABORADOR, query = "select t from Tarefa as t where t.colaborador = :colaborador"),
-        @NamedQuery(name = Tarefa.NAMEDQUERY_BUSCAR_POR_COLABORADOR_E_STATUS, query = "select t from Tarefa as t where t.colaborador = :colaborador and t.status in (:status)"),
-        @NamedQuery(name = Tarefa.NAMEDQUERY_BUSCAR_POR_STATUS, query = "select t from Tarefa as t where t.status in (:status)"),
-        @NamedQuery(name = Tarefa.NAMEDQUERY_BUSCAR_POR_EQUIPE, query = "select t from Tarefa as t where t.equipe = :equipe"),
-        @NamedQuery(name = Tarefa.NAMEDQUERY_BUSCAR_POR_CLIENTE, query = "select t from Tarefa as t where t.cliente = :cliente"),
-        @NamedQuery(name = Tarefa.NAMEDQUERY_BUSCAR_POR_SISTEMA, query = "select t from Tarefa as t where t.sistema = :sistema"),
-        @NamedQuery(name = Tarefa.NAMEDQUERY_BUSCAR_POR_STATUS_DATAS_DEFINIDAS, query = "select t from Tarefa as t where t.status in (:status) and t.inicio is not null and t.finalPlanejado is not null"),
-        @NamedQuery(name = Tarefa.NAMEDQUERY_BUSCAR_TODOS_DATAS_DEFINIDAS, query = "select t from Tarefa as t where t.inicio is not null and t.finalPlanejado is not null"),
-        @NamedQuery(name = Tarefa.NAMEDQUERY_BUSCAR_POR_COLABORADOR_E_STATUS_DATAS_DEFINIDAS, query = "select t from Tarefa as t where t.colaborador = :colaborador and t.status in (:status) and t.inicio is not null and t.finalPlanejado is not null"),
-        @NamedQuery(name = Tarefa.NAMEDQUERY_BUSCAR_POR_EQUIPE_E_DATAS, query = "select t from Tarefa as t where t.equipe = :equipe and t.abertura between :dataInicio and :dataFim"),
-        @NamedQuery(name = Tarefa.NAMEDQUERY_BUSCAR_POR_CLIENTE_E_DATAS, query = "select t from Tarefa as  t where t.cliente = :cliente and t.abertura between :dataInicio and :dataFim"),
-        @NamedQuery(name = Tarefa.NAMEDQUERY_BUSCAR_POR_SISTEMA_E_DATAS, query = "select t from Tarefa as t where t.sistema = :sistema and t.abertura between :dataInicio and :dataFim"),
-        @NamedQuery(name = Tarefa.NAMEDQUERY_BUSCAR_TOTAIS_POR_SISTEMA_E_DATAS, query = "select count(t), t.abertura from Tarefa as t where t.sistema = :sistema and t.abertura between :dataInicio and :dataFim group by t.abertura"),
-        @NamedQuery(name = Tarefa.NAMEDQUERY_BUSCAR_TOTAIS_POR_CLIENTE_E_DATAS, query = "select count(t), t.abertura from Tarefa as t where t.cliente = :cliente and t.abertura between :dataInicio and :dataFim group by t.abertura"),
-        @NamedQuery(name = Tarefa.NAMEDQUERY_BUSCAR_TOTAIS_POR_EQUIPE_E_DATAS, query = "select count(t), t.abertura from Tarefa as t where t.equipe = :equipe and t.abertura between :dataInicio and :dataFim group by t.abertura")})
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_TODOS, query = "select t from Tarefa as t"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_COLABORADOR, query = "select t from Tarefa as t where t.colaborador = :colaborador"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_COLABORADOR_E_STATUS, query = "select t from Tarefa as t where t.colaborador = :colaborador and t.status in (:status)"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_STATUS, query = "select t from Tarefa as t where t.status in (:status)"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_EQUIPE, query = "select t from Tarefa as t where t.equipe = :equipe"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_CLIENTE, query = "select t from Tarefa as t where t.cliente = :cliente"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_SISTEMA, query = "select t from Tarefa as t where t.sistema = :sistema"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_STATUS_DATAS_DEFINIDAS, query = "select t from Tarefa as t where t.status in (:status) and t.inicio is not null and t.finalPlanejado is not null"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_TODOS_DATAS_DEFINIDAS, query = "select t from Tarefa as t where t.inicio is not null and t.finalPlanejado is not null"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_COLABORADOR_E_STATUS_DATAS_DEFINIDAS, query = "select t from Tarefa as t where t.colaborador = :colaborador and t.status in (:status) and t.inicio is not null and t.finalPlanejado is not null"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_EQUIPE_E_DATAS, query = "select t from Tarefa as t where t.equipe = :equipe and t.abertura between :dataInicio and :dataFim"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_CLIENTE_E_DATAS, query = "select t from Tarefa as  t where t.cliente = :cliente and t.abertura between :dataInicio and :dataFim"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_SISTEMA_E_DATAS, query = "select t from Tarefa as t where t.sistema = :sistema and t.abertura between :dataInicio and :dataFim")
+}) // fim da declaracao de namedqueries
+@NamedNativeQueries({
+        @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_TODAS_EQUIPES_POR_TIPO, query = "select b.nome_equipe as nome, count(*) as total from tb_tarefa a, tb_equipe b where a.data_abertura between ? and ? and a.equipe_id_equipe = b.id_equipe and a.tipo_demanda = ? group by b.nome_equipe",
+                resultSetMapping = Tarefa.MAPPING_TOTAL_TAREFA_POR_EQUIPE),
+        @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_TODAS_EQUIPES, query = "select b.nome_equipe as nome, count(*) as total from tb_tarefa a, tb_equipe b where a.data_abertura between ? and ? and a.equipe_id_equipe = b.id_equipe group by b.nome_equipe",
+                resultSetMapping = Tarefa.MAPPING_TOTAL_TAREFA_POR_EQUIPE)
+})// fim da declaracao de namednativequeries
 public class Tarefa implements Serializable {
 
-    public static final String NAMEDQUERY_BUSCAR_TODOS = "buscarTodasTarefas";
-    public static final String NAMEDQUERY_BUSCAR_POR_COLABORADOR = "buscarTodasTarefasPorColaborador";
-    public static final String NAMEDQUERY_BUSCAR_POR_COLABORADOR_E_STATUS = "buscarTodosTarefasPorColaboradorEStatus";
-    public static final String NAMEDQUERY_BUSCAR_POR_STATUS = "buscarTodasTarefasPorStatus";
-    public static final String NAMEDQUERY_BUSCAR_POR_EQUIPE = "buscarTodasTarefasPorEquipe";
-    public static final String NAMEDQUERY_BUSCAR_POR_CLIENTE = "buscarTodasTarefasPorCliente";
-    public static final String NAMEDQUERY_BUSCAR_POR_SISTEMA = "buscarTodasTarefasPorSistema";
-    public static final String NAMEDQUERY_BUSCAR_TODOS_DATAS_DEFINIDAS = "buscarTodasTarefasDatasDefinidas";
-    public static final String NAMEDQUERY_BUSCAR_POR_STATUS_DATAS_DEFINIDAS = "buscarPorStatusDatasDefinidas";
-    public static final String NAMEDQUERY_BUSCAR_POR_COLABORADOR_E_STATUS_DATAS_DEFINIDAS = "buscarTodasTarefasPorColaboradorEStatusDatasDefinidas";
-    public static final String NAMEDQUERY_BUSCAR_POR_EQUIPE_E_DATAS = "buscarTodasTarefasPorColaboradorEDatas";
-    public static final String NAMEDQUERY_BUSCAR_POR_CLIENTE_E_DATAS = "buscarTodasTarefasPorClienteEDatas";
-    public static final String NAMEDQUERY_BUSCAR_POR_SISTEMA_E_DATAS = "buscarTodasTarefasPorSistemaEDatas";
-    public static final String NAMEDQUERY_BUSCAR_TOTAIS_POR_SISTEMA_E_DATAS = "buscarTotaisPorSistemaEDatas";
-    public static final String NAMEDQUERY_BUSCAR_TOTAIS_POR_EQUIPE_E_DATAS = "buscarTotaisPorEquipeEDatas";
-    public static final String NAMEDQUERY_BUSCAR_TOTAIS_POR_CLIENTE_E_DATAS = "buscarTotaisPorClienteEDatas";
+    // Constantes que servem para guardar os nomes das queries JPQL definidas para entidade Tarefa
+    public static final String NAMED_QUERY_BUSCAR_TODOS = "buscarTodasTarefas";
+    public static final String NAMED_QUERY_BUSCAR_POR_COLABORADOR = "buscarTodasTarefasPorColaborador";
+    public static final String NAMED_QUERY_BUSCAR_POR_COLABORADOR_E_STATUS = "buscarTodosTarefasPorColaboradorEStatus";
+    public static final String NAMED_QUERY_BUSCAR_POR_STATUS = "buscarTodasTarefasPorStatus";
+    public static final String NAMED_QUERY_BUSCAR_POR_EQUIPE = "buscarTodasTarefasPorEquipe";
+    public static final String NAMED_QUERY_BUSCAR_POR_CLIENTE = "buscarTodasTarefasPorCliente";
+    public static final String NAMED_QUERY_BUSCAR_POR_SISTEMA = "buscarTodasTarefasPorSistema";
+    public static final String NAMED_QUERY_BUSCAR_TODOS_DATAS_DEFINIDAS = "buscarTodasTarefasDatasDefinidas";
+    public static final String NAMED_QUERY_BUSCAR_POR_STATUS_DATAS_DEFINIDAS = "buscarPorStatusDatasDefinidas";
+    public static final String NAMED_QUERY_BUSCAR_POR_COLABORADOR_E_STATUS_DATAS_DEFINIDAS = "buscarTodasTarefasPorColaboradorEStatusDatasDefinidas";
+    public static final String NAMED_QUERY_BUSCAR_POR_EQUIPE_E_DATAS = "buscarTodasTarefasPorColaboradorEDatas";
+    public static final String NAMED_QUERY_BUSCAR_POR_CLIENTE_E_DATAS = "buscarTodasTarefasPorClienteEDatas";
+    public static final String NAMED_QUERY_BUSCAR_POR_SISTEMA_E_DATAS = "buscarTodasTarefasPorSistemaEDatas";
+
+    // Constantes que servem para guardar os nomes das queries nativas definidas para entidade Tarefa
+    public static final String NAMED_NATIVE_QUERY_TOTAL_TODAS_EQUIPES_POR_TIPO = "totalIndividualPorEquipe";
+    public static final String NAMED_NATIVE_QUERY_TOTAL_TODAS_EQUIPES = "totalIndividualDeTodasEquipes";
+
+    // Constantes que servem para guardar os nomes dos mapeamentos definidos para as queries nativas.
+    public static final String MAPPING_TOTAL_TAREFA_POR_EQUIPE = "totalTarefaPorEquipe";
 
     private static final long serialVersionUID = 1L;
 
@@ -103,9 +116,7 @@ public class Tarefa implements Serializable {
         this.observacao = observacao;
     } // fim do construtor
 
-
-    public Tarefa(String numeroDemanda, String titulo,
-                  Prioridade prioridade) {
+    public Tarefa(String numeroDemanda, String titulo, Prioridade prioridade) {
         super();
         this.numeroDemanda = numeroDemanda;
         this.titulo = titulo;

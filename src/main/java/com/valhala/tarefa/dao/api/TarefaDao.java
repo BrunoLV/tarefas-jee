@@ -5,6 +5,7 @@ import com.valhala.tarefa.model.Colaborador;
 import com.valhala.tarefa.model.Status;
 import com.valhala.tarefa.model.Tarefa;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -71,5 +72,9 @@ public interface TarefaDao extends Dao<Tarefa> {
      * @throws ConsultaSemRetornoException
      */
     List<Tarefa> buscarTodasPorStatusComDatasDefinidas(List<Status> status) throws ConsultaSemRetornoException;
+
+    List<Object[]> buscarTotaisTarefasPorPeriodoDeTodasEquipes(Date inicio, Date fim) throws ConsultaSemRetornoException;
+
+    List<Object[]> buscarTotaisTarefasPorPeriodoEEquipePorTipo(Date inicio, Date fim, String tipo) throws ConsultaSemRetornoException;
 
 } // fim da interface TarefaDao

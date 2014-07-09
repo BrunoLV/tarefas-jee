@@ -15,7 +15,7 @@
                 <h:inputHidden value="#{TarefaBean.tarefa.id}"/>
                 <h:inputHidden value="#{TarefaBean.tarefa.status}"/>
                 <h:inputHidden value="#{TarefaBean.tarefa.colaborador.id}"/>
-                <p:panelGrid columns="1" if="geralDataGrid">
+                <p:panelGrid columns="1" id="geralDataGrid">
                     <f:facet name="header">#{recurso['header.cadastroTarefa']}</f:facet>
                     <p:panelGrid columns="3" id="ajustePanelGrid">
                         <f:facet name="header">#{recurso['header.dadosGerais']}</f:facet>

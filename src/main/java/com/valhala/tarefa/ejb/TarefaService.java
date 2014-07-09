@@ -14,7 +14,11 @@ import com.valhala.tarefa.util.Copiador;
 import javax.ejb.*;
 import javax.inject.Inject;
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * EJB responsavel pela regra de negócio relacionada a Tarefa
@@ -28,6 +32,7 @@ import java.util.List;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class TarefaService {
 
+    private static final String TIPO_TODOS = "Todos";
     @Inject
     private TarefaDao tarefaDao;
 
@@ -164,5 +169,26 @@ public class TarefaService {
     public List<Tarefa> buscarTarefasPorStatusComDatasDefinidas(List<Status> status) throws ConsultaSemRetornoException {
         return this.tarefaDao.buscarTodasPorStatusComDatasDefinidas(status);
     } // fim do método buscarTarefasPorStatusComDatasDefinidas
+
+    @Auditavel
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Map<String, BigInteger> buscarTotaisPorEquipeEPeriodoETipo(Date inicio, Date fim, String tipo) throws ConsultaSemRetornoException {
+        Map<String, BigInteger> mapa = new HashMap<>();
+        List<Object[]> retorno;
+
+        if (tipo.equals(TarefaService.TIPO_TODOS)) {
+            retorno = this.tarefaDao.buscarTotaisTarefasPorPeriodoDeTodasEquipes(inicio, fim);
+        } else {
+            retorno = this.tarefaDao.buscarTotaisTarefasPorPeriodoEEquipePorTipo(inicio, fim, tipo);
+        } // fim do bloco if/else
+
+        for (Object[] objeto : retorno) {
+            String nome = (String) objeto[0];
+            BigInteger total = (BigInteger) objeto[1];
+            mapa.put(nome, total);
+        } // fim do bloco for
+
+        return mapa;
+    } // fim do método buscarTotaisPorEquipeEPeriodo
 
 } // fim da classe TarefaService
