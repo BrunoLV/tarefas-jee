@@ -1,12 +1,12 @@
 package com.valhala.tarefa.dao.api;
 
+import java.util.Date;
+import java.util.List;
+
 import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
 import com.valhala.tarefa.model.Colaborador;
 import com.valhala.tarefa.model.Status;
 import com.valhala.tarefa.model.Tarefa;
-
-import java.util.Date;
-import java.util.List;
 
 /**
  * Interface DAO especializada para a entidade Tarefa.

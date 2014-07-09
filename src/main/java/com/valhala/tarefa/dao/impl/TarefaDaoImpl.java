@@ -5,9 +5,11 @@ import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
 import com.valhala.tarefa.model.Colaborador;
 import com.valhala.tarefa.model.Status;
 import com.valhala.tarefa.model.Tarefa;
+import com.valhala.tarefa.model.TipoDemanda;
 
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+
 import java.util.Date;
 import java.util.List;
 

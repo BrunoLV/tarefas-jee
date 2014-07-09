@@ -2,12 +2,16 @@ package com.valhala.tarefa.web.beans;
 
 import com.valhala.tarefa.ejb.TarefaService;
 import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
+import com.valhala.tarefa.model.TipoDemanda;
+
 import org.primefaces.model.chart.PieChartModel;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -23,33 +27,40 @@ import java.util.*;
  */
 @Named("GraficoBean")
 @RequestScoped
-public class GraficoBean extends BaseJSFBean {
+public class GraficoBean extends BaseJSFBean implements Serializable {
 
-    private static DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+	private static final long serialVersionUID = 1L;
+	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+    
     @EJB
     private TarefaService tarefaService;
     private PieChartModel graficoEquipes = new PieChartModel();
+    
+    private Date dataInicial;
+    private Date dataFinal;
+    private TipoDemanda tipoDemanda;
 
     @PostConstruct
     public void init() {
-        try {
-            gerarGraficoEquipe(calcularDataInicial(), calcularDataFinal(), "Todos");
-        } catch (ParseException e) {
-            inserirMensagemDeErro("Ocorreu um erro de parseamento de datas.");
-        } // fim do bloco try/catch
+    	gerarGraficoEquipe(TipoDemanda.TODOS);
     } // fim do método init
 
-    public void gerarGraficoEquipe(Date inicio, Date fim, String tipo) {
-        graficoEquipes = new PieChartModel();
+    public void gerarGraficoEquipe(TipoDemanda tipo) {
+        this.graficoEquipes = new PieChartModel();
         try {
-            Map<String, BigInteger> mapa = this.tarefaService.buscarTotaisPorEquipeEPeriodoETipo(inicio, fim, tipo);
+            Map<String, BigInteger> mapa = this.tarefaService.buscarTotaisPorEquipeEPeriodoETipo(calcularDataInicial(), calcularDataFinal(), tipo);
             Set<String> chaves = mapa.keySet();
             for (String chave : chaves) {
                 graficoEquipes.set(chave, mapa.get(chave).intValue());
             } // fim do bloco for
-        } catch (ConsultaSemRetornoException e) {
-            inserirMensagemDeErro(e.getMessage());
+        } catch (ConsultaSemRetornoException | ParseException e) {
+            this.graficoEquipes = new PieChartModel();
+        	inserirMensagemDeErro(e.getMessage());
         } // fim do método
+    }
+    
+    public void atualizarGraficoEquipe() {
+    	gerarGraficoEquipe(this.tipoDemanda);
     }
 
     private Date calcularDataInicial() throws ParseException {
@@ -65,9 +76,37 @@ public class GraficoBean extends BaseJSFBean {
                 gregorianCalendar.get(Calendar.MONTH) + 1,
                 gregorianCalendar.get(Calendar.YEAR)));
     }
+    
+    public TipoDemanda[] getTipo(){
+    	return TipoDemanda.values();
+    }
 
     public PieChartModel getGraficoEquipes() {
         return graficoEquipes;
     }
+    
+    public Date getDataFinal() {
+		return dataFinal;
+	}
+    
+    public void setDataFinal(Date dataFinal) {
+		this.dataFinal = dataFinal;
+	}
+    
+    public Date getDataInicial() {
+		return dataInicial;
+	}
+    
+    public void setDataInicial(Date dataInicial) {
+		this.dataInicial = dataInicial;
+	}
+    
+    public TipoDemanda getTipoDemanda() {
+		return tipoDemanda;
+	}
+    
+    public void setTipoDemanda(TipoDemanda tipoDemanda) {
+		this.tipoDemanda = tipoDemanda;
+	}
 
 }

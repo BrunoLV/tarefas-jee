@@ -8,11 +8,13 @@ import com.valhala.tarefa.exceptions.ServiceException;
 import com.valhala.tarefa.model.Colaborador;
 import com.valhala.tarefa.model.Status;
 import com.valhala.tarefa.model.Tarefa;
+import com.valhala.tarefa.model.TipoDemanda;
 import com.valhala.tarefa.qualifiers.Auditavel;
 import com.valhala.tarefa.util.Copiador;
 
 import javax.ejb.*;
 import javax.inject.Inject;
+
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
@@ -32,7 +34,6 @@ import java.util.Map;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class TarefaService {
 
-    private static final String TIPO_TODOS = "Todos";
     @Inject
     private TarefaDao tarefaDao;
 
@@ -172,14 +173,16 @@ public class TarefaService {
 
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Map<String, BigInteger> buscarTotaisPorEquipeEPeriodoETipo(Date inicio, Date fim, String tipo) throws ConsultaSemRetornoException {
+    public Map<String, BigInteger> buscarTotaisPorEquipeEPeriodoETipo(Date inicio, Date fim, TipoDemanda tipo) throws ConsultaSemRetornoException {
         Map<String, BigInteger> mapa = new HashMap<>();
         List<Object[]> retorno;
 
-        if (tipo.equals(TarefaService.TIPO_TODOS)) {
+        if (tipo.equals(TipoDemanda.TODOS)) {
             retorno = this.tarefaDao.buscarTotaisTarefasPorPeriodoDeTodasEquipes(inicio, fim);
         } else {
-            retorno = this.tarefaDao.buscarTotaisTarefasPorPeriodoEEquipePorTipo(inicio, fim, tipo);
+        	System.out.println(tipo);
+        	System.out.println(tipo.name());
+            retorno = this.tarefaDao.buscarTotaisTarefasPorPeriodoEEquipePorTipo(inicio, fim, tipo.name());
         } // fim do bloco if/else
 
         for (Object[] objeto : retorno) {

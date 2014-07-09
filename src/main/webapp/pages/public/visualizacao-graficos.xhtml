@@ -1,7 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns="http://www.w3.org/1999/xhtml">
 
@@ -9,8 +10,16 @@
     <ui:define name="content">
         <div id="graficoDiv">
             <h:form id="formGrafico">
-                <p:pieChart value="#{GraficoBean.graficoEquipes}" title="#{recurso['title.grafico.equipes']}"
-                            legendPosition="e" showDataLabels="true" fill="false" sliceMargin="5"/>
+            	
+            	<p:panelGrid columns="6">
+            		<p:outputLabel for="tiposSelectOneMenu" value="#{recurso['label.tipoDemanda']}" />
+            		<p:selectOneMenu id="tiposSelectOneMenu" value="#{GraficoBean.tipoDemanda}" >
+            			<f:selectItems value="#{GraficoBean.tipo}" var="tipo" itemLabel="#{tipo.nomeExibicao}" />
+            		</p:selectOneMenu>
+            		<p:commandButton value="#{recurso['button.atualizarGrafico']}" actionListener="#{GraficoBean.atualizarGraficoEquipe}" process="tiposSelectOneMenu" update="equipePieChart" ajax="false" />
+            	</p:panelGrid>
+            	
+                <p:pieChart id="equipePieChart" value="#{GraficoBean.graficoEquipes}" title="#{recurso['title.grafico.equipes']}" legendPosition="e" showDataLabels="true" fill="false" sliceMargin="5"/>
             </h:form>
         </div>
     </ui:define>
