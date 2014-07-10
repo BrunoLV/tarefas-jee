@@ -178,11 +178,9 @@ public class TarefaService {
         List<Object[]> retorno;
 
         if (tipo.equals(TipoDemanda.TODOS)) {
-            retorno = this.tarefaDao.buscarTotaisTarefasPorPeriodoDeTodasEquipes(inicio, fim);
+            retorno = this.tarefaDao.buscarTotaisDemandasPorPeriodoDeTodasEquipes(inicio, fim);
         } else {
-        	System.out.println(tipo);
-        	System.out.println(tipo.name());
-            retorno = this.tarefaDao.buscarTotaisTarefasPorPeriodoEEquipePorTipo(inicio, fim, tipo.name());
+            retorno = this.tarefaDao.buscarTotaisDemandasPorPeriodoEEquipePorTipo(inicio, fim, tipo.name());
         } // fim do bloco if/else
 
         for (Object[] objeto : retorno) {
@@ -193,5 +191,34 @@ public class TarefaService {
 
         return mapa;
     } // fim do método buscarTotaisPorEquipeEPeriodo
+    
+    @Auditavel
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Map<String, BigInteger> buscarTotaisTodosSistemaPorTipoEEquipe(Date inicio, Date fim, Long id, TipoDemanda tipo) throws ConsultaSemRetornoException {
+    	Map<String, BigInteger> mapa = new HashMap<>();
+    	List<Object[]> retorno;
+    	
+    	if (id != null && !id.equals(Long.valueOf(0l))) {
+			if(tipo.equals(TipoDemanda.TODOS)) {
+				retorno = this.tarefaDao.buscarTotaisDemandasTodosSistemasPorEquipe(inicio, fim, id);
+			} else {
+				retorno = this.tarefaDao.buscarTotaisDemandasTodosSistemasPorTipoEEquipe(inicio, fim, id, tipo.name());
+			} // fim do bloco if/else
+		} else {
+			if (tipo.equals(TipoDemanda.TODOS)) {
+				retorno = this.tarefaDao.buscarTotaisDemandasTodosSistemas(inicio, fim);
+			} else {
+				retorno = this.tarefaDao.buscarTotaisDemandasTodosSistemasPorTipo(inicio, fim, tipo.name());
+			} // fim do bloco if/else
+		} // fim do bloco if/else
+    	
+    	for (Object[] objeto : retorno) {
+			String nome = (String) objeto[0];
+			BigInteger total = (BigInteger) objeto[1];
+			mapa.put(nome, total);
+		} // fim do bloco for
+    	
+    	return mapa;
+    } // fim do método buscarTotaisTodosSistemaPorTipoEEquipe
 
 } // fim da classe TarefaService

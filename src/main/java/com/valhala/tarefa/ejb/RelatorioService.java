@@ -10,6 +10,7 @@ import com.valhala.tarefa.util.MontadorRelatorio;
 
 import javax.ejb.*;
 import javax.inject.Inject;
+
 import java.util.*;
 
 /**
@@ -39,7 +40,8 @@ public class RelatorioService {
      * @return
      * @throws ServiceException
      */
-    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    @SuppressWarnings("rawtypes")
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public String gerarRelatorioTarefasCompleto() throws ServiceException {
 
         String caminhoArquivoGerado;

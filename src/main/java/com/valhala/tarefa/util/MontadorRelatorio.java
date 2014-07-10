@@ -2,11 +2,13 @@ package com.valhala.tarefa.util;
 
 import com.valhala.tarefa.exceptions.MontagemRelatorioException;
 import com.valhala.tarefa.model.Tarefa;
+
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import javax.annotation.PostConstruct;
+
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
@@ -43,7 +45,8 @@ public class MontadorRelatorio {
      * @return
      * @throws MontagemRelatorioException
      */
-    public String montarRelatorioTarefaCompleto(Map<String, List> mapa) throws MontagemRelatorioException {
+    @SuppressWarnings("rawtypes")
+	public String montarRelatorioTarefaCompleto(Map<String, List> mapa) throws MontagemRelatorioException {
         String nomeArquivo = String.format("%s%s%s", properties.getProperty("arquivo.tarefa.prefix"), SDF_ARQUIVO.format(new Date()), properties.getProperty("arquivo.tarefa.extensao"));
         String nomeArquivoInteiro = String.format("%s%s", properties.getProperty("arquivo.caminho"), nomeArquivo);
         try (OutputStream stream = new FileOutputStream(nomeArquivoInteiro)) {
@@ -60,7 +63,8 @@ public class MontadorRelatorio {
     /*
     Método utilizado para montar as planilhas dentro da pasta do arquivo de relatório.
      */
-    private void montarSheets(HSSFWorkbook workbook, Map<String, List> sheets, String[] rotulos, TipoRelatorio tipo) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	private void montarSheets(HSSFWorkbook workbook, Map<String, List> sheets, String[] rotulos, TipoRelatorio tipo) {
         for (String key : sheets.keySet()) {
             HSSFSheet sheet = workbook.createSheet(key);
             montarLinhaComRotulos(sheet, rotulos);
@@ -69,6 +73,16 @@ public class MontadorRelatorio {
                 case TAREFAS:
                     montarSheetTarefa(lista, sheet);
                     break;
+                case CLIENTE:
+                	break;
+                case COLABORADORES:
+                	break;
+                case EQUIPE:
+                	break;
+                case SISTEMAS:
+                	break;
+                default:
+                	break;
             } // fim do bloco switch
         } // fim do bloco for
     } // fim do método monstarSheets

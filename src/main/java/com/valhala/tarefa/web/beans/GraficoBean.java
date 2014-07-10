@@ -1,7 +1,9 @@
 package com.valhala.tarefa.web.beans;
 
+import com.valhala.tarefa.ejb.EquipeService;
 import com.valhala.tarefa.ejb.TarefaService;
 import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
+import com.valhala.tarefa.model.Equipe;
 import com.valhala.tarefa.model.TipoDemanda;
 
 import org.primefaces.model.chart.PieChartModel;
@@ -34,33 +36,75 @@ public class GraficoBean extends BaseJSFBean implements Serializable {
     
     @EJB
     private TarefaService tarefaService;
+    @EJB
+    private EquipeService equipeService;
+    
     private PieChartModel graficoEquipes = new PieChartModel();
+    private PieChartModel graficoTarefas = new PieChartModel();
     
     private Date dataInicial;
     private Date dataFinal;
+    
     private TipoDemanda tipoDemanda;
-
+    private Long idEquipe;
+    private List<Equipe> equipes;
+    
     @PostConstruct
     public void init() {
-    	gerarGraficoEquipe(TipoDemanda.TODOS);
+    	try {
+			this.equipes = this.equipeService.buscarTodasEquipes();
+		} catch (ConsultaSemRetornoException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	this.idEquipe = Long.valueOf(0l);
+    	this.tipoDemanda = TipoDemanda.TODOS;
+    	try {
+			this.dataInicial = calcularDataInicial();
+		} catch (ParseException e) {
+			this.dataInicial = new Date();
+		}
+    	try {
+			this.dataFinal = calcularDataFinal();
+		} catch (ParseException e) {
+			this.dataFinal = new Date();
+		}
+    	gerarGraficoEquipe();
+    	gerarGraficoIncidentes();
     } // fim do método init
 
-    public void gerarGraficoEquipe(TipoDemanda tipo) {
+    public void gerarGraficoEquipe() {
         this.graficoEquipes = new PieChartModel();
         try {
-            Map<String, BigInteger> mapa = this.tarefaService.buscarTotaisPorEquipeEPeriodoETipo(calcularDataInicial(), calcularDataFinal(), tipo);
+            Map<String, BigInteger> mapa = this.tarefaService.buscarTotaisPorEquipeEPeriodoETipo(this.dataInicial, this.dataFinal, this.tipoDemanda);
             Set<String> chaves = mapa.keySet();
             for (String chave : chaves) {
                 graficoEquipes.set(chave, mapa.get(chave).intValue());
             } // fim do bloco for
-        } catch (ConsultaSemRetornoException | ParseException e) {
-            this.graficoEquipes = new PieChartModel();
+        } catch (ConsultaSemRetornoException e) {
         	inserirMensagemDeErro(e.getMessage());
         } // fim do método
     }
     
+    public void gerarGraficoIncidentes() {
+    	this.graficoTarefas = new PieChartModel();
+    	try {
+			Map<String, BigInteger> mapa = this.tarefaService.buscarTotaisTodosSistemaPorTipoEEquipe(this.dataInicial, this.dataFinal, this.idEquipe, this.tipoDemanda);
+			Set<String> chaves = mapa.keySet();
+			for (String chave : chaves) {
+				graficoTarefas.set(chave, mapa.get(chave).intValue());
+			}
+		} catch (ConsultaSemRetornoException e) {
+			inserirMensagemDeErro(e.getMessage());
+		}
+    }
+    
     public void atualizarGraficoEquipe() {
-    	gerarGraficoEquipe(this.tipoDemanda);
+    	gerarGraficoEquipe();
+    }
+    
+    public void atualizarGraficoTarefa() {
+    	gerarGraficoIncidentes();
     }
 
     private Date calcularDataInicial() throws ParseException {
@@ -85,6 +129,10 @@ public class GraficoBean extends BaseJSFBean implements Serializable {
         return graficoEquipes;
     }
     
+    public PieChartModel getGraficoTarefas() {
+		return graficoTarefas;
+	}
+    
     public Date getDataFinal() {
 		return dataFinal;
 	}
@@ -107,6 +155,22 @@ public class GraficoBean extends BaseJSFBean implements Serializable {
     
     public void setTipoDemanda(TipoDemanda tipoDemanda) {
 		this.tipoDemanda = tipoDemanda;
+	}
+    
+    public Long getIdEquipe() {
+		return idEquipe;
+	}
+    
+    public void setIdEquipe(Long idEquipe) {
+		this.idEquipe = idEquipe;
+	}
+    
+    public List<Equipe> getEquipes() {
+		return equipes;
+	}
+    
+    public void setEquipes(List<Equipe> equipes) {
+		this.equipes = equipes;
 	}
 
 }
