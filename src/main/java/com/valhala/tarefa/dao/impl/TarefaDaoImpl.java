@@ -115,7 +115,6 @@ public class TarefaDaoImpl extends BaseDao<Tarefa> implements TarefaDao {
 	@Override
     public List<Object[]> buscarTotaisDemandasPorPeriodoDeTodasEquipes(Date inicio, Date fim) throws ConsultaSemRetornoException {
         Query query = this.entityManager.createNamedQuery(Tarefa.NAMED_NATIVE_QUERY_TOTAL_TODAS_EQUIPES);
-        System.out.println(inicio + "-" + fim);
         query.setParameter(1, inicio);
         query.setParameter(2, fim);
         List<Object[]> totais = query.getResultList();
