@@ -53,24 +53,23 @@ public class GraficoBean extends BaseJSFBean implements Serializable {
     public void init() {
     	try {
 			this.equipes = this.equipeService.buscarTodasEquipes();
+			this.idEquipe = Long.valueOf(0l);
+	    	this.tipoDemanda = TipoDemanda.TODOS;
+	    	try {
+				this.dataInicial = calcularDataInicial();
+			} catch (ParseException e) {
+				this.dataInicial = new Date();
+			}
+	    	try {
+				this.dataFinal = calcularDataFinal();
+			} catch (ParseException e) {
+				this.dataFinal = new Date();
+			}
+	    	gerarGraficoEquipe();
+	    	gerarGraficoIncidentes();
 		} catch (ConsultaSemRetornoException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			inserirMensagemDeErro(e1.getMessage());
 		}
-    	this.idEquipe = Long.valueOf(0l);
-    	this.tipoDemanda = TipoDemanda.TODOS;
-    	try {
-			this.dataInicial = calcularDataInicial();
-		} catch (ParseException e) {
-			this.dataInicial = new Date();
-		}
-    	try {
-			this.dataFinal = calcularDataFinal();
-		} catch (ParseException e) {
-			this.dataFinal = new Date();
-		}
-    	gerarGraficoEquipe();
-    	gerarGraficoIncidentes();
     } // fim do método init
 
     public void gerarGraficoEquipe() {
