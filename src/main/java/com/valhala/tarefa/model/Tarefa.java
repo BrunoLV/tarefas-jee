@@ -73,7 +73,7 @@ import java.util.Date;
         @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_TIPO,
         	query = "select b.nome_sistema as nome, count(*) as total "
         			+ "from tb_tarefa a, tb_sistema b "
-        			+ "where a.data_abertura between ? and ? and a.sistema_id_sistema = b.id_sistema and a.tipo_demanada = ? "
+        			+ "where a.data_abertura between ? and ? and a.sistema_id_sistema = b.id_sistema and a.tipo_demanda = ?"
         			+ "group by b.nome_sistema",
         	resultSetMapping = Tarefa.MAPPING_TOTAL_TAREFA_POR_SISTEMA),
         @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_EQUIPE_E_TIPO,

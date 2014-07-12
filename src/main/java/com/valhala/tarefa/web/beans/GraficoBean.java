@@ -39,14 +39,16 @@ public class GraficoBean extends BaseJSFBean implements Serializable {
     @EJB
     private EquipeService equipeService;
     
-    private PieChartModel graficoEquipes = new PieChartModel();
-    private PieChartModel graficoTarefas = new PieChartModel();
+    private PieChartModel graficoDemandasEquipes = new PieChartModel();
+    private PieChartModel graficoDemandasSistemas = new PieChartModel();
     
     private Date dataInicial;
     private Date dataFinal;
     
     private TipoDemanda tipoDemanda;
+    
     private Long idEquipe;
+    
     private List<Equipe> equipes;
     
     @PostConstruct
@@ -57,53 +59,52 @@ public class GraficoBean extends BaseJSFBean implements Serializable {
 	    	this.tipoDemanda = TipoDemanda.TODOS;
 	    	try {
 				this.dataInicial = calcularDataInicial();
-			} catch (ParseException e) {
-				this.dataInicial = new Date();
-			}
-	    	try {
 				this.dataFinal = calcularDataFinal();
 			} catch (ParseException e) {
+				this.dataInicial = new Date();
 				this.dataFinal = new Date();
-			}
-	    	gerarGraficoEquipe();
-	    	gerarGraficoIncidentes();
-		} catch (ConsultaSemRetornoException e1) {
-			inserirMensagemDeErro(e1.getMessage());
+			} // fim do bloco try/catch
+	    	this.gerarGraficoDemandasEquipe();
+	    	this.gerarGraficoDemandasSistemas();
+		} catch (ConsultaSemRetornoException e) {
+			inserirMensagemDeErro(e.getMessage());
 		}
     } // fim do método init
 
-    public void gerarGraficoEquipe() {
-        this.graficoEquipes = new PieChartModel();
+    public void gerarGraficoDemandasEquipe() {
+        this.graficoDemandasEquipes = new PieChartModel();
         try {
             Map<String, BigInteger> mapa = this.tarefaService.buscarTotaisPorEquipeEPeriodoETipo(this.dataInicial, this.dataFinal, this.tipoDemanda);
             Set<String> chaves = mapa.keySet();
             for (String chave : chaves) {
-                graficoEquipes.set(chave, mapa.get(chave).intValue());
+                graficoDemandasEquipes.set(chave, mapa.get(chave).intValue());
             } // fim do bloco for
         } catch (ConsultaSemRetornoException e) {
+        	graficoDemandasEquipes = new PieChartModel();
         	inserirMensagemDeErro(e.getMessage());
         } // fim do método
     }
     
-    public void gerarGraficoIncidentes() {
-    	this.graficoTarefas = new PieChartModel();
+    public void gerarGraficoDemandasSistemas() {
+    	this.graficoDemandasSistemas = new PieChartModel();
     	try {
 			Map<String, BigInteger> mapa = this.tarefaService.buscarTotaisTodosSistemaPorTipoEEquipe(this.dataInicial, this.dataFinal, this.idEquipe, this.tipoDemanda);
 			Set<String> chaves = mapa.keySet();
 			for (String chave : chaves) {
-				graficoTarefas.set(chave, mapa.get(chave).intValue());
+				graficoDemandasSistemas.set(chave, mapa.get(chave).intValue());
 			}
 		} catch (ConsultaSemRetornoException e) {
+			graficoDemandasSistemas = new PieChartModel();
 			inserirMensagemDeErro(e.getMessage());
 		}
     }
     
     public void atualizarGraficoEquipe() {
-    	gerarGraficoEquipe();
+    	gerarGraficoDemandasEquipe();
     }
     
     public void atualizarGraficoTarefa() {
-    	gerarGraficoIncidentes();
+    	gerarGraficoDemandasSistemas();
     }
 
     private Date calcularDataInicial() throws ParseException {
@@ -123,46 +124,6 @@ public class GraficoBean extends BaseJSFBean implements Serializable {
     public TipoDemanda[] getTipo(){
     	return TipoDemanda.values();
     }
-
-    public PieChartModel getGraficoEquipes() {
-        return graficoEquipes;
-    }
-    
-    public PieChartModel getGraficoTarefas() {
-		return graficoTarefas;
-	}
-    
-    public Date getDataFinal() {
-		return dataFinal;
-	}
-    
-    public void setDataFinal(Date dataFinal) {
-		this.dataFinal = dataFinal;
-	}
-    
-    public Date getDataInicial() {
-		return dataInicial;
-	}
-    
-    public void setDataInicial(Date dataInicial) {
-		this.dataInicial = dataInicial;
-	}
-    
-    public TipoDemanda getTipoDemanda() {
-		return tipoDemanda;
-	}
-    
-    public void setTipoDemanda(TipoDemanda tipoDemanda) {
-		this.tipoDemanda = tipoDemanda;
-	}
-    
-    public Long getIdEquipe() {
-		return idEquipe;
-	}
-    
-    public void setIdEquipe(Long idEquipe) {
-		this.idEquipe = idEquipe;
-	}
     
     public List<Equipe> getEquipes() {
 		return equipes;
@@ -170,6 +131,46 @@ public class GraficoBean extends BaseJSFBean implements Serializable {
     
     public void setEquipes(List<Equipe> equipes) {
 		this.equipes = equipes;
+	}
+
+	public Date getDataInicial() {
+		return dataInicial;
+	}
+
+	public void setDataInicial(Date dataInicial) {
+		this.dataInicial = dataInicial;
+	}
+
+	public Date getDataFinal() {
+		return dataFinal;
+	}
+
+	public void setDataFinal(Date dataFinal) {
+		this.dataFinal = dataFinal;
+	}
+
+	public TipoDemanda getTipoDemanda() {
+		return tipoDemanda;
+	}
+
+	public void setTipoDemanda(TipoDemanda tipoDemanda) {
+		this.tipoDemanda = tipoDemanda;
+	}
+
+	public Long getIdEquipe() {
+		return idEquipe;
+	}
+
+	public void setIdEquipe(Long idEquipe) {
+		this.idEquipe = idEquipe;
+	}
+
+	public PieChartModel getGraficoDemandasEquipes() {
+		return graficoDemandasEquipes;
+	}
+
+	public PieChartModel getGraficoDemandasSistemas() {
+		return graficoDemandasSistemas;
 	}
 
 }

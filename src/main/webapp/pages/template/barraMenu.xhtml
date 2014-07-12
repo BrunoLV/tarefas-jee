@@ -19,15 +19,22 @@
                 <p:submenu label="#{recurso['menu.lideranca']}" rendered="#{LoginBean.lider}">
                     <p:menuitem value="#{recurso['menu.carga']}" url="/pages/lider/cargas_administrativas.xhtml"/>
                 </p:submenu>
+                
                 <p:menuitem value="#{recurso['menu.tarefas']}" url="/pages/public/visualizacao-tarefas.xhtml"/>
+                
                 <p:menuitem value="#{recurso['menu.calendario']}" url="/pages/public/visualizacao-calendario.xhtml"/>
+                
                 <p:menuitem value="#{recurso['menu.relatorio.tarefas']}" ajax="false"
                             onclick="PrimeFaces.monitorDownload(start, stop);"
                             icon="ui-icon-arrowthick-1-s">
                     <p:fileDownload value="#{RelatorioBean.gerarRelatorioTarefasCompleto()}"/>
                 </p:menuitem>
-                <p:menuitem value="#{recurso['menu.graficos']}" url="/pages/public/visualizacao-graficos.xhtml"/>
-
+                
+                <p:submenu label="#{recurso['menu.graficos']}">
+                	<p:menuitem value="#{recurso['menu.grafico.demandaEquipe']}" url="/pages/public/visualizacao-graficos-demandas-equipes.xhtml"/>
+                	<p:menuitem value="#{recurso['menu.grafico.demandaSistema']}" url="/pages/public/visualizacao-graficos-demandas-sistemas.xhtml"/>
+                </p:submenu>
+                
                 <p:menuitem value="#{recurso['menu.mudar.senha']}" url="/pages/public/mudanca-senha.xhtml"
                             rendered="#{not empty sessionScope['USUARIO_LOGADO']}"/>
 
