@@ -14,8 +14,9 @@ import java.util.Date;
 @Entity
 @Table(name = "tb_tarefa")
 @SqlResultSetMappings({
-        @SqlResultSetMapping(name = Tarefa.MAPPING_TOTAL_TAREFA_POR_EQUIPE, columns = {@ColumnResult(name = "nome"), @ColumnResult(name = "total")}),
-        @SqlResultSetMapping(name = Tarefa.MAPPING_TOTAL_TAREFA_POR_SISTEMA, columns = {@ColumnResult(name = "nome"), @ColumnResult(name = "total")})
+        @SqlResultSetMapping(name = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_EQUIPE, columns = {@ColumnResult(name = "nome"), @ColumnResult(name = "total")}),
+        @SqlResultSetMapping(name = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_SISTEMA, columns = {@ColumnResult(name = "nome"), @ColumnResult(name = "total")}),
+        @SqlResultSetMapping(name = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_CLIENTE, columns = {@ColumnResult(name = "nome"), @ColumnResult(name = "total")})
 }) // fim da declaracao dos SqlResultSetMappings
 @NamedQueries({
         @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_TODOS,
@@ -51,37 +52,61 @@ import java.util.Date;
         			+ "from tb_tarefa a, tb_equipe b "
         			+ "where a.data_abertura between ? and ? and a.equipe_id_equipe = b.id_equipe and a.tipo_demanda = ? "
         			+ "group by b.nome_equipe",
-            resultSetMapping = Tarefa.MAPPING_TOTAL_TAREFA_POR_EQUIPE),
+            resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_EQUIPE),
         @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_TODAS_EQUIPES, 
         	query = "select b.nome_equipe as nome, count(*) as total "
         			+ "from tb_tarefa a, tb_equipe b "
         			+ "where a.data_abertura between ? and ? and a.equipe_id_equipe = b.id_equipe "
         			+ "group by b.nome_equipe",
-            resultSetMapping = Tarefa.MAPPING_TOTAL_TAREFA_POR_EQUIPE),
+            resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_EQUIPE),
         @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS, 
         	query = "select b.nome_sistema as nome, count(*) as total "
         			+ "from tb_tarefa a, tb_sistema b "
         			+ "where a.data_abertura between ? and ? and a.sistema_id_sistema = b.id_sistema "
         			+ "group by b.nome_sistema",
-        	resultSetMapping = Tarefa.MAPPING_TOTAL_TAREFA_POR_SISTEMA),
+        	resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_SISTEMA),
         @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_EQUIPE, 
         	query = "select b.nome_sistema as nome, count(*) as total "
         			+ "from tb_tarefa a, tb_sistema b, tb_equipe c "
         			+ "where a.data_abertura between ? and ? and a.sistema_id_sistema = b.id_sistema and a.equipe_id_equipe = c.id_equipe and c.id_equipe = ? "
         			+ "group by b.nome_sistema",
-        	resultSetMapping = Tarefa.MAPPING_TOTAL_TAREFA_POR_SISTEMA),
+        	resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_SISTEMA),
         @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_TIPO,
         	query = "select b.nome_sistema as nome, count(*) as total "
         			+ "from tb_tarefa a, tb_sistema b "
         			+ "where a.data_abertura between ? and ? and a.sistema_id_sistema = b.id_sistema and a.tipo_demanda = ?"
         			+ "group by b.nome_sistema",
-        	resultSetMapping = Tarefa.MAPPING_TOTAL_TAREFA_POR_SISTEMA),
+        	resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_SISTEMA),
         @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_EQUIPE_E_TIPO,
         	query = "select b.nome_sistema as nome, count(*) as total "
         			+ "from tb_tarefa a, tb_sistema b, tb_equipe c "
         			+ "where a.data_abertura between ? and ? and a.sistema_id_sistema = b.id_sistema and a.equipe_id_equipe = c.id_equipe and c.id_equipe = ? and a.tipo_demanda = ? "
         			+ "group by b.nome_sistema",
-        	resultSetMapping = Tarefa.MAPPING_TOTAL_TAREFA_POR_SISTEMA)
+        	resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_SISTEMA),
+        @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_CLIENTES,
+        	query = "select c.nome_cliente as nome, count(*) as total "
+        			+ "from tb_tarefa t, tb_cliente c "
+        			+ "where t.data_abertura between ? and ? and t.cliente_id_cliente = c.id_cliente "
+        			+ "group by c.nome_cliente",
+        	resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_CLIENTE),
+        @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_CLIENTES_POR_EQUIPE,
+        	query = "select c.nome_cliente as nome, count(*) as total "
+        			+ "from tb_tarefa t, tb_cliente c, tb_equipe e "
+        			+ "where t.data_abertura between ? and ? and t.cliente_id_cliente = c.id_cliente and t.equipe_id_equipe = e.id_equipe and e.id_equipe = ?"
+        			+ "group by c.nome_cliente",
+        	resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_CLIENTE),
+        @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_CLIENTES_POR_TIPO,
+        	query = "select c.nome_cliente as nome, count(*) as total "
+        			+ "from tb_tarefa t, tb_cliente c "
+        			+ "where t.data_abertura between ? and ? and t.cliente_id_cliente = c.id_cliente and t.tipo_demanda = ? "
+        			+ "group by c.nome_cliente",
+        	resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_CLIENTE),
+        @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_QUERY_DEMANDAS_TODOS_CLIENTES_POR_EQUIPE_E_TIPO,
+        	query = "select c.nome_cliente as nome, count(*) as total "
+        			+ "from tb_tarefa t, tb_cliente c, tb_equipe e "
+        			+ "where t.data_abertura between ? and ? and t.cliente_id_cliente = c.id_cliente and t.equipe_id_equipe = e.id_equipe and e.id_equipe = ? and t.tipo_demanda = ? "
+        			+ "group by c.nome_cliente",
+        	resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_CLIENTE)
 })// fim da declaracao de namednativequeries
 public class Tarefa implements Serializable {
 
@@ -107,10 +132,15 @@ public class Tarefa implements Serializable {
     public static final String NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_EQUIPE = "totalDemandasTodosSistemasPorEquipe";
     public static final String NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_TIPO = "totalDemandasTodosSistemasPorTipo";
     public static final String NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_EQUIPE_E_TIPO = "totalDemandasTodosSistemasPorEquipeETipo";
+    public static final String NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_CLIENTES = "totalDemandasDeTodosClientes";
+    public static final String NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_CLIENTES_POR_EQUIPE = "totalDemandasTodosClientesPorEquipe";
+    public static final String NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_CLIENTES_POR_TIPO = "totalDemandasTodosClientesPorTipo";
+    public static final String NAMED_NATIVE_QUERY_QUERY_DEMANDAS_TODOS_CLIENTES_POR_EQUIPE_E_TIPO = "totalDemandasTodosClientesPorEquipeETipo";
 
     // Constantes que servem para guardar os nomes dos mapeamentos definidos para as queries nativas.
-    public static final String MAPPING_TOTAL_TAREFA_POR_EQUIPE = "totalTarefaPorEquipeMapping";
-    public static final String MAPPING_TOTAL_TAREFA_POR_SISTEMA = "totalTarefaPorSistemaMapping";
+    public static final String MAPPING_TOTAL_DEMANDAS_POR_EQUIPE = "totalDemandasPorEquipeMapping";
+    public static final String MAPPING_TOTAL_DEMANDAS_POR_SISTEMA = "totalDemandasPorSistemaMapping";
+    public static final String MAPPING_TOTAL_DEMANDAS_POR_CLIENTE = "totalDemandasPorClienteMapping";
 
     private static final long serialVersionUID = 1L;
 

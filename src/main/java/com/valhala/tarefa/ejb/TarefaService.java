@@ -177,12 +177,10 @@ public class TarefaService {
         Map<String, BigInteger> mapa = new HashMap<>();
         List<Object[]> retorno;
 
-        if (tipo.equals(TipoDemanda.TODOS)) {
-            retorno = this.tarefaDao.buscarTotaisDemandasPorPeriodoDeTodasEquipes(inicio, fim);
-        } else {
-            retorno = this.tarefaDao.buscarTotaisDemandasPorPeriodoEEquipePorTipo(inicio, fim, tipo.name());
-        } // fim do bloco if/else
-
+        retorno = tipo.equals(TipoDemanda.TODOS)? 
+        		this.tarefaDao.buscarTotaisDemandasPorPeriodoDeTodasEquipes(inicio, fim) : 
+        		this.tarefaDao.buscarTotaisDemandasPorPeriodoEEquipePorTipo(inicio, fim, tipo.name());
+        
         for (Object[] objeto : retorno) {
             String nome = (String) objeto[0];
             BigInteger total = (BigInteger) objeto[1];
@@ -199,17 +197,13 @@ public class TarefaService {
     	List<Object[]> retorno;
     	
     	if (id != null && !id.equals(Long.valueOf(0l))) {
-			if(tipo.equals(TipoDemanda.TODOS)) {
-				retorno = this.tarefaDao.buscarTotaisDemandasTodosSistemasPorEquipe(inicio, fim, id);
-			} else {
-				retorno = this.tarefaDao.buscarTotaisDemandasTodosSistemasPorTipoEEquipe(inicio, fim, id, tipo.name());
-			} // fim do bloco if/else
+			retorno = tipo.equals(TipoDemanda.TODOS) ? 
+					this.tarefaDao.buscarTotaisDemandasTodosSistemasPorEquipe(inicio, fim, id) : 
+					this.tarefaDao.buscarTotaisDemandasTodosSistemasPorTipoEEquipe(inicio, fim, id, tipo.name());
 		} else {
-			if (tipo.equals(TipoDemanda.TODOS)) {
-				retorno = this.tarefaDao.buscarTotaisDemandasTodosSistemas(inicio, fim);
-			} else {
-				retorno = this.tarefaDao.buscarTotaisDemandasTodosSistemasPorTipo(inicio, fim, tipo.name());
-			} // fim do bloco if/else
+			retorno = tipo.equals(TipoDemanda.TODOS) ?
+					this.tarefaDao.buscarTotaisDemandasTodosSistemas(inicio, fim) :
+					this.tarefaDao.buscarTotaisDemandasTodosSistemasPorTipo(inicio, fim, tipo.name());	
 		} // fim do bloco if/else
     	
     	for (Object[] objeto : retorno) {
@@ -220,5 +214,30 @@ public class TarefaService {
     	
     	return mapa;
     } // fim do método buscarTotaisTodosSistemaPorTipoEEquipe
+    
+    @Auditavel
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Map<String, BigInteger> buscarTotaisTodosClientesPorTipoEEquipe(Date inicio, Date fim, Long id, TipoDemanda tipo) throws ConsultaSemRetornoException {
+    	Map<String, BigInteger> mapa = new HashMap<>();
+    	List<Object[]> retorno;
+    	
+    	if (id != null && !id.equals(Long.valueOf(0l))) {
+			retorno = tipo.equals(TipoDemanda.TODOS) ? 
+					this.tarefaDao.buscarTotaisDemandasTodosClientesPorEquipe(inicio, fim, id) : 
+					this.tarefaDao.buscarTotaisDemandasTodosClientesPorEquipeETipo(inicio, fim, id, tipo.name());
+    	} else {
+    		retorno = tipo.equals(TipoDemanda.TODOS) ? 
+    				this.tarefaDao.buscarTotaisDemandasTodosClientes(inicio, fim) : 
+    				this.tarefaDao.buscarTotaisDemandasTodosClientesPorTipo(inicio, fim, tipo.name());
+		} // fim do bloco if/else
+    	
+    	for (Object[] objeto : retorno) {
+			String nome = (String) objeto[0];
+			BigInteger total = (BigInteger) objeto[1];
+			mapa.put(nome, total);
+		} // fim do bloco for
+    	
+    	return mapa;
+    }// fim do método buscarTotaisTodosClientesPorTipoEEquipe
 
 } // fim da classe TarefaService

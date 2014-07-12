@@ -84,5 +84,13 @@ public interface TarefaDao extends Dao<Tarefa> {
     List<Object[]> buscarTotaisDemandasTodosSistemasPorTipo(Date inicio, Date fim, String tipo) throws ConsultaSemRetornoException;
     
     List<Object[]> buscarTotaisDemandasTodosSistemasPorTipoEEquipe(Date inicio, Date fim, Long id, String tipo) throws ConsultaSemRetornoException;
+    
+    List<Object[]> buscarTotaisDemandasTodosClientes(Date inicio, Date fim) throws ConsultaSemRetornoException;
+    
+    List<Object[]> buscarTotaisDemandasTodosClientesPorTipo(Date inicio, Date fim, String tipo) throws ConsultaSemRetornoException;
+    
+    List<Object[]> buscarTotaisDemandasTodosClientesPorEquipe(Date inicio, Date fim, Long id) throws ConsultaSemRetornoException;
+    
+    List<Object[]> buscarTotaisDemandasTodosClientesPorEquipeETipo(Date inicio, Date fim, Long id, String tipo) throws ConsultaSemRetornoException;
 
 } // fim da interface TarefaDao

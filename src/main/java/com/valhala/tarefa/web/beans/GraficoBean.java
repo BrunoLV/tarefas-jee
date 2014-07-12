@@ -1,11 +1,13 @@
 package com.valhala.tarefa.web.beans;
 
+import com.valhala.tarefa.ejb.ClienteService;
 import com.valhala.tarefa.ejb.EquipeService;
 import com.valhala.tarefa.ejb.TarefaService;
 import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
 import com.valhala.tarefa.model.Equipe;
 import com.valhala.tarefa.model.TipoDemanda;
 
+import org.primefaces.event.ItemSelectEvent;
 import org.primefaces.model.chart.PieChartModel;
 
 import javax.annotation.PostConstruct;
@@ -38,9 +40,12 @@ public class GraficoBean extends BaseJSFBean implements Serializable {
     private TarefaService tarefaService;
     @EJB
     private EquipeService equipeService;
+    @EJB
+    private ClienteService clienteService;
     
-    private PieChartModel graficoDemandasEquipes = new PieChartModel();
-    private PieChartModel graficoDemandasSistemas = new PieChartModel();
+    private PieChartModel graficoDemandasEquipes;
+    private PieChartModel graficoDemandasSistemas;
+    private PieChartModel graficoDemandasCliente;
     
     private Date dataInicial;
     private Date dataFinal;
@@ -66,6 +71,7 @@ public class GraficoBean extends BaseJSFBean implements Serializable {
 			} // fim do bloco try/catch
 	    	this.gerarGraficoDemandasEquipe();
 	    	this.gerarGraficoDemandasSistemas();
+	    	this.gerarGraficoDemandasClientes();
 		} catch (ConsultaSemRetornoException e) {
 			inserirMensagemDeErro(e.getMessage());
 		}
@@ -99,12 +105,30 @@ public class GraficoBean extends BaseJSFBean implements Serializable {
 		}
     }
     
+    public void gerarGraficoDemandasClientes() {
+    	this.graficoDemandasCliente = new PieChartModel();
+    	try {
+			Map<String, BigInteger> mapa = this.tarefaService.buscarTotaisTodosClientesPorTipoEEquipe(this.dataInicial, this.dataFinal, this.idEquipe, this.tipoDemanda);
+			Set<String> chaves = mapa.keySet();
+			for (String chave : chaves) {
+				graficoDemandasCliente.set(chave, mapa.get(chave).intValue());
+			}
+		} catch (ConsultaSemRetornoException e) {
+			graficoDemandasCliente = new PieChartModel();
+			inserirMensagemDeErro(e.getMessage());
+		}
+    }
+    
     public void atualizarGraficoEquipe() {
     	gerarGraficoDemandasEquipe();
     }
     
     public void atualizarGraficoTarefa() {
     	gerarGraficoDemandasSistemas();
+    }
+    
+    public void atualizarGraficoCliente() {
+    	gerarGraficoDemandasClientes();
     }
 
     private Date calcularDataInicial() throws ParseException {
@@ -171,6 +195,10 @@ public class GraficoBean extends BaseJSFBean implements Serializable {
 
 	public PieChartModel getGraficoDemandasSistemas() {
 		return graficoDemandasSistemas;
+	}
+	
+	public PieChartModel getGraficoDemandasCliente() {
+		return graficoDemandasCliente;
 	}
 
 }

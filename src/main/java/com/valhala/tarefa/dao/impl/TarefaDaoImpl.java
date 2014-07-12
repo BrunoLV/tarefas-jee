@@ -194,4 +194,60 @@ public class TarefaDaoImpl extends BaseDao<Tarefa> implements TarefaDao {
 		return totais;
 	} // fim do método buscarTotaisIncidentesTodosSistemasPorTipoEEquipe
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> buscarTotaisDemandasTodosClientes(Date inicio, Date fim) throws ConsultaSemRetornoException {
+		Query query = this.entityManager.createNamedQuery(Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_CLIENTES);
+		query.setParameter(1, inicio);
+		query.setParameter(2, fim);
+		List<Object[]> totais = query.getResultList();
+		if (totais.isEmpty()) {
+			throw new ConsultaSemRetornoException("Consulta não trouxe resultados.");
+		} // fim do bloco if
+		return totais;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> buscarTotaisDemandasTodosClientesPorTipo(Date inicio, Date fim, String tipo) throws ConsultaSemRetornoException {
+		Query query = this.entityManager.createNamedQuery(Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_CLIENTES_POR_TIPO);
+		query.setParameter(1, inicio);
+		query.setParameter(2, fim);
+		query.setParameter(3, tipo);
+		List<Object[]> totais = query.getResultList();
+		if (totais.isEmpty()) {
+			throw new ConsultaSemRetornoException("Consulta não trouxe resultados.");
+		} // fim do bloco if
+		return totais;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> buscarTotaisDemandasTodosClientesPorEquipe(Date inicio, Date fim, Long id) throws ConsultaSemRetornoException {
+		Query query = this.entityManager.createNamedQuery(Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_EQUIPE);
+		query.setParameter(1, inicio);
+		query.setParameter(2, fim);
+		query.setParameter(3, id);
+		List<Object[]> totais = query.getResultList();
+		if (totais.isEmpty()) {
+			throw new ConsultaSemRetornoException("Consulta não trouxe resultados.");
+		} // fim do bloco if
+		return totais;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> buscarTotaisDemandasTodosClientesPorEquipeETipo(Date inicio, Date fim, Long id, String tipo) throws ConsultaSemRetornoException {
+		Query query = this.entityManager.createNamedQuery(Tarefa.NAMED_NATIVE_QUERY_QUERY_DEMANDAS_TODOS_CLIENTES_POR_EQUIPE_E_TIPO);
+		query.setParameter(1, inicio);
+		query.setParameter(2, fim);
+		query.setParameter(3, id);
+		query.setParameter(4, tipo);
+		List<Object[]> totais = query.getResultList();
+		if (totais.isEmpty()) {
+			throw new ConsultaSemRetornoException("Consulta não trouxe resultados.");
+		} // fim do bloco if
+		return totais;
+	}
+
 } // fim da classe TarefaDaoImpl

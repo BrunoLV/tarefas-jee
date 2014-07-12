@@ -1,16 +1,29 @@
 package com.valhala.tarefa.web.beans;
 
-import com.valhala.tarefa.qualifiers.*;
-import com.valhala.tarefa.web.TipoCarga;
-import org.primefaces.model.UploadedFile;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
+
+import org.primefaces.model.UploadedFile;
+
+import com.valhala.tarefa.exceptions.StreamConverterException;
+import com.valhala.tarefa.model.Cliente;
+import com.valhala.tarefa.model.Colaborador;
+import com.valhala.tarefa.model.Equipe;
+import com.valhala.tarefa.model.Sistema;
+import com.valhala.tarefa.model.Tarefa;
+import com.valhala.tarefa.qualifiers.CargaCliente;
+import com.valhala.tarefa.qualifiers.CargaColaborador;
+import com.valhala.tarefa.qualifiers.CargaEquipe;
+import com.valhala.tarefa.qualifiers.CargaSistema;
+import com.valhala.tarefa.qualifiers.CargaTarefa;
+import com.valhala.tarefa.util.StreamConverter;
+import com.valhala.tarefa.web.TipoCarga;
 
 /**
  * ManagedBean reponsavel pela interação de tela que envolve as ações de carga de dados dentro do sistema.
@@ -30,23 +43,23 @@ public class CargaBean extends BaseJSFBean implements Serializable {
      */
     @Inject
     @CargaSistema
-    private Event<InputStream> eventoCargaSistema;
+    private Event<List<Sistema>> eventoCargaSistema;
 
     @Inject
     @CargaCliente
-    private Event<InputStream> eventoCargaCliente;
+    private Event<List<Cliente>> eventoCargaCliente;
 
     @Inject
     @CargaEquipe
-    private Event<InputStream> eventoCargaEquipe;
+    private Event<List<Equipe>> eventoCargaEquipe;
 
     @Inject
     @CargaTarefa
-    private Event<InputStream> eventoCargaTarefa;
+    private Event<List<Tarefa>> eventoCargaTarefa;
 
     @Inject
     @CargaColaborador
-    private Event<InputStream> eventoCargaColaborador;
+    private Event<List<Colaborador>> eventoCargaColaborador;
 
     // Objeto que representa o arquivo que foi enviado para o servidor.
     private UploadedFile file;
@@ -81,25 +94,25 @@ public class CargaBean extends BaseJSFBean implements Serializable {
         try {
             switch (this.tipoCarga) {
                 case SISTEMAS:
-                    eventoCargaSistema.fire(this.file.getInputstream());
+                    eventoCargaSistema.fire(StreamConverter.converterStreamParaListaDeSistema(this.file.getInputstream()));
                     break;
                 case CLIENTES:
-                    eventoCargaCliente.fire(this.file.getInputstream());
+                    eventoCargaCliente.fire(StreamConverter.converterStreamParaListaDeClientes(this.file.getInputstream()));
                     break;
                 case EQUIPES:
-                    eventoCargaEquipe.fire(this.file.getInputstream());
+                    eventoCargaEquipe.fire(StreamConverter.converterStreamParaListaDeEquipes(this.file.getInputstream()));
                     break;
                 case TAREFAS:
-                    eventoCargaTarefa.fire(this.file.getInputstream());
+                    eventoCargaTarefa.fire(StreamConverter.converterStreamParaListaDeTarefas(this.file.getInputstream()));
                     break;
                 case COLABORADORES:
-                    eventoCargaColaborador.fire(this.file.getInputstream());
+                    eventoCargaColaborador.fire(StreamConverter.converterStreamParaListaDeColaboradores(this.file.getInputstream()));
                     break;
                 default:
                     break;
             } // fim do bloco switch
             inserirMensagemDeSucesso("A carga foi remetida. No final você receberá um email com o resultado.");
-        } catch (IOException e) {
+        } catch (IOException | StreamConverterException e) {
             inserirMensagemDeErro(String.format("Ocorreu um erro durante a execução da ação: %s", e.getMessage()));
         } // fim do bloco try/catch
     } // fim do método upload
