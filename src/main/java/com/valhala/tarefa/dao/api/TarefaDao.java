@@ -73,24 +73,113 @@ public interface TarefaDao extends Dao<Tarefa> {
      */
     List<Tarefa> buscarTodasPorStatusComDatasDefinidas(List<Status> status) throws ConsultaSemRetornoException;
 
+    /**
+     * Método utilizado para buscar totais de demandas e nome da equipe a qual pertencem filtrando por um periodo definido.
+     * 
+     * @param inicio
+     * @param fim
+     * @return
+     * @throws ConsultaSemRetornoException
+     */
     List<Object[]> buscarTotaisDemandasPorPeriodoDeTodasEquipes(Date inicio, Date fim) throws ConsultaSemRetornoException;
 
+    /**
+     * Método utilizado para buscar totais de demandas e no da equipe a qual pertencem filtrando por um periodo definido, por tipo de demanda e equipes.
+     * 
+     * @param inicio
+     * @param fim
+     * @param tipo
+     * @return
+     * @throws ConsultaSemRetornoException
+     */
     List<Object[]> buscarTotaisDemandasPorPeriodoEEquipePorTipo(Date inicio, Date fim, String tipo) throws ConsultaSemRetornoException;
     
+    /**
+     * Método utilizado para buscar totais de demandas e o nome do sistema a qual pertencem filtandro por um periodo definido.
+     * 
+     * @param inicio
+     * @param fim
+     * @return
+     * @throws ConsultaSemRetornoException
+     */
     List<Object[]> buscarTotaisDemandasTodosSistemas(Date inicio, Date fim) throws ConsultaSemRetornoException;
     
+    /**
+     * Método utilizado para buscar totais de demandas e o nome do sistema a qual pertencem filtrando por um periodo definido e equipe.
+     * 
+     * @param inicio
+     * @param fim
+     * @param id
+     * @return
+     * @throws ConsultaSemRetornoException
+     */
     List<Object[]> buscarTotaisDemandasTodosSistemasPorEquipe(Date inicio, Date fim, Long id) throws ConsultaSemRetornoException;
     
+    /**
+     * Método utilizado para buscar totais de demandas e o nome do sistema a qual pertencem filtrando por um periodo definido e tipo de demanda.
+     * 
+     * @param inicio
+     * @param fim
+     * @param tipo
+     * @return
+     * @throws ConsultaSemRetornoException
+     */
     List<Object[]> buscarTotaisDemandasTodosSistemasPorTipo(Date inicio, Date fim, String tipo) throws ConsultaSemRetornoException;
     
+    /**
+     * Método utilizado para buscar totais de demandas e o nome do sistema a qual pertencem filtrando por um periodo definido, equipe e tipo de demanda. 
+     * 
+     * @param inicio
+     * @param fim
+     * @param id
+     * @param tipo
+     * @return
+     * @throws ConsultaSemRetornoException
+     */
     List<Object[]> buscarTotaisDemandasTodosSistemasPorTipoEEquipe(Date inicio, Date fim, Long id, String tipo) throws ConsultaSemRetornoException;
     
+    /**
+     * Método utilizado para buscar totais de demandas e nome do cliente a qual pertencem filtrando por um periodo definido.
+     * 
+     * @param inicio
+     * @param fim
+     * @return
+     * @throws ConsultaSemRetornoException
+     */
     List<Object[]> buscarTotaisDemandasTodosClientes(Date inicio, Date fim) throws ConsultaSemRetornoException;
     
+    /**
+     * Método utilizado para buscar totais de demandas e nome do cliente a qual pertencem filtrando por um periodo definido e tipo de demanda.
+     * 
+     * @param inicio
+     * @param fim
+     * @param tipo
+     * @return
+     * @throws ConsultaSemRetornoException
+     */
     List<Object[]> buscarTotaisDemandasTodosClientesPorTipo(Date inicio, Date fim, String tipo) throws ConsultaSemRetornoException;
     
+    /**
+     * Método utilizado para buscar totais de demandas e nome do cliente a qual pertencem filtrando por um periodo definido e por equipe. 
+     * 
+     * @param inicio
+     * @param fim
+     * @param id
+     * @return
+     * @throws ConsultaSemRetornoException
+     */
     List<Object[]> buscarTotaisDemandasTodosClientesPorEquipe(Date inicio, Date fim, Long id) throws ConsultaSemRetornoException;
     
+    /**
+     * Método utilizado para buscar totais de demandas e nome do cliente a qual pertencem filtrando por um periodo definido, equipe e tipo de demanda.
+     * 
+     * @param inicio
+     * @param fim
+     * @param id
+     * @param tipo
+     * @return
+     * @throws ConsultaSemRetornoException
+     */
     List<Object[]> buscarTotaisDemandasTodosClientesPorEquipeETipo(Date inicio, Date fim, Long id, String tipo) throws ConsultaSemRetornoException;
 
 } // fim da interface TarefaDao

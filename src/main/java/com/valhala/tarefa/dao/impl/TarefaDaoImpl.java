@@ -205,7 +205,7 @@ public class TarefaDaoImpl extends BaseDao<Tarefa> implements TarefaDao {
 			throw new ConsultaSemRetornoException("Consulta não trouxe resultados.");
 		} // fim do bloco if
 		return totais;
-	}
+	} // fim do método buscarTotaisDemandasTodosClientes
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -219,7 +219,7 @@ public class TarefaDaoImpl extends BaseDao<Tarefa> implements TarefaDao {
 			throw new ConsultaSemRetornoException("Consulta não trouxe resultados.");
 		} // fim do bloco if
 		return totais;
-	}
+	} // fim do método buscarTotaisDemandasTodosClientesPorTipo
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -233,7 +233,7 @@ public class TarefaDaoImpl extends BaseDao<Tarefa> implements TarefaDao {
 			throw new ConsultaSemRetornoException("Consulta não trouxe resultados.");
 		} // fim do bloco if
 		return totais;
-	}
+	} // fim do método buscarTotaisDemandasTodosClientesPorEquipe
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -248,6 +248,6 @@ public class TarefaDaoImpl extends BaseDao<Tarefa> implements TarefaDao {
 			throw new ConsultaSemRetornoException("Consulta não trouxe resultados.");
 		} // fim do bloco if
 		return totais;
-	}
+	} // fim do método buscarTotaisDemandasTodosClientePorEquipeETipo
 
 } // fim da classe TarefaDaoImpl

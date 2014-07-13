@@ -19,32 +19,19 @@ import java.util.Date;
         @SqlResultSetMapping(name = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_CLIENTE, columns = {@ColumnResult(name = "nome"), @ColumnResult(name = "total")})
 }) // fim da declaracao dos SqlResultSetMappings
 @NamedQueries({
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_TODOS,
-        	query = "select t from Tarefa as t"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_COLABORADOR, 
-        	query = "select t from Tarefa as t where t.colaborador = :colaborador"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_COLABORADOR_E_STATUS, 
-        	query = "select t from Tarefa as t where t.colaborador = :colaborador and t.status in (:status)"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_STATUS, 
-        	query = "select t from Tarefa as t where t.status in (:status)"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_EQUIPE, 
-        	query = "select t from Tarefa as t where t.equipe = :equipe"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_CLIENTE, 
-        	query = "select t from Tarefa as t where t.cliente = :cliente"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_SISTEMA, 
-        	query = "select t from Tarefa as t where t.sistema = :sistema"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_STATUS_DATAS_DEFINIDAS, 
-        	query = "select t from Tarefa as t where t.status in (:status) and t.inicio is not null and t.finalPlanejado is not null"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_TODOS_DATAS_DEFINIDAS, 
-        	query = "select t from Tarefa as t where t.inicio is not null and t.finalPlanejado is not null"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_COLABORADOR_E_STATUS_DATAS_DEFINIDAS, 
-        	query = "select t from Tarefa as t where t.colaborador = :colaborador and t.status in (:status) and t.inicio is not null and t.finalPlanejado is not null"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_EQUIPE_E_DATAS, 
-        	query = "select t from Tarefa as t where t.equipe = :equipe and t.abertura between :dataInicio and :dataFim"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_CLIENTE_E_DATAS, 
-        	query = "select t from Tarefa as  t where t.cliente = :cliente and t.abertura between :dataInicio and :dataFim"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_SISTEMA_E_DATAS, 
-        	query = "select t from Tarefa as t where t.sistema = :sistema and t.abertura between :dataInicio and :dataFim")
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_TODOS, query = "select t from Tarefa as t"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_COLABORADOR, query = "select t from Tarefa as t where t.colaborador = :colaborador"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_COLABORADOR_E_STATUS, query = "select t from Tarefa as t where t.colaborador = :colaborador and t.status in (:status)"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_STATUS, query = "select t from Tarefa as t where t.status in (:status)"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_EQUIPE, query = "select t from Tarefa as t where t.equipe = :equipe"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_CLIENTE, query = "select t from Tarefa as t where t.cliente = :cliente"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_SISTEMA, query = "select t from Tarefa as t where t.sistema = :sistema"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_STATUS_DATAS_DEFINIDAS, query = "select t from Tarefa as t where t.status in (:status) and t.inicio is not null and t.finalPlanejado is not null"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_TODOS_DATAS_DEFINIDAS, query = "select t from Tarefa as t where t.inicio is not null and t.finalPlanejado is not null"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_COLABORADOR_E_STATUS_DATAS_DEFINIDAS, query = "select t from Tarefa as t where t.colaborador = :colaborador and t.status in (:status) and t.inicio is not null and t.finalPlanejado is not null"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_EQUIPE_E_DATAS, query = "select t from Tarefa as t where t.equipe = :equipe and t.abertura between :dataInicio and :dataFim"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_CLIENTE_E_DATAS, query = "select t from Tarefa as  t where t.cliente = :cliente and t.abertura between :dataInicio and :dataFim"),
+        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_SISTEMA_E_DATAS, query = "select t from Tarefa as t where t.sistema = :sistema and t.abertura between :dataInicio and :dataFim")
 }) // fim da declaracao de namedqueries
 @NamedNativeQueries({
         @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_TODAS_EQUIPES_POR_TIPO, 
@@ -153,7 +140,7 @@ public class Tarefa implements Serializable {
     private Date inicio;
     private Date finalPlanejado;
     private Date finalEfetivo;
-    private Status status;
+    private Status status;	
     private Integer estimativa;
     private Integer totalHoras;
     private Boolean replanajado;
