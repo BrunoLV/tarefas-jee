@@ -1,26 +1,31 @@
 package com.valhala.tarefa.web.beans;
 
-import com.valhala.tarefa.ejb.ClienteService;
-import com.valhala.tarefa.ejb.EquipeService;
-import com.valhala.tarefa.ejb.TarefaService;
-import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
-import com.valhala.tarefa.model.Equipe;
-import com.valhala.tarefa.model.TipoDemanda;
-
-import org.primefaces.event.ItemSelectEvent;
-import org.primefaces.model.chart.PieChartModel;
+import java.io.Serializable;
+import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
-import java.io.Serializable;
-import java.math.BigInteger;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import org.primefaces.model.chart.PieChartModel;
+
+import com.valhala.tarefa.ejb.ClienteService;
+import com.valhala.tarefa.ejb.EquipeService;
+import com.valhala.tarefa.ejb.TarefaService;
+import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
+import com.valhala.tarefa.model.Equipe;
+import com.valhala.tarefa.model.TipoDemanda;
 
 /**
  * Managed Bean utilizado para as ações de tela relacionadas a gráficos.
@@ -82,9 +87,11 @@ public class GraficoBean extends BaseJSFBean implements Serializable {
         try {
             Map<String, BigInteger> mapa = this.tarefaService.buscarTotaisPorEquipeEPeriodoETipo(this.dataInicial, this.dataFinal, this.tipoDemanda);
             Set<String> chaves = mapa.keySet();
+            Map<String, Number> valor = new LinkedHashMap<>();
             for (String chave : chaves) {
-                graficoDemandasEquipes.set(chave, mapa.get(chave).intValue());
+            	valor.put(chave, mapa.get(chave));
             } // fim do bloco for
+            graficoDemandasEquipes.setData(valor);
         } catch (ConsultaSemRetornoException e) {
         	graficoDemandasEquipes = new PieChartModel();
         	inserirMensagemDeErro(e.getMessage());
@@ -96,9 +103,11 @@ public class GraficoBean extends BaseJSFBean implements Serializable {
     	try {
 			Map<String, BigInteger> mapa = this.tarefaService.buscarTotaisTodosSistemaPorTipoEEquipe(this.dataInicial, this.dataFinal, this.idEquipe, this.tipoDemanda);
 			Set<String> chaves = mapa.keySet();
+			Map<String, Number> valor = new LinkedHashMap<>();
 			for (String chave : chaves) {
-				graficoDemandasSistemas.set(chave, mapa.get(chave).intValue());
+				valor.put(chave, mapa.get(chave));
 			}
+			graficoDemandasSistemas.setData(valor);
 		} catch (ConsultaSemRetornoException e) {
 			graficoDemandasSistemas = new PieChartModel();
 			inserirMensagemDeErro(e.getMessage());
@@ -110,9 +119,11 @@ public class GraficoBean extends BaseJSFBean implements Serializable {
     	try {
 			Map<String, BigInteger> mapa = this.tarefaService.buscarTotaisTodosClientesPorTipoEEquipe(this.dataInicial, this.dataFinal, this.idEquipe, this.tipoDemanda);
 			Set<String> chaves = mapa.keySet();
+			Map<String, Number> valor = new LinkedHashMap<>();
 			for (String chave : chaves) {
-				graficoDemandasCliente.set(chave, mapa.get(chave).intValue());
+				valor.put(chave, mapa.get(chave));
 			}
+			graficoDemandasCliente.setData(valor);
 		} catch (ConsultaSemRetornoException e) {
 			graficoDemandasCliente = new PieChartModel();
 			inserirMensagemDeErro(e.getMessage());

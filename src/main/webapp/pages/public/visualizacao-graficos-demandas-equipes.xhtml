@@ -22,17 +22,28 @@
 					</p:panelGrid>
 					<p:commandButton value="#{recurso['button.atualizarGraficoGeral']}" 
 						actionListener="#{GraficoBean.atualizarGraficoEquipe}"
-						update="demandasEquipePieChart"
+						update="@form"
 						ajax="false" />
 					<br />
 
 					<p:pieChart id="demandasEquipePieChart"
 						value="#{GraficoBean.graficoDemandasEquipes}"
-						title="#{recurso['title.grafico.geral']}" 
+						title="#{recurso['title.grafico.geral']}"
 						legendPosition="e"
 						showDataLabels="true" 
 						fill="false" 
 						sliceMargin="5" />
+					
+					<br />
+					
+					<p:pieChart id="demandasEquipePieChart2"
+						value="#{GraficoBean.graficoDemandasEquipes}"
+						title="#{recurso['title.grafico.geral']}" 
+						legendPosition="e"
+						showDataLabels="true" 
+						dataFormat="value"
+						fill="false" 
+						sliceMargin="5" />					
 				</p:panel>
 			</h:form>
 		</div>
