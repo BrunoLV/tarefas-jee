@@ -70,6 +70,11 @@
                                     showOn="button" required="false"
                                     requiredMessage="#{erro['message.campoObrigatorio']}" locale="pt"/>
                         <p:message for="inicioCalendar"/>
+                        <p:outputLabel value="#{recurso['label.dataHomologacao']}" for="homologacaoCalendar"/>
+                        <p:calendar id="homologacaoCalendar" pattern="dd/MM/yyyy" value="#{TarefaBean.tarefa.homologacao}"
+                                    showOn="button" required="false"
+                                    requiredMessage="#{erro['message.campoObrigatorio']}" locale="pt"/>
+                        <p:message for="homologacaoCalendar"/>
                         <p:outputLabel value="#{recurso['label.dataFinalPlanejado']}" for="finalPlanejadoCalendar"/>
                         <p:calendar id="finalPlanejadoCalendar" pattern="dd/MM/yyyy"
                                     value="#{TarefaBean.tarefa.finalPlanejado}" showOn="button" required="false"

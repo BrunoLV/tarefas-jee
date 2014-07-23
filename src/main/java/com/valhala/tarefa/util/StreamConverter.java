@@ -1,17 +1,23 @@
 package com.valhala.tarefa.util;
 
-import com.valhala.tarefa.exceptions.StreamConverterException;
-import com.valhala.tarefa.model.*;
-
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import com.valhala.tarefa.exceptions.StreamConverterException;
+import com.valhala.tarefa.model.Atribuicao;
+import com.valhala.tarefa.model.Cliente;
+import com.valhala.tarefa.model.Colaborador;
+import com.valhala.tarefa.model.Equipe;
+import com.valhala.tarefa.model.Prioridade;
+import com.valhala.tarefa.model.Sistema;
+import com.valhala.tarefa.model.Status;
+import com.valhala.tarefa.model.Tarefa;
+import com.valhala.tarefa.model.TipoDemanda;
 
 /**
  * Classe utilizada para converter Streams em objetos de tipos definidos.
@@ -41,7 +47,7 @@ public class StreamConverter {
                 sistemas.add(new Sistema(linha));
                 linhaLida += 1;
             } // fim do bloco try/catch
-        } catch (IOException | ArrayIndexOutOfBoundsException e) {
+        } catch (Exception e) {
             throw new StreamConverterException(String.format("Ocorreu um erro de processamento na linha %d - Erro: %s", linhaLida, e.getMessage()), e);
         } // fim do bloco try/catch
         return sistemas;
@@ -64,7 +70,7 @@ public class StreamConverter {
                 clientes.add(new Cliente(linha));
                 linhaLida += 1;
             } // fim do bloco while
-        } catch (IOException | ArrayIndexOutOfBoundsException e) {
+        } catch (Exception e) {
             throw new StreamConverterException(String.format("Ocorreu um erro de processamento na linha %d - Erro: %s", linhaLida, e.getMessage()), e);
         } // fim do bloco try/catch
         return clientes;
@@ -87,7 +93,7 @@ public class StreamConverter {
                 equipes.add(new Equipe(linha));
                 linhaLida += 1;
             } // fim do bloco while
-        } catch (IOException | ArrayIndexOutOfBoundsException e) {
+        } catch (Exception e) {
             throw new StreamConverterException(String.format("Ocorreu um erro de processamento na linha %d - Erro: %s", linhaLida, e.getMessage()), e);
         } // fim do bloco try/catch
         return equipes;
@@ -116,7 +122,7 @@ public class StreamConverter {
                 colaboradores.add(new Colaborador(null, atributos[0], atributos[1], null, atribuicoes));
                 linhaLida += 1;
             } // fim do bloco while
-        } catch (IOException | ArrayIndexOutOfBoundsException e) {
+        } catch (Exception e) {
             throw new StreamConverterException(String.format("Ocorreu um erro de processamento na linha %d - Erro: %s", linhaLida, e.getMessage()), e);
         } // fim do bloco try/catch
         return colaboradores;
@@ -148,6 +154,7 @@ public class StreamConverter {
                         null,
                         null,
                         null,
+                        null,
                         atributos[4] != null && !atributos[4].trim().equals("") ? Status.valueOf(atributos[4]) : Status.ABERTO,
                         null,
                         null,
@@ -160,7 +167,7 @@ public class StreamConverter {
                 tarefas.add(tarefa);
                 linhaLida += 1;
             } // fim do bloco while
-        } catch (IOException | ParseException | ArrayIndexOutOfBoundsException e) {
+        } catch (Exception e) {
             throw new StreamConverterException(String.format("Ocorreu um erro de processamento na linha %d - Erro: %s", linhaLida, e.getMessage()), e);
         } // fim do bloco try/catch
         return tarefas;

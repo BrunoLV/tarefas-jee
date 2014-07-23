@@ -138,6 +138,7 @@ public class Tarefa implements Serializable {
     private TipoDemanda tipoDemanda;
     private Date abertura;
     private Date inicio;
+    private Date homologacao;
     private Date finalPlanejado;
     private Date finalEfetivo;
     private Status status;	
@@ -158,7 +159,7 @@ public class Tarefa implements Serializable {
     }
 
     public Tarefa(String numeroDemanda, String titulo, Prioridade prioridade, TipoDemanda tipoDemanda,
-                  Date abertura, Date inicio, Date finalPlanejado, Date finalEfetivo,
+                  Date abertura, Date inicio, Date homologacao, Date finalPlanejado, Date finalEfetivo,
                   Status status, Integer estimativa, Integer totalHoras, Boolean replanajado,
                   String observacao, Colaborador colaborador, Cliente cliente,
                   Equipe equipe, Sistema sistema) {
@@ -169,6 +170,7 @@ public class Tarefa implements Serializable {
         this.tipoDemanda = tipoDemanda;
         this.abertura = abertura;
         this.inicio = inicio;
+        this.homologacao = homologacao;
         this.finalPlanejado = finalPlanejado;
         this.finalEfetivo = finalEfetivo;
         this.status = status;
@@ -262,6 +264,16 @@ public class Tarefa implements Serializable {
     public void setInicio(Date inicio) {
         this.inicio = inicio;
     }
+    
+    @Temporal(TemporalType.DATE)
+    @Column(name = "data_homologacao")
+    public Date getHomologacao() {
+		return homologacao;
+	}
+    
+    public void setHomologacao(Date homologacao) {
+		this.homologacao = homologacao;
+	}
 
     @Temporal(TemporalType.DATE)
     @Column(name = "data_fim_planejado")

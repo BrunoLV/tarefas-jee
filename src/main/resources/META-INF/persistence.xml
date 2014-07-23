@@ -5,7 +5,6 @@
     <persistence-unit name="tarefas-PU" transaction-type="JTA">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <jta-data-source>java:jboss/datasources/TarefasJeeDS</jta-data-source>
-        <class>com.valhala.tarefa.model.Colaborador</class>
 
         <properties>
             <!-- propriedades do hibernate -->
