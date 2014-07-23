@@ -155,6 +155,7 @@ public class StreamConverter {
                         null,
                         null,
                         null,
+                        null,
                         atributos[4] != null && !atributos[4].trim().equals("") ? Status.valueOf(atributos[4]) : Status.ABERTO,
                         null,
                         null,

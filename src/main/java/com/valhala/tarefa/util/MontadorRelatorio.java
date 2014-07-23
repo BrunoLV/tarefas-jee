@@ -26,7 +26,7 @@ import java.util.Properties;
  */
 public class MontadorRelatorio {
 
-private static final String[] ROTULOS_PLANILHA_TAREFA = {"DEMANDA", "TITULO", "TIPO", "PRIORIDADE", "CLIENTE", "SISTEMA", "ABERTURA", "INICIO", "HOMOLOGACAO", "FINAL PLANEJADO", "FINAL EFETIVO", "STATUS", "COLABORADOR", "OBSERVACAO"};
+private static final String[] ROTULOS_PLANILHA_TAREFA = {"DEMANDA", "TITULO", "TIPO", "PRIORIDADE", "CLIENTE", "SISTEMA", "ABERTURA", "INICIO", "DESENVOLVIMENTO", "HOMOLOGACAO", "FINAL PLANEJADO", "FINAL EFETIVO", "STATUS", "COLABORADOR", "OBSERVACAO"};
     private static final int NUMERO_LINHA_ROTULO = 0;
     private static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy");
     private static final SimpleDateFormat SDF_ARQUIVO = new SimpleDateFormat("dd-MM-yyyy_hh-mm-ss");
@@ -126,12 +126,13 @@ private static final String[] ROTULOS_PLANILHA_TAREFA = {"DEMANDA", "TITULO", "T
         linha.createCell(5).setCellValue(tarefa.getSistema() != null ? tarefa.getSistema().getNome() : properties.getProperty("arquivo.registro.inexistente"));
         linha.createCell(6).setCellValue(tarefa.getAbertura() != null ? SDF.format(tarefa.getAbertura()) : properties.getProperty("arquivo.registro.inexistente"));
         linha.createCell(7).setCellValue(tarefa.getInicio() != null ? SDF.format(tarefa.getInicio()) : properties.getProperty("arquivo.registro.inexistente"));
-        linha.createCell(8).setCellValue(tarefa.getHomologacao() != null ? SDF.format(tarefa.getHomologacao()) : properties.getProperty("arquivo.registro.inexistente"));
-        linha.createCell(9).setCellValue(tarefa.getFinalPlanejado() != null ? SDF.format(tarefa.getFinalPlanejado()) : properties.getProperty("arquivo.registro.inexistente"));
-        linha.createCell(10).setCellValue(tarefa.getFinalEfetivo() != null ? SDF.format(tarefa.getFinalEfetivo()) : properties.getProperty("arquivo.registro.inexistente"));
-        linha.createCell(11).setCellValue(tarefa.getStatus().getNomeExibicao());
-        linha.createCell(12).setCellValue(tarefa.getColaborador() != null ? tarefa.getColaborador().getNome() : properties.getProperty("arquivo.registro.inexistente"));
-        linha.createCell(13).setCellValue(tarefa.getObservacao() != null && !tarefa.getObservacao().trim().equals("") ? tarefa.getObservacao() : properties.getProperty("arquivo.registro.inexistente"));
+        linha.createCell(8).setCellValue(tarefa.getDesenvolvimento() != null ? SDF.format(tarefa.getDesenvolvimento()) : properties.getProperty("arquivo.registro.inexistente"));
+        linha.createCell(9).setCellValue(tarefa.getHomologacao() != null ? SDF.format(tarefa.getHomologacao()) : properties.getProperty("arquivo.registro.inexistente"));
+        linha.createCell(10).setCellValue(tarefa.getFinalPlanejado() != null ? SDF.format(tarefa.getFinalPlanejado()) : properties.getProperty("arquivo.registro.inexistente"));
+        linha.createCell(11).setCellValue(tarefa.getFinalEfetivo() != null ? SDF.format(tarefa.getFinalEfetivo()) : properties.getProperty("arquivo.registro.inexistente"));
+        linha.createCell(12).setCellValue(tarefa.getStatus().getNomeExibicao());
+        linha.createCell(13).setCellValue(tarefa.getColaborador() != null ? tarefa.getColaborador().getNome() : properties.getProperty("arquivo.registro.inexistente"));
+        linha.createCell(14).setCellValue(tarefa.getObservacao() != null && !tarefa.getObservacao().trim().equals("") ? tarefa.getObservacao() : properties.getProperty("arquivo.registro.inexistente"));
     } // fim do método monstarLinhaTarefa
 
     /*

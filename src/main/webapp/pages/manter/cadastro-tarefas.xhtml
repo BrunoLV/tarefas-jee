@@ -70,6 +70,11 @@
                                     showOn="button" required="false"
                                     requiredMessage="#{erro['message.campoObrigatorio']}" locale="pt"/>
                         <p:message for="inicioCalendar"/>
+                        <p:outputLabel value="#{recurso['label.dataDesenvolvimento']}" for="desenvolvimentoCalendar"/>
+                        <p:calendar id="desenvolvimentoCalendar" pattern="dd/MM/yyyy" value="#{TarefaBean.tarefa.desenvolvimento}"
+                                    showOn="button" required="false"
+                                    requiredMessage="#{erro['message.campoObrigatorio']}" locale="pt"/>
+                        <p:message for="desenvolvimentoCalendar"/>
                         <p:outputLabel value="#{recurso['label.dataHomologacao']}" for="homologacaoCalendar"/>
                         <p:calendar id="homologacaoCalendar" pattern="dd/MM/yyyy" value="#{TarefaBean.tarefa.homologacao}"
                                     showOn="button" required="false"
@@ -102,9 +107,9 @@
                         <p:message for="colaboradorList"/>
                         <p:outputLabel value="#{recurso['label.replanejado']}" for="replanejadoBooleanCheckBox"/>
                         <p:selectBooleanCheckbox id="replanejadoBooleanCheckBox"
-                                                 value="#{TarefaBean.tarefa.replanajado}" required="true"
+                                                 value="#{TarefaBean.tarefa.replanajado}" required="false"
                                                  requiredMessage="#{erro['message.campoObrigatorio']}"/>
-                        <p:message for="colaboradorList"/>
+                        <p:message for="replanejadoBooleanCheckBox"/>
                     </p:panelGrid>
                     <p:panelGrid columns="1" id="observacaoPanelGrid">
                         <f:facet name="header">#{recurso['header.observacao']}</f:facet>
