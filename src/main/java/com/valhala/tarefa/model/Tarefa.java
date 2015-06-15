@@ -1,8 +1,28 @@
 package com.valhala.tarefa.model;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.ColumnResult;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.SqlResultSetMapping;
+import javax.persistence.SqlResultSetMappings;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 /**
  * Entity que mapeia a tabela de Colabores no banco de dados.
@@ -131,263 +151,379 @@ public class Tarefa implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_tarefa")
     private Long id;
-    private String numeroDemanda;
+    @Column(name = "numero_demanda", unique = true, nullable = false)
+    private Long numeroDemanda;
+    @Column(name = "titulo_demanda", nullable = false, length = 130)
     private String titulo;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "prioridade_demanda", nullable = false, length = 80)
     private Prioridade prioridade;
+    @Column(name = "categoria_demanda", nullable = true, length = 200)
+    private String categoria;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_demanda", nullable = false, length = 80)
     private TipoDemanda tipoDemanda;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "data_abertura", nullable = false, updatable = false)
     private Date abertura;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "data_inicio")
     private Date inicio;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "data_desenvolvimento")
     private Date desenvolvimento;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "data_homologacao")
     private Date homologacao;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "data_fim_planejado")
     private Date finalPlanejado;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "data_fim_efetivo")
     private Date finalEfetivo;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status_tarefa", nullable = false, length = 80)
     private Status status;	
-    private Integer estimativa;
-    private Integer totalHoras;
-    private Boolean replanajado;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status_sla", nullable = false, length = 50)
+    private StatusSla statusSla;
+    @Lob
+    @Column(name = "observacao_tarefa")
     private String observacao;
+    @ManyToOne
     private Colaborador colaborador = new Colaborador();
+    @ManyToOne
     private Cliente cliente = new Cliente();
+    @ManyToOne
     private Equipe equipe = new Equipe();
+    @ManyToOne
     private Sistema sistema = new Sistema();
 
     @Version
     private Long versao;
 
-    public Tarefa() {
+    Tarefa() {
         super();
     }
 
-    public Tarefa(String numeroDemanda, String titulo, Prioridade prioridade, TipoDemanda tipoDemanda,
-                  Date abertura, Date inicio, Date desenvolvimento, Date homologacao, Date finalPlanejado, Date finalEfetivo,
-                  Status status, Integer estimativa, Integer totalHoras, Boolean replanajado,
-                  String observacao, Colaborador colaborador, Cliente cliente,
-                  Equipe equipe, Sistema sistema) {
-        super();
-        this.numeroDemanda = numeroDemanda;
-        this.titulo = titulo;
-        this.prioridade = prioridade;
-        this.tipoDemanda = tipoDemanda;
-        this.abertura = abertura;
-        this.inicio = inicio;
-        this.desenvolvimento = desenvolvimento;
-        this.homologacao = homologacao;
-        this.finalPlanejado = finalPlanejado;
-        this.finalEfetivo = finalEfetivo;
-        this.status = status;
-        this.estimativa = estimativa;
-        this.totalHoras = totalHoras;
-        this.replanajado = replanajado;
-        this.observacao = observacao;
-        this.colaborador = colaborador;
-        this.cliente = cliente;
-        this.equipe = equipe;
-        this.sistema = sistema;
-        this.observacao = observacao;
-    } // fim do construtor
-
-    public Tarefa(String numeroDemanda, String titulo, Prioridade prioridade) {
-        super();
-        this.numeroDemanda = numeroDemanda;
-        this.titulo = titulo;
-        this.prioridade = prioridade;
-        this.colaborador = null;
-        this.cliente = null;
-        this.equipe = null;
-        this.sistema = null;
-    } // fim do construtor
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_tarefa")
+    public Tarefa(Builder builder) {
+    	super();
+    	this.id = builder.id;
+    	this.numeroDemanda = builder.numeroDemanda;
+    	this.titulo = builder.titulo;
+    	this.prioridade = builder.prioridade;
+    	this.tipoDemanda = builder.tipoDemanda;
+    	this.categoria = builder.categoria;
+    	this.abertura = builder.abertura;
+    	this.inicio = builder.inicio;
+    	this.desenvolvimento = builder.desenvolvimento;
+    	this.homologacao = builder.homologacao;
+    	this.finalPlanejado = builder.finalPlanejado;
+    	this.finalEfetivo = builder.finalEfetivo;
+    	this.status = builder.status;
+    	this.statusSla = builder.statusSla;
+    	this.observacao = builder.observacao;
+    	this.colaborador = builder.colaborador;
+    	this.cliente = builder.cliente;
+    	this.equipe = builder.equipe;
+    	this.sistema = builder.sistema;
+	}
+    
     public Long getId() {
         return id;
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Column(name = "numero_demanda", unique = true, nullable = false)
-    public String getNumeroDemanda() {
+    
+    public Long getNumeroDemanda() {
         return numeroDemanda;
     }
+    
+    public String getCategoria() {
+		return categoria;
+	}
 
-    public void setNumeroDemanda(String numeroDemanda) {
-        this.numeroDemanda = numeroDemanda;
-    }
-
-    @Column(name = "titulo_demanda", nullable = false, length = 130)
     public String getTitulo() {
         return titulo;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "prioridade_demanda", nullable = false, length = 80)
     public Prioridade getPrioridade() {
         return prioridade;
     }
 
-    public void setPrioridade(Prioridade prioridade) {
-        this.prioridade = prioridade;
-    }
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_demanda", nullable = false, length = 80)
     public TipoDemanda getTipoDemanda() {
         return tipoDemanda;
     }
 
-    public void setTipoDemanda(TipoDemanda tipoDemanda) {
-        this.tipoDemanda = tipoDemanda;
-    }
-
-    @Temporal(TemporalType.DATE)
-    @Column(name = "data_abertura", nullable = false)
     public Date getAbertura() {
-        return abertura;
+        return abertura == null ? null : new Date(abertura.getTime());
     }
 
-    public void setAbertura(Date abertura) {
-        this.abertura = abertura;
-    }
-
-    @Temporal(TemporalType.DATE)
-    @Column(name = "data_inicio")
     public Date getInicio() {
-        return inicio;
-    }
-
-    public void setInicio(Date inicio) {
-        this.inicio = inicio;
+        return inicio == null ? null : new Date(inicio.getTime());
     }
     
-    @Temporal(TemporalType.DATE)
-    @Column(name = "data_desenvolvimento")
     public Date getDesenvolvimento() {
-		return desenvolvimento;
+		return desenvolvimento == null ? null : new Date(desenvolvimento.getTime());
 	}
     
-    public void setDesenvolvimento(Date desenvolvimento) {
-		this.desenvolvimento = desenvolvimento;
-	}
-    
-    @Temporal(TemporalType.DATE)
-    @Column(name = "data_homologacao")
     public Date getHomologacao() {
-		return homologacao;
-	}
-    
-    public void setHomologacao(Date homologacao) {
-		this.homologacao = homologacao;
+		return homologacao == null ? null : new Date(homologacao.getTime());
 	}
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "data_fim_planejado")
     public Date getFinalPlanejado() {
-        return finalPlanejado;
+        return finalPlanejado == null ? null : new Date(finalPlanejado.getTime());
     }
 
-    public void setFinalPlanejado(Date finalPlanejado) {
-        this.finalPlanejado = finalPlanejado;
-    }
-
-    @Temporal(TemporalType.DATE)
-    @Column(name = "data_fim_efetivo")
     public Date getFinalEfetivo() {
-        return finalEfetivo;
+        return finalEfetivo == null ? null : new Date(finalEfetivo.getTime());
     }
 
-    public void setFinalEfetivo(Date finalEfetivo) {
-        this.finalEfetivo = finalEfetivo;
-    }
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status_tarefa", nullable = false, length = 80)
     public Status getStatus() {
         return status;
     }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    @Column(name = "estimativa_tarefa")
-    public Integer getEstimativa() {
-        return estimativa;
-    }
-
-    public void setEstimativa(Integer estimativa) {
-        this.estimativa = estimativa;
-    }
-
-    @Column(name = "total_horas_tarefa")
-    public Integer getTotalHoras() {
-        return totalHoras;
-    }
-
-    public void setTotalHoras(Integer totalHoras) {
-        this.totalHoras = totalHoras;
-    }
-
-    @Column(name = "replanejado")
-    public Boolean getReplanajado() {
-        return replanajado;
-    }
-
-    public void setReplanajado(Boolean replanajado) {
-        this.replanajado = replanajado;
-    }
-
-    @Lob
-    @Column(name = "observacao_tarefa")
+    
+    public StatusSla getStatusSla() {
+		return statusSla;
+	}
+    
     public String getObservacao() {
         return observacao;
     }
 
-    public void setObservacao(String observacao) {
-        this.observacao = observacao;
-    }
-
-    @ManyToOne
     public Colaborador getColaborador() {
         return colaborador;
     }
 
-    public void setColaborador(Colaborador colaborador) {
-        this.colaborador = colaborador;
-    }
-
-    @ManyToOne
     public Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    @ManyToOne
     public Equipe getEquipe() {
         return equipe;
     }
 
-    public void setEquipe(Equipe equipe) {
-        this.equipe = equipe;
-    }
-
-    @ManyToOne
     public Sistema getSistema() {
         return sistema;
     }
-
-    public void setSistema(Sistema sistema) {
-        this.sistema = sistema;
+    
+    public static class Builder {
+    	private Long id = null;
+        private Long numeroDemanda;
+        private String titulo;
+        private Prioridade prioridade;
+        private TipoDemanda tipoDemanda;
+        private String categoria = "";
+        private Date abertura = new Date();
+        private Date inicio = null;
+        private Date desenvolvimento = null;
+        private Date homologacao = null;
+        private Date finalPlanejado = null;
+        private Date finalEfetivo = null;
+        private Status status = Status.ABERTO;	
+        private StatusSla statusSla = StatusSla.NAO_VIOLADO;
+        private String observacao = "";
+        private Colaborador colaborador = new Colaborador();
+        private Cliente cliente = new Cliente();
+        private Equipe equipe = new Equipe();
+        private Sistema sistema = new Sistema();
+        
+        public Builder(final Long numeroDemanda, final String titulo, final Prioridade prioridade, final TipoDemanda demanda) {
+        	this.numeroDemanda = numeroDemanda;
+        	this.titulo = titulo;
+        	this.prioridade = prioridade;
+        	this.tipoDemanda = demanda;
+        }
+        
+        public Builder id(final Long id) {
+        	this.id = id;
+        	return this;
+        }
+        
+        public Builder categoria(final String categoria) {
+        	this.categoria = categoria;
+        	return this;
+        }
+        
+        public Builder abertura(final Date abertura) {
+        	this.abertura = abertura;
+        	return this;
+        }
+        
+        public Builder inicio(final Date inicio) {
+        	this.inicio = inicio;
+        	return this;
+        }
+        
+        public Builder desenvolvimento(final Date desenvolvimento) {
+        	this.desenvolvimento = desenvolvimento;
+        	return this;
+        }
+        
+        public Builder homologacao(final Date homologacao) {
+        	this.homologacao = homologacao;
+        	return this;
+        }
+        
+        public Builder finalPlanejado(final Date finalPlanejado) {
+        	this.finalPlanejado = finalPlanejado;
+        	return this;
+        }
+        
+        public Builder finalEfetivo(final Date finalEfetivo) {
+        	this.finalEfetivo = finalEfetivo;
+        	return this;
+        }
+        
+        public Builder status(final Status status) {
+        	this.status = status;
+        	return this;
+        }
+        
+        public Builder statusSla(final StatusSla statusSla) {
+        	this.statusSla = statusSla;
+        	return this;
+        }
+        
+        public Builder observacao(final String observacao) {
+        	this.observacao = observacao;
+        	return this;
+        }
+        
+        public Builder colaborador(final Colaborador colaborador) {
+        	this.colaborador = colaborador;
+        	return this;
+        }
+        
+        public Builder cliente(final Cliente cliente) {
+        	this.cliente = cliente;
+        	return this;
+        }
+        
+        public Builder equipe(final Equipe equipe) {
+        	this.equipe = equipe;
+        	return this;
+        }
+        
+        public Builder sistema(final Sistema sistema) {
+        	this.sistema = sistema;
+        	return this;
+        }
+        
+        public Tarefa build() {
+        	return new Tarefa(this);
+        }
+        
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+    	if (obj == this) {
+			return true;
+		}
+    	if (!(obj instanceof Tarefa)) {
+			return false;
+		}
+    	Tarefa tarefa = (Tarefa) obj;
+    	return tarefa.getNumeroDemanda().equals(this.getNumeroDemanda()) && tarefa.getTipoDemanda().equals(this.getTipoDemanda());
+    }
+    
+    @Override
+    public int hashCode() {
+    	int result = 21;
+    	result = 31 * result + (this.getNumeroDemanda() == null ? 0 : this.getNumeroDemanda().hashCode());
+    	result = 31 * result + (this.getTipoDemanda() == null ? 0 : this.getTipoDemanda().hashCode());
+    	return result;
+    }
+    
+    @Override
+    public String toString() {
+    	return this.getTipoDemanda() + " - Numero: " + this.getNumeroDemanda();
+    }
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
 
+	public void setNumeroDemanda(Long numeroDemanda) {
+		this.numeroDemanda = numeroDemanda;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public void setPrioridade(Prioridade prioridade) {
+		this.prioridade = prioridade;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
+
+	public void setTipoDemanda(TipoDemanda tipoDemanda) {
+		this.tipoDemanda = tipoDemanda;
+	}
+
+	public void setAbertura(Date abertura) {
+		this.abertura = abertura;
+	}
+
+	public void setInicio(Date inicio) {
+		this.inicio = inicio;
+	}
+
+	public void setDesenvolvimento(Date desenvolvimento) {
+		this.desenvolvimento = desenvolvimento;
+	}
+
+	public void setHomologacao(Date homologacao) {
+		this.homologacao = homologacao;
+	}
+
+	public void setFinalPlanejado(Date finalPlanejado) {
+		this.finalPlanejado = finalPlanejado;
+	}
+
+	public void setFinalEfetivo(Date finalEfetivo) {
+		this.finalEfetivo = finalEfetivo;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public void setStatusSla(StatusSla statusSla) {
+		this.statusSla = statusSla;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+
+	public void setColaborador(Colaborador colaborador) {
+		this.colaborador = colaborador;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public void setEquipe(Equipe equipe) {
+		this.equipe = equipe;
+	}
+
+	public void setSistema(Sistema sistema) {
+		this.sistema = sistema;
+	}
+
+	public Long retornarQuantidadeDeDiasAberto() {
+		Date hoje = new Date();
+		long diferencaDatas = (hoje.getTime() - this.getAbertura().getTime()) + 3600000;
+		long diferencaDias = diferencaDatas / 86400000L;
+		return Long.valueOf(diferencaDias);
+	}
+    
 } // fim da classe Tarefa

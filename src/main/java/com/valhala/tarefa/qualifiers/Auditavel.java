@@ -10,6 +10,7 @@ import java.lang.annotation.*;
  * @version 1.0
  * @since 23/02/2014
  */
+@Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Inherited

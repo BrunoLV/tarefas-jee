@@ -3,11 +3,9 @@ package com.valhala.tarefa.dao.api;
 import com.valhala.tarefa.model.Cliente;
 
 /**
- * Interface DAO especializada para entidade Cliente
+ * Interface que define o contrato de implementação de DAO para ações de banco de dados de CLIENTE.
+ * @author bruno
  *
- * @author Bruno Luiz Viana
- * @version 1.0
- * @since 04/06/2014
  */
 public interface ClienteDao extends Dao<Cliente> {
 

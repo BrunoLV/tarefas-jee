@@ -22,7 +22,7 @@ public class LoggerProducer {
      * @return
      */
     @Produces
-    public Logger gerarLogger(InjectionPoint point) {
+    public Logger gerarLogger(final InjectionPoint point) {
         return LoggerFactory.getLogger(point.getMember().getDeclaringClass().getCanonicalName());
     } // fim do método gerarLogger
 

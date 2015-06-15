@@ -1,20 +1,22 @@
 package com.valhala.tarefa.web.beans;
 
-import com.valhala.tarefa.ejb.RelatorioService;
-import com.valhala.tarefa.exceptions.ArquivoUtilException;
-import com.valhala.tarefa.exceptions.ServiceException;
-import com.valhala.tarefa.util.ArquivoUtil;
-import com.valhala.tarefa.util.PropertiesUtil;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.util.Properties;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import java.io.InputStream;
-import java.io.Serializable;
-import java.util.Properties;
+
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+
+import com.valhala.tarefa.ejb.RelatorioBean;
+import com.valhala.tarefa.exceptions.ArquivoUtilException;
+import com.valhala.tarefa.exceptions.ServiceException;
+import com.valhala.tarefa.file.LeitorArquivo;
+import com.valhala.tarefa.util.PropertiesUtil;
 
 /**
  * ManagedBean reponsavel pela interação de tela que envolve a emissão de relatórios.
@@ -25,7 +27,7 @@ import java.util.Properties;
  */
 @Named("RelatorioBean")
 @RequestScoped
-public class RelatorioBean extends BaseJSFBean implements Serializable {
+public class RelatorioMB extends BaseMB implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,9 +35,9 @@ public class RelatorioBean extends BaseJSFBean implements Serializable {
     private StreamedContent content;
 
     @EJB
-    private RelatorioService relatorioService;
+    private RelatorioBean relatorioService;
 
-    public RelatorioBean() {
+    public RelatorioMB() {
     } // fim do método construtor
 
     @PostConstruct
@@ -51,7 +53,7 @@ public class RelatorioBean extends BaseJSFBean implements Serializable {
     public StreamedContent gerarRelatorioTarefasCompleto() {
         try {
             String nome = this.relatorioService.gerarRelatorioTarefasCompleto();
-            InputStream inputStream = ArquivoUtil.obterStreamDeArquivo(properties.getProperty("arquivo.caminho"), nome);
+            InputStream inputStream = LeitorArquivo.obterStreamDeArquivo(properties.getProperty("arquivo.caminho"), nome);
             content = new DefaultStreamedContent(inputStream, "application/vnd.ms-excel", nome);
         } catch (ServiceException | ArquivoUtilException e) {
             inserirMensagemDeErro(e.getMessage());

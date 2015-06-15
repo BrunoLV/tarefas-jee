@@ -1,16 +1,16 @@
 package com.valhala.tarefa.web.beans;
 
-import com.valhala.tarefa.ejb.ColaboradorService;
-import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
-import com.valhala.tarefa.model.Colaborador;
+import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
+import com.valhala.tarefa.ejb.ColaboradorBean;
+import com.valhala.tarefa.model.Colaborador;
+import com.valhala.tarefa.vo.ColaboradorVO;
 
 /**
  * Managed Bean utilizado para as ações de tela relacionadas a colaboradores.
@@ -21,30 +21,30 @@ import java.util.List;
  */
 @Named("ColaboradorBean")
 @RequestScoped
-public class ColaboradorBean implements Serializable {
+public class ColaboradorMB implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @EJB
-    private ColaboradorService colaboradorService;
+    private ColaboradorBean colaboradorService;
 
-    private Colaborador colaborador;
+    private ColaboradorVO colaborador;
     private List<Colaborador> colaboradores;
 
-    public ColaboradorBean() {
+    public ColaboradorMB() {
     }
 
     @PostConstruct
     public void init() {
-        this.colaborador = new Colaborador();
+        this.colaborador = new ColaboradorVO();
         this.inicializarColaboradores();
     } // fim do método init
 
-    public Colaborador getColaborador() {
+    public ColaboradorVO getColaborador() {
         return colaborador;
     }
 
-    public void setColaborador(Colaborador colaborador) {
+    public void setColaborador(ColaboradorVO colaborador) {
         this.colaborador = colaborador;
     }
 
@@ -57,11 +57,7 @@ public class ColaboradorBean implements Serializable {
     }
 
     private void inicializarColaboradores() {
-        try {
-            this.colaboradores = this.colaboradorService.buscarTodosColaboradores();
-        } catch (ConsultaSemRetornoException e) {
-            this.colaboradores = new ArrayList<>();
-        } // fim do bloco try/catch
+        this.colaboradores = this.colaboradorService.buscarTodosColaboradores();
     } // fim do método inicializarColaboradores
 
 } // fim da classe ColaboradorBean

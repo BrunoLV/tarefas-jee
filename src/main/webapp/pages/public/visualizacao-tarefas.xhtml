@@ -1,222 +1,305 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns="http://www.w3.org/1999/xhtml">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns="http://www.w3.org/1999/xhtml">
 
 <ui:composition template="/pages/template/layout.xhtml">
-<ui:define name="content">
-<div id="listagemDiv">
-<h:form id="listagemForm">
-<p:growl autoUpdate="true" globalOnly="true" showDetail="true" showSummary="false" id="globalMessageGrowl" life="3000"/>
-<p:commandButton id="novoButton" icon="ui-icon-plus" action="/pages/manter/cadastro-tarefas.xhtml?faces-redirect=true"
-                 ajax="false" immediate="true" rendered="#{LoginBean.lider}"/>
-<p:tooltip for="novoButton" value="#{recurso['tooltip.novo']}" showEffect="fade" hideEffect="fade"/>
-<p:separator/>
+	<ui:define name="content">
+		<div id="listagemDiv">
+			<h:form id="listagemForm">
+				<p:growl autoUpdate="true" globalOnly="true" showDetail="true"
+					showSummary="false" id="globalMessageGrowl" life="3000" />
+				<p:commandButton id="novoButton" icon="ui-icon-plus"
+					action="/pages/manter/cadastro-tarefas.xhtml?faces-redirect=true"
+					ajax="false" immediate="true" rendered="#{LoginMB.lider}" />
+				<p:tooltip for="novoButton" value="#{recurso['tooltip.novo']}"
+					showEffect="fade" hideEffect="fade" />
+				<p:separator />
 
-<!--<p:tabView id="listagemTabView" dynamic="true" cache="true" effect="fade">-->
-<p:tabView id="listagemTabView" effect="fade">
+				<!--<p:tabView id="listagemTabView" dynamic="true" cache="true" effect="fade">-->
+				<p:tabView id="listagemTabView" effect="fade">
 
-<p:tab title="#{recurso['tab.todos']}">
-    <p:dataTable value="#{TarefaBean.tarefasNaoConcluidas}" var="tarefa" emptyMessage="#{erro['message.emptyTable']}"
-                 paginator="true" rows="10"
-                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                 rowsPerPageTemplate="10,50,100,1000">
-        <p:column>
-            <p:rowToggler/>
-        </p:column>
-        <!-- 
+					<p:tab title="#{recurso['tab.todos']}">
+						<p:dataTable value="#{TarefaBean.tarefasNaoConcluidas}"
+							var="tarefa" emptyMessage="#{erro['message.emptyTable']}"
+							paginator="true" rows="10"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="10,50,100,1000">
+							<p:column>
+								<p:rowToggler />
+							</p:column>
         <p:column headerText="#{recurso['column.id']}">
             <h:outputText value="#{tarefa.id}"/>
         </p:column>
-        -->
-        <p:column headerText="#{recurso['column.numDemanda']}" sortBy="#{tarefa.numeroDemanda}">
-            <h:outputText value="#{tarefa.numeroDemanda}"/>
-        </p:column>
-        <p:column headerText="#{recurso['column.tipoDemanda']}" sortBy="#{tarefa.tipoDemanda}">
-            <h:outputText value="#{tarefa.tipoDemanda.nomeExibicao}"/>
-        </p:column>
-        <p:column headerText="#{recurso['column.areaSolicitante']}">
-            <h:outputText value="#{tarefa.cliente.nome}" rendered="#{not empty tarefa.cliente.nome}"/>
-            <h:outputText value="#{recurso['text.naoInformado']}" rendered="#{empty tarefa.cliente.nome}"/>
-        </p:column>
-        <p:column headerText="#{recurso['column.titulo']}">
-            <h:outputText value="#{tarefa.titulo}"/>
-        </p:column>
-        <p:column headerText="#{recurso['column.sistema']}">
-            <h:outputText value="#{tarefa.sistema.nome}" rendered="#{not empty tarefa.sistema.nome}"/>
-            <h:outputText value="#{recurso['text.naoInformado']}" rendered="#{empty tarefa.sistema.nome}"/>
-        </p:column>
-        <p:column headerText="#{recurso['column.status']}">
-            <h:outputText value="#{tarefa.status.nomeExibicao}"/>
-        </p:column>
-        <p:column headerText="#{recurso['column.prioridade']}">
-            <h:outputText value="#{tarefa.prioridade.nomeExibicao}"/>
-        </p:column>
-        <p:column headerText="#{recurso['column.colaborador']}">
-            <h:outputText value="#{tarefa.colaborador.nome}" rendered="#{not empty tarefa.colaborador}"/>
-            <h:outputText value="#{recurso['text.naoInformado']}" rendered="#{empty tarefa.colaborador}"/>
-        </p:column>
-        <p:column headerText="#{recurso['column.dataAbertura']}" sortBy="#{tarefa.abertura}">
-            <h:outputFormat value="#{tarefa.abertura}">
-                <f:convertDateTime pattern="dd/MM/yyyy"/>
-            </h:outputFormat>
-        </p:column>
-        <p:column headerText="#{recurso['column.dataInicio']}">
-            <h:outputFormat value="#{tarefa.inicio}" rendered="#{not empty tarefa.inicio}">
-                <f:convertDateTime pattern="dd/MM/yyyy"/>
-            </h:outputFormat>
-            <h:outputText value="#{recurso['text.naoInformado']}" rendered="#{empty tarefa.inicio}"/>
-        </p:column>
-        <p:column headerText="#{recurso['column.dataDesenvolvimento']}">
-            <h:outputFormat value="#{tarefa.desenvolvimento}" rendered="#{not empty tarefa.desenvolvimento}">
-                <f:convertDateTime pattern="dd/MM/yyyy"/>
-            </h:outputFormat>
-            <h:outputText value="#{recurso['text.naoInformado']}" rendered="#{empty tarefa.desenvolvimento}"/>
-        </p:column>
-        <p:column headerText="#{recurso['column.dataHomologacao']}">
-            <h:outputFormat value="#{tarefa.homologacao}" rendered="#{not empty tarefa.homologacao}">
-                <f:convertDateTime pattern="dd/MM/yyyy"/>
-            </h:outputFormat>
-            <h:outputText value="#{recurso['text.naoInformado']}" rendered="#{empty tarefa.homologacao}"/>
-        </p:column>
-        <p:column headerText="#{recurso['column.dataFinalPlanejado']}">
-            <h:outputFormat value="#{tarefa.finalPlanejado}" rendered="#{not empty tarefa.finalPlanejado}">
-                <f:convertDateTime pattern="dd/MM/yyyy"/>
-            </h:outputFormat>
-            <h:outputText value="#{recurso['text.naoInformado']}" rendered="#{empty tarefa.finalPlanejado}"/>
-        </p:column>
-        <!-- 
+							<p:column headerText="#{recurso['column.numDemanda']}"
+								sortBy="#{tarefa.numeroDemanda}">
+								<h:outputText value="#{tarefa.numeroDemanda}" />
+							</p:column>
+							<p:column headerText="#{recurso['column.diasAberto']}">
+								<h:outputText value="#{tarefa.retornarQuantidadeDeDiasAberto()}" />
+							</p:column>
+							<p:column headerText="#{recurso['column.tipoDemanda']}"
+								sortBy="#{tarefa.tipoDemanda}">
+								<h:outputText value="#{tarefa.tipoDemanda.nomeExibicao}" />
+							</p:column>
+							<p:column headerText="#{recurso['column.areaSolicitante']}">
+								<h:outputText value="#{tarefa.cliente.nome}"
+									rendered="#{not empty tarefa.cliente.nome}" />
+								<h:outputText value="#{recurso['text.naoInformado']}"
+									rendered="#{empty tarefa.cliente.nome}" />
+							</p:column>
+							<p:column headerText="#{recurso['column.titulo']}">
+								<h:outputText value="#{tarefa.titulo}" />
+							</p:column>
+							<p:column headerText="#{recurso['column.categoria']}">
+									<h:outputText value="#{tarefa.categoria}"
+										rendered="#{not empty tarefa.categoria}" />
+									<h:outputText value="#{recurso['text.naoInformado']}"
+										rendered="#{empty tarefa.categoria}" />
+								</p:column>
+							<p:column headerText="#{recurso['column.sistema']}">
+								<h:outputText value="#{tarefa.sistema.nome}"
+									rendered="#{not empty tarefa.sistema.nome}" />
+								<h:outputText value="#{recurso['text.naoInformado']}"
+									rendered="#{empty tarefa.sistema.nome}" />
+							</p:column>
+							<p:column headerText="#{recurso['column.status']}">
+								<h:outputText value="#{tarefa.status.nomeExibicao}" />
+							</p:column>
+							<p:column headerText="#{recurso['column.prioridade']}">
+								<h:outputText value="#{tarefa.prioridade.nomeExibicao}" />
+							</p:column>
+							<p:column headerText="#{recurso['column.colaborador']}">
+								<h:outputText value="#{tarefa.colaborador.nome}"
+									rendered="#{not empty tarefa.colaborador}" />
+								<h:outputText value="#{recurso['text.naoInformado']}"
+									rendered="#{empty tarefa.colaborador}" />
+							</p:column>
+							<p:column headerText="#{recurso['column.dataAbertura']}"
+								sortBy="#{tarefa.abertura}">
+								<h:outputFormat value="#{tarefa.abertura}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputFormat>
+							</p:column>
+							<p:column headerText="#{recurso['column.violado']}">
+								<h:outputText value="#{tarefa.statusSla.descricaoViolacao}" />
+							</p:column>
+							<!-- 
         <p:column headerText="#{recurso['column.replanejado']}">
             <p:selectBooleanCheckbox value="#{tarefa.replanajado}" disabled="true"/>
         </p:column>
         -->
-        <p:column rendered="#{not empty sessionScope['USUARIO_LOGADO'] and LoginBean.lider}">
-            <p:commandButton id="editarCommandButton" icon="ui-icon-pencil"
-                             action="#{TarefaBean.enviarTarefaParaEdicao(tarefa.id)}" immediate="true" ajax="false"
-                             process="@this"/>
-            <p:tooltip for="editarCommandButton" value="#{recurso['tooltip.editar']}" showEffect="fade"
-                       hideEffect="fade"/>
-            <p:commandButton id="deletarCommandButton" icon="ui-icon-trash"
-                             actionListener="#{TarefaBean.removerTarefa(tarefa.id)}" immediate="true" ajax="true"
-                             process="@this" update="@form"/>
-            <p:tooltip for="deletarCommandButton" value="#{recurso['tooltip.remover']}" showEffect="fade"
-                       hideEffect="fade"/>
-        </p:column>
-        <p:rowExpansion>
-            <p:panelGrid columns="1">
-                <f:facet name="header">
-                    <h:outputText value="#{recurso['label.observacao']}"/>
-                </f:facet>
-                <h:outputText value="#{tarefa.observacao}"/>
-            </p:panelGrid>
-        </p:rowExpansion>
-    </p:dataTable>
-</p:tab>
+							<p:column
+								rendered="#{not empty sessionScope['USUARIO_LOGADO'] and LoginMB.lider}">
+								<p:commandButton id="editarCommandButton" icon="ui-icon-pencil"
+									action="#{TarefaBean.enviarTarefaParaEdicao(tarefa.id)}"
+									immediate="true" ajax="false" process="@this" />
+								<p:tooltip for="editarCommandButton"
+									value="#{recurso['tooltip.editar']}" showEffect="fade"
+									hideEffect="fade" />
+								<p:commandButton id="deletarCommandButton" icon="ui-icon-trash"
+									actionListener="#{TarefaBean.removerTarefa(tarefa.id)}"
+									immediate="true" ajax="true" process="@this" update="@form" />
+								<p:tooltip for="deletarCommandButton"
+									value="#{recurso['tooltip.remover']}" showEffect="fade"
+									hideEffect="fade" />
+							</p:column>
+							<p:rowExpansion>
+								<p:panelGrid columns="2">
+									<p:outputLabel value="#{recurso['column.dataInicio']}" />
+									<h:outputFormat value="#{tarefa.inicio}"
+										rendered="#{not empty tarefa.inicio}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputFormat>
+									<h:outputText value="#{recurso['text.naoInformado']}"
+										rendered="#{empty tarefa.inicio}" />
+									<p:outputLabel value="#{recurso['column.dataDesenvolvimento']}" />
+									<h:outputFormat value="#{tarefa.inicio}"
+										rendered="#{not empty tarefa.desenvolvimento}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputFormat>
+									<h:outputText value="#{recurso['text.naoInformado']}"
+										rendered="#{empty tarefa.desenvolvimento}" />
+									<p:outputLabel value="#{recurso['column.dataHomologacao']}" />
+									<h:outputFormat value="#{tarefa.homologacao}"
+										rendered="#{not empty tarefa.homologacao}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputFormat>
+									<h:outputText value="#{recurso['text.naoInformado']}"
+										rendered="#{empty tarefa.homologacao}" />
+									<p:outputLabel value="#{recurso['column.dataFinalPlanejado']}" />
+									<h:outputFormat value="#{tarefa.finalPlanejado}"
+										rendered="#{not empty tarefa.finalPlanejado}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputFormat>
+									<h:outputText value="#{recurso['text.naoInformado']}"
+										rendered="#{empty tarefa.finalPlanejado}" />
+									<p:outputLabel value="#{recurso['column.dataFinalEfetivo']}" />
+									<h:outputFormat value="#{tarefa.finalEfetivo}"
+										rendered="#{not empty tarefa.finalEfetivo}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputFormat>
+									<h:outputText value="#{recurso['text.naoInformado']}"
+										rendered="#{empty tarefa.finalEfetivo}" />
+								</p:panelGrid>
+								<p:panelGrid columns="1">
+									<f:facet name="header">
+										<h:outputText value="#{recurso['label.observacao']}" />
+									</f:facet>
+									<h:outputText value="#{tarefa.observacao}" />
+								</p:panelGrid>
+							</p:rowExpansion>
+						</p:dataTable>
+					</p:tab>
 
-<c:forEach var="colaborador" items="#{ColaboradorBean.colaboradores}">
-    <p:tab title="#{colaborador.nome}">
-        <p:dataTable value="#{TarefaBean.listarPorColaborador(colaborador)}" var="tarefa"
-                     emptyMessage="#{erro['message.emptyTable']}" paginator="true" rows="10"
-                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                     rowsPerPageTemplate="10,50,100,1000">
-            <p:column exportable="false">
-                <p:rowToggler/>
-            </p:column>
-            <!-- 
-            <p:column headerText="#{recurso['column.id']}">
+					<c:forEach var="colaborador"
+						items="#{ColaboradorBean.colaboradores}">
+						<p:tab title="#{colaborador.nome}">
+							<p:dataTable
+								value="#{TarefaBean.listarPorColaborador(colaborador)}"
+								var="tarefa" emptyMessage="#{erro['message.emptyTable']}"
+								paginator="true" rows="10"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="10,50,100,1000">
+								<p:column exportable="false">
+									<p:rowToggler />
+								</p:column>
+			<p:column headerText="#{recurso['column.id']}">
                 <h:outputText value="#{tarefa.id}"/>
             </p:column>
-            -->
-            <p:column headerText="#{recurso['column.numDemanda']}" sortBy="#{tarefa.numeroDemanda}">
-                <h:outputText value="#{tarefa.numeroDemanda}"/>
-            </p:column>
-            <p:column headerText="#{recurso['column.tipoDemanda']}" sortBy="#{tarefa.tipoDemanda}">
-                <h:outputText value="#{tarefa.tipoDemanda.nomeExibicao}"/>
-            </p:column>
-            <p:column headerText="#{recurso['column.areaSolicitante']}">
-                <h:outputText value="#{tarefa.cliente.nome}" rendered="#{not empty tarefa.cliente.nome}"/>
-                <h:outputText value="#{recurso['text.naoInformado']}" rendered="#{empty tarefa.cliente.nome}"/>
-            </p:column>
-            <p:column headerText="#{recurso['column.titulo']}">
-                <h:outputText value="#{tarefa.titulo}"/>
-            </p:column>
-            <p:column headerText="#{recurso['column.sistema']}">
-                <h:outputText value="#{tarefa.sistema.nome}" rendered="#{not empty tarefa.sistema.nome}"/>
-                <h:outputText value="#{recurso['text.naoInformado']}" rendered="#{empty tarefa.sistema.nome}"/>
-            </p:column>
-            <p:column headerText="#{recurso['column.status']}">
-                <h:outputText value="#{tarefa.status.nomeExibicao}"/>
-            </p:column>
-            <p:column headerText="#{recurso['column.prioridade']}">
-                <h:outputText value="#{tarefa.prioridade.nomeExibicao}"/>
-            </p:column>
-            <p:column headerText="#{recurso['column.dataAbertura']}" sortBy="#{tarefa.abertura}">
-                <h:outputFormat value="#{tarefa.abertura}">
-                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                </h:outputFormat>
-            </p:column>
-            <p:column headerText="#{recurso['column.dataInicio']}">
-                <h:outputFormat value="#{tarefa.inicio}" rendered="#{not empty tarefa.inicio}">
-                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                </h:outputFormat>
-                <h:outputText value="#{recurso['text.naoInformado']}" rendered="#{empty tarefa.inicio}"/>
-            </p:column>
-            <p:column headerText="#{recurso['column.dataDesenvolvimento']}">
-            	<h:outputFormat value="#{tarefa.desenvolvimento}" rendered="#{not empty tarefa.desenvolvimento}">
-                	<f:convertDateTime pattern="dd/MM/yyyy"/>
-            	</h:outputFormat>
-            	<h:outputText value="#{recurso['text.naoInformado']}" rendered="#{empty tarefa.desenvolvimento}"/>
-        	</p:column>
-            <p:column headerText="#{recurso['column.dataHomologacao']}">
-            	<h:outputFormat value="#{tarefa.homologacao}" rendered="#{not empty tarefa.homologacao}">
-                	<f:convertDateTime pattern="dd/MM/yyyy"/>
-            	</h:outputFormat>
-            	<h:outputText value="#{recurso['text.naoInformado']}" rendered="#{empty tarefa.homologacao}"/>
-        	</p:column>
-            <p:column headerText="#{recurso['column.dataFinalPlanejado']}">
-                <h:outputFormat value="#{tarefa.finalPlanejado}" rendered="#{not empty tarefa.finalPlanejado}">
-                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                </h:outputFormat>
-                <h:outputText value="#{recurso['text.naoInformado']}" rendered="#{empty tarefa.finalPlanejado}"/>
-            </p:column>
-            <!--
+								<p:column headerText="#{recurso['column.numDemanda']}"
+									sortBy="#{tarefa.numeroDemanda}">
+									<h:outputText value="#{tarefa.numeroDemanda}" />
+								</p:column>
+								<p:column headerText="#{recurso['column.diasAberto']}">
+									<h:outputText
+										value="#{tarefa.retornarQuantidadeDeDiasAberto()}" />
+								</p:column>
+								<p:column headerText="#{recurso['column.tipoDemanda']}"
+									sortBy="#{tarefa.tipoDemanda}">
+									<h:outputText value="#{tarefa.tipoDemanda.nomeExibicao}" />
+								</p:column>
+								<p:column headerText="#{recurso['column.areaSolicitante']}">
+									<h:outputText value="#{tarefa.cliente.nome}"
+										rendered="#{not empty tarefa.cliente.nome}" />
+									<h:outputText value="#{recurso['text.naoInformado']}"
+										rendered="#{empty tarefa.cliente.nome}" />
+								</p:column>
+								<p:column headerText="#{recurso['column.titulo']}">
+									<h:outputText value="#{tarefa.titulo}" />
+								</p:column>
+								<p:column headerText="#{recurso['column.categoria']}">
+									<h:outputText value="#{tarefa.categoria}"
+										rendered="#{not empty tarefa.categoria}" />
+									<h:outputText value="#{recurso['text.naoInformado']}"
+										rendered="#{empty tarefa.categoria}" />
+								</p:column>
+								<p:column headerText="#{recurso['column.sistema']}">
+									<h:outputText value="#{tarefa.sistema.nome}"
+										rendered="#{not empty tarefa.sistema.nome}" />
+									<h:outputText value="#{recurso['text.naoInformado']}"
+										rendered="#{empty tarefa.sistema.nome}" />
+								</p:column>
+								<p:column headerText="#{recurso['column.categoria']}">
+									<h:outputText value="#{tarefa.categoria}"
+										rendered="#{not empty tarefa.categoria}" />
+									<h:outputText value="#{recurso['text.naoInformado']}"
+										rendered="#{empty tarefa.categoria}" />
+								</p:column>
+								<p:column headerText="#{recurso['column.status']}">
+									<h:outputText value="#{tarefa.status.nomeExibicao}" />
+								</p:column>
+								<p:column headerText="#{recurso['column.prioridade']}">
+									<h:outputText value="#{tarefa.prioridade.nomeExibicao}" />
+								</p:column>
+								<p:column headerText="#{recurso['column.dataAbertura']}"
+									sortBy="#{tarefa.abertura}">
+									<h:outputFormat value="#{tarefa.abertura}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputFormat>
+								</p:column>
+								<p:column headerText="#{recurso['column.violado']}">
+									<h:outputText value="#{tarefa.statusSla.descricaoViolacao}" />
+								</p:column>
+								<!--
             <p:column headerText="#{recurso['column.replanejado']}">
                 <p:selectBooleanCheckbox value="#{tarefa.replanajado}" disabled="true"/>
             </p:column>
             -->
-            <p:column rendered="#{not empty sessionScope['USUARIO_LOGADO'] and LoginBean.liderOrManter}">
-                <p:commandButton id="editarCommandButton" icon="ui-icon-pencil"
-                                 action="#{TarefaBean.enviarTarefaParaEdicao(tarefa.id)}" immediate="true" ajax="false"
-                                 process="@this"
-                                 rendered="#{tarefa.colaborador.id == sessionScope['USUARIO_LOGADO'].id}"/>
-                <p:tooltip for="editarCommandButton" value="#{recurso['tooltip.editar']}" showEffect="fade"
-                           hideEffect="fade"/>
-            </p:column>
-            <p:rowExpansion>
-                <p:panelGrid columns="1">
-                    <f:facet name="header">
-                        <h:outputText value="#{recurso['label.observacao']}"/>
-                    </f:facet>
-                    <h:outputText value="#{tarefa.observacao}"/>
-                </p:panelGrid>
-            </p:rowExpansion>
-        </p:dataTable>
-    </p:tab>
-</c:forEach>
+								<p:column
+									rendered="#{not empty sessionScope['USUARIO_LOGADO'] and LoginMB.liderOrManter}">
+									<p:commandButton id="editarCommandButton" icon="ui-icon-pencil"
+										action="#{TarefaBean.enviarTarefaParaEdicao(tarefa.id)}"
+										immediate="true" ajax="false" process="@this"
+										rendered="#{tarefa.colaborador.id == sessionScope['USUARIO_LOGADO'].id}" />
+									<p:tooltip for="editarCommandButton"
+										value="#{recurso['tooltip.editar']}" showEffect="fade"
+										hideEffect="fade" />
+								</p:column>
+								<p:rowExpansion>
+									<p:panelGrid columns="2">
+										<p:outputLabel value="#{recurso['column.dataInicio']}" />
+										<h:outputFormat value="#{tarefa.inicio}"
+											rendered="#{not empty tarefa.inicio}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputFormat>
+										<h:outputText value="#{recurso['text.naoInformado']}"
+											rendered="#{empty tarefa.inicio}" />
+										<p:outputLabel value="column.dataDesenvolvimento" />
+										<h:outputFormat value="#{tarefa.inicio}"
+											rendered="#{not empty tarefa.desenvolvimento}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputFormat>
+										<h:outputText value="#{recurso['text.naoInformado']}"
+											rendered="#{empty tarefa.desenvolvimento}" />
+										<p:outputLabel value="#{recurso['column.dataHomologacao']}" />
+										<h:outputFormat value="#{tarefa.homologacao}"
+											rendered="#{not empty tarefa.homologacao}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputFormat>
+										<h:outputText value="#{recurso['text.naoInformado']}"
+											rendered="#{empty tarefa.homologacao}" />
+										<p:outputLabel value="#{recurso['column.dataFinalPlanejado']}" />
+										<h:outputFormat value="#{tarefa.finalPlanejado}"
+											rendered="#{not empty tarefa.finalPlanejado}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputFormat>
+										<h:outputText value="#{recurso['text.naoInformado']}"
+											rendered="#{empty tarefa.finalPlanejado}" />
+										<p:outputLabel value="#{recurso['column.dataFinalEfetivo']}" />
+										<h:outputFormat value="#{tarefa.finalEfetivo}"
+											rendered="#{not empty tarefa.finalEfetivo}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputFormat>
+										<h:outputText value="#{recurso['text.naoInformado']}"
+											rendered="#{empty tarefa.finalEfetivo}" />
+									</p:panelGrid>
+									<p:panelGrid columns="1">
+										<f:facet name="header">
+											<h:outputText value="#{recurso['label.observacao']}" />
+										</f:facet>
+										<h:outputText value="#{tarefa.observacao}" />
+									</p:panelGrid>
+								</p:rowExpansion>
+							</p:dataTable>
+						</p:tab>
+					</c:forEach>
 
-<p:tab id="concluidosTab" title="#{recurso['tab.concluidos']}">
-    <p:dataTable id="concluidosDataTable" value="#{TarefaBean.buscarTodosConcluidos()}" var="tarefa"
-                 emptyMessage="#{erro['message.emptyTable']}" paginator="true" rows="10"
-                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                 rowsPerPageTemplate="10,50,100,1000">
-        <p:column>
-            <p:rowToggler/>
-        </p:column>
-        <!-- 
+					<p:tab id="concluidosTab" title="#{recurso['tab.concluidos']}">
+						<p:dataTable id="concluidosDataTable"
+							value="#{TarefaBean.buscarTodosConcluidos()}" var="tarefa"
+							emptyMessage="#{erro['message.emptyTable']}" paginator="true"
+							rows="10"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="10,50,100,1000">
+							<p:column>
+								<p:rowToggler />
+							</p:column>
+							<!-- 
         <p:column>
             <f:facet name="header">
                 <h:outputText value="#{recurso['column.id']}"/>
@@ -224,98 +307,110 @@
             <h:outputText value="#{tarefa.id}"/>
         </p:column>
         -->
-        <p:column sortBy="#{tarefa.numeroDemanda}">
-            <f:facet name="header">
-                <h:outputText value="#{recurso['column.numDemanda']}"/>
-            </f:facet>
-            <h:outputText value="#{tarefa.numeroDemanda}"/>
-        </p:column>
-        <p:column sortBy="#{tarefa.tipoDemanda}">
-            <f:facet name="header">
-                <h:outputText value="#{recurso['column.tipoDemanda']}"/>
-            </f:facet>
-            <h:outputText value="#{tarefa.tipoDemanda.nomeExibicao}"/>
-        </p:column>
-        <p:column>
-            <f:facet name="header">
-                <h:outputText value="#{recurso['column.titulo']}"/>
-            </f:facet>
-            <h:outputText value="#{tarefa.titulo}"/>
-        </p:column>
-        <p:column>
-            <f:facet name="header">
-                <h:outputText value="#{recurso['column.status']}"/>
-            </f:facet>
-            <h:outputText value="#{tarefa.status.nomeExibicao}"/>
-        </p:column>
-        <p:column>
-            <f:facet name="header">
-                <h:outputText value="#{recurso['column.dataInicio']}"/>
-            </f:facet>
-            <h:outputFormat value="#{tarefa.inicio}" rendered="#{not empty tarefa.inicio}">
-                <f:convertDateTime pattern="dd/MM/yyyy"/>
-            </h:outputFormat>
-            <h:outputText value="#{recurso['text.naoInformado']}" rendered="#{empty tarefa.inicio}"/>
-        </p:column>
-        <p:column headerText="#{recurso['column.dataDesenvolvimento']}">
-            <h:outputFormat value="#{tarefa.desenvolvimento}" rendered="#{not empty tarefa.desenvolvimento}">
-                <f:convertDateTime pattern="dd/MM/yyyy"/>
-            </h:outputFormat>
-            <h:outputText value="#{recurso['text.naoInformado']}" rendered="#{empty tarefa.desenvolvimento}"/>
-        </p:column>
-        <p:column headerText="#{recurso['column.dataHomologacao']}">
-            <h:outputFormat value="#{tarefa.homologacao}" rendered="#{not empty tarefa.homologacao}">
-                <f:convertDateTime pattern="dd/MM/yyyy"/>
-            </h:outputFormat>
-            <h:outputText value="#{recurso['text.naoInformado']}" rendered="#{empty tarefa.homologacao}"/>
-        </p:column>
-        <p:column>
-            <f:facet name="header">
-                <h:outputText value="#{recurso['column.dataFinalPlanejado']}"/>
-            </f:facet>
-            <h:outputFormat value="#{tarefa.finalPlanejado}">
-                <f:convertDateTime pattern="dd/MM/yyyy"/>
-            </h:outputFormat>
-        </p:column>
-        <p:column>
-            <f:facet name="header">
-                <h:outputText value="#{recurso['column.dataFinalEfetivo']}"/>
-            </f:facet>
-            <h:outputFormat value="#{tarefa.finalEfetivo}">
-                <f:convertDateTime pattern="dd/MM/yyyy"/>
-            </h:outputFormat>
-        </p:column>
-        <p:column>
-            <f:facet name="header">
-                <h:outputText value="#{recurso['column.totalHoras']}"/>
-            </f:facet>
-            <h:outputText value="#{tarefa.totalHoras}" rendered="#{not empty tarefa.totalHoras}"/>
-            <h:outputText value="#{recurso['text.naoInformado']}" rendered="#{empty tarefa.totalHoras}"/>
-        </p:column>
-        <p:column>
-            <f:facet name="header">
-                <h:outputText value="#{recurso['column.colaborador']}"/>
-            </f:facet>
-            <h:outputText value="#{tarefa.colaborador.nome}"/>
-        </p:column>
-        <p:column exportable="false" rendered="#{not empty sessionScope['USUARIO_LOGADO'] and LoginBean.lider}">
-            <p:commandButton id="ajustarCommandButton" icon="ui-icon-wrench"
-                             action="#{TarefaBean.enviarTarefaParaAjusteAdministrativo(tarefa.id)}" immediate="true"
-                             ajax="false" process="@this"/>
-            <p:tooltip for="ajustarCommandButton" value="#{recurso['tooltip.ajustar']}" showEffect="fade"
-                       hideEffect="fade"/>
-        </p:column>
-        <p:rowExpansion>
-            <p:panelGrid columns="1">
-                <f:facet name="header">
-                    <h:outputText value="#{recurso['label.observacao']}"/>
-                </f:facet>
-                <h:outputText value="#{tarefa.observacao}"/>
-            </p:panelGrid>
-        </p:rowExpansion>
-    </p:dataTable>
-    <br/>
-    <!--<h:commandLink ajax="true">
+							<p:column sortBy="#{tarefa.numeroDemanda}">
+								<f:facet name="header">
+									<h:outputText value="#{recurso['column.numDemanda']}" />
+								</f:facet>
+								<h:outputText value="#{tarefa.numeroDemanda}" />
+							</p:column>
+							<p:column sortBy="#{tarefa.tipoDemanda}">
+								<f:facet name="header">
+									<h:outputText value="#{recurso['column.tipoDemanda']}" />
+								</f:facet>
+								<h:outputText value="#{tarefa.tipoDemanda.nomeExibicao}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{recurso['column.titulo']}" />
+								</f:facet>
+								<h:outputText value="#{tarefa.titulo}" />
+							</p:column>
+							<p:column headerText="#{recurso['column.categoria']}">
+									<h:outputText value="#{tarefa.categoria}"
+										rendered="#{not empty tarefa.categoria}" />
+									<h:outputText value="#{recurso['text.naoInformado']}"
+										rendered="#{empty tarefa.categoria}" />
+								</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{recurso['column.status']}" />
+								</f:facet>
+								<h:outputText value="#{tarefa.status.nomeExibicao}" />
+							</p:column>
+							<p:column headerText="#{recurso['column.dataAbertura']}">
+								<h:outputFormat value="#{tarefa.abertura}"
+									rendered="#{not empty tarefa.abertura}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputFormat>
+								<h:outputText value="#{recurso['text.naoInformado']}"
+									rendered="#{empty tarefa.abertura}" />
+							</p:column>
+							<p:column headerText="#{recurso['column.violado']}">
+								<h:outputText value="#{tarefa.statusSla.descricaoViolacao}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{recurso['column.colaborador']}" />
+								</f:facet>
+								<h:outputText value="#{tarefa.colaborador.nome}" />
+							</p:column>
+							<p:column exportable="false"
+								rendered="#{not empty sessionScope['USUARIO_LOGADO'] and LoginMB.lider}">
+								<p:commandButton id="ajustarCommandButton" icon="ui-icon-wrench"
+									action="#{TarefaBean.enviarTarefaParaAjusteAdministrativo(tarefa.id)}"
+									immediate="true" ajax="false" process="@this" />
+								<p:tooltip for="ajustarCommandButton"
+									value="#{recurso['tooltip.ajustar']}" showEffect="fade"
+									hideEffect="fade" />
+							</p:column>
+							<p:rowExpansion>
+								<p:panelGrid columns="2">
+									<p:outputLabel value="#{recurso['column.dataInicio']}" />
+									<h:outputFormat value="#{tarefa.inicio}"
+										rendered="#{not empty tarefa.inicio}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputFormat>
+									<h:outputText value="#{recurso['text.naoInformado']}"
+										rendered="#{empty tarefa.inicio}" />
+									<p:outputLabel value="#{recurso['column.dataDesenvolvimento']}" />
+									<h:outputFormat value="#{tarefa.inicio}"
+										rendered="#{not empty tarefa.desenvolvimento}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputFormat>
+									<h:outputText value="#{recurso['text.naoInformado']}"
+										rendered="#{empty tarefa.desenvolvimento}" />
+									<p:outputLabel value="#{recurso['column.dataHomologacao']}" />
+									<h:outputFormat value="#{tarefa.homologacao}"
+										rendered="#{not empty tarefa.homologacao}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputFormat>
+									<h:outputText value="#{recurso['text.naoInformado']}"
+										rendered="#{empty tarefa.homologacao}" />
+									<p:outputLabel value="#{recurso['column.dataFinalPlanejado']}" />
+									<h:outputFormat value="#{tarefa.finalPlanejado}"
+										rendered="#{not empty tarefa.finalPlanejado}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputFormat>
+									<h:outputText value="#{recurso['text.naoInformado']}"
+										rendered="#{empty tarefa.finalPlanejado}" />
+									<p:outputLabel value="#{recurso['column.dataFinalEfetivo']}" />
+									<h:outputFormat value="#{tarefa.finalEfetivo}"
+										rendered="#{not empty tarefa.finalEfetivo}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputFormat>
+									<h:outputText value="#{recurso['text.naoInformado']}"
+										rendered="#{empty tarefa.finalEfetivo}" />
+								</p:panelGrid>
+								<p:panelGrid columns="1">
+									<f:facet name="header">
+										<h:outputText value="#{recurso['label.observacao']}" />
+									</f:facet>
+									<h:outputText value="#{tarefa.observacao}" />
+								</p:panelGrid>
+							</p:rowExpansion>
+						</p:dataTable>
+						<br />
+						<!--<h:commandLink ajax="true">
         <p:graphicImage value="/imagens/excel.png"/>
         <p:dataExporter target="concluidosDataTable" type="xls" fileName="concluidos"/>
     </h:commandLink>
@@ -323,10 +418,10 @@
         <p:graphicImage value="/imagens/pdf.png"/>
         <p:dataExporter target="concluidosDataTable" type="pdf" fileName="concluidos"/>
     </h:commandLink>-->
-</p:tab>
-</p:tabView>
-</h:form>
-</div>
-</ui:define>
+					</p:tab>
+				</p:tabView>
+			</h:form>
+		</div>
+	</ui:define>
 </ui:composition>
 </html>

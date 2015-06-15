@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
  * @version 1.0
  * @since 23/02/2014
  */
-public class BaseJSFBean {
+public class BaseMB {
 
     /**
      * Método utilizado para inserir uma mensagem de sucesso no contexto.

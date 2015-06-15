@@ -1,26 +1,31 @@
 package com.valhala.tarefa.ejb;
 
-import com.valhala.tarefa.dao.api.TarefaDao;
-import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
-import com.valhala.tarefa.exceptions.CopiaDePropriedadesException;
-import com.valhala.tarefa.exceptions.DaoException;
-import com.valhala.tarefa.exceptions.ServiceException;
-import com.valhala.tarefa.model.Colaborador;
-import com.valhala.tarefa.model.Status;
-import com.valhala.tarefa.model.Tarefa;
-import com.valhala.tarefa.model.TipoDemanda;
-import com.valhala.tarefa.qualifiers.Auditavel;
-import com.valhala.tarefa.util.Copiador;
-
-import javax.ejb.*;
-import javax.inject.Inject;
-
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
+import javax.inject.Inject;
+
+import com.valhala.tarefa.dao.api.ClienteDao;
+import com.valhala.tarefa.dao.api.ColaboradorDao;
+import com.valhala.tarefa.dao.api.EquipeDao;
+import com.valhala.tarefa.dao.api.SistemaDao;
+import com.valhala.tarefa.dao.api.TarefaDao;
+import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
+import com.valhala.tarefa.exceptions.ServiceException;
+import com.valhala.tarefa.model.Colaborador;
+import com.valhala.tarefa.model.Status;
+import com.valhala.tarefa.model.Tarefa;
+import com.valhala.tarefa.model.TipoDemanda;
+import com.valhala.tarefa.qualifiers.Auditavel;
 
 /**
  * EJB responsavel pela regra de negócio relacionada a Tarefa
@@ -32,11 +37,19 @@ import java.util.Map;
 @Auditavel
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class TarefaService {
+public class TarefaBean {
 
     @Inject
     private TarefaDao tarefaDao;
-
+    @Inject
+    private ColaboradorDao colaboradorDao;
+    @Inject
+    private SistemaDao sistemaDao;
+    @Inject
+    private ClienteDao clienteDao;
+    @Inject
+    private EquipeDao equipeDao;
+    
     /**
      * Método utilizado para executar a ação de cadastrar uma tarefa no sistema.
      *
@@ -62,14 +75,27 @@ public class TarefaService {
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void editarTarefa(Tarefa tarefa) throws ServiceException {
-        Tarefa tarefaPersitente;
-        try {
-            tarefaPersitente = this.tarefaDao.buscarPorId(tarefa.getId());
-            Copiador.copiar(Tarefa.class, tarefaPersitente, tarefa);
-            this.tarefaDao.atualizar(tarefaPersitente);
-        } catch (ConsultaSemRetornoException | CopiaDePropriedadesException | DaoException e) {
-            throw new ServiceException(e.getMessage(), e);
-        } // fim do bloco try/catch
+    	Tarefa tarefaPersistir = this.tarefaDao.buscarPorId(tarefa.getId());
+    	tarefaPersistir.setId(tarefa.getId());
+    	tarefaPersistir.setNumeroDemanda(tarefa.getNumeroDemanda());
+    	tarefaPersistir.setTitulo(tarefa.getTitulo());
+    	tarefaPersistir.setPrioridade(tarefa.getPrioridade());
+    	tarefaPersistir.setTipoDemanda(tarefa.getTipoDemanda());
+    	tarefaPersistir.setCategoria(tarefa.getCategoria());
+    	tarefaPersistir.setAbertura(tarefa.getAbertura());
+    	tarefaPersistir.setInicio(tarefa.getInicio());
+    	tarefaPersistir.setDesenvolvimento(tarefa.getDesenvolvimento());
+    	tarefaPersistir.setHomologacao(tarefa.getHomologacao());
+    	tarefaPersistir.setFinalPlanejado(tarefa.getFinalPlanejado());
+    	tarefaPersistir.setFinalEfetivo(tarefa.getFinalEfetivo());
+    	tarefaPersistir.setStatus(tarefa.getStatus());
+    	tarefaPersistir.setStatusSla(tarefa.getStatusSla());
+    	tarefaPersistir.setObservacao(tarefa.getObservacao());
+    	tarefaPersistir.setColaborador(tarefa.getColaborador() != null && tarefa.getColaborador().getId() != null  ? colaboradorDao.buscarPorId(tarefa.getColaborador().getId()) : null);
+    	tarefaPersistir.setCliente(tarefa.getCliente() != null && tarefa.getCliente().getId() != null ? clienteDao.buscarPorId(tarefa.getCliente().getId()) : null);
+    	tarefaPersistir.setEquipe(tarefa.getEquipe() != null && tarefa.getEquipe().getId() != null ? equipeDao.buscarPorId(tarefa.getEquipe().getId()) : null);
+    	tarefaPersistir.setSistema(tarefa.getSistema() != null && tarefa.getSistema().getId() != null ? sistemaDao.buscarPorId(tarefa.getSistema().getId()) : null);
+    	this.tarefaDao.atualizar(tarefaPersistir);
     } // fim do método editarTarefa
 
     /**
@@ -80,12 +106,8 @@ public class TarefaService {
      */
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void removerTarefa(Serializable id) throws ServiceException {
-        try {
-            this.tarefaDao.remover(this.tarefaDao.buscarPorId(id));
-        } catch (ConsultaSemRetornoException | DaoException e) {
-            throw new ServiceException(e.getMessage(), e);
-        } // fim do bloco try/catch
+    public void removerTarefa(Serializable id) {
+        this.tarefaDao.remover(this.tarefaDao.buscarPorId(id));
     } // fim do método removerTarefa
 
     /**
@@ -97,7 +119,7 @@ public class TarefaService {
      */
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Tarefa buscarPorId(Serializable id) throws ConsultaSemRetornoException {
+    public Tarefa buscarPorId(Serializable id) {
         return this.tarefaDao.buscarPorId(id);
     } // fim do método buscarPorId
 
@@ -109,7 +131,7 @@ public class TarefaService {
      */
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<Tarefa> buscarTodasTarefas() throws ConsultaSemRetornoException {
+    public List<Tarefa> buscarTodasTarefas() {
         return this.tarefaDao.listarTudo();
     } // fim do método buscarTodasTarefas
 
@@ -122,7 +144,7 @@ public class TarefaService {
      */
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<Tarefa> buscarTarefasPorColaborador(Colaborador colaborador) throws ConsultaSemRetornoException {
+    public List<Tarefa> buscarTarefasPorColaborador(Colaborador colaborador) {
         return this.tarefaDao.buscarTodasPorColaborador(colaborador);
     } // fim do método buscarTarefasPorColaborador
 
@@ -136,7 +158,7 @@ public class TarefaService {
      */
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<Tarefa> buscarTarefasPorColaboradorEStatus(Colaborador colaborador, List<Status> status) throws ConsultaSemRetornoException {
+    public List<Tarefa> buscarTarefasPorColaboradorEStatus(Colaborador colaborador, List<Status> status) {
         return this.tarefaDao.buscarTodasPorColaboradorEStatus(colaborador, status);
     } // fim do método buscarTarefasPorColaboradorEStatus
 
@@ -149,31 +171,31 @@ public class TarefaService {
      */
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<Tarefa> buscarTarefasPorStatus(List<Status> status) throws ConsultaSemRetornoException {
+    public List<Tarefa> buscarTarefasPorStatus(List<Status> status) {
         return this.tarefaDao.buscarTodasPorStatus(status);
     } // fim do método buscarTarefasPorStatus
 
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<Tarefa> buscarTodasTarefasComDataDefinidas() throws ConsultaSemRetornoException {
+    public List<Tarefa> buscarTodasTarefasComDataDefinidas() {
         return this.tarefaDao.buscarTodasComDatasDefinidas();
     } // fim do método buscarTodasTarefasComDataDefinidas
 
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<Tarefa> buscarTarefasPorColaboradorEStatusComDatasDefinidas(Colaborador colaborador, List<Status> status) throws ConsultaSemRetornoException {
+    public List<Tarefa> buscarTarefasPorColaboradorEStatusComDatasDefinidas(Colaborador colaborador, List<Status> status) {
         return this.tarefaDao.buscarTodasPorColaboradorEStatusComDatasDefinidas(colaborador, status);
     } // fim do método buscarTodasTarefasComDataDefinidas
 
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<Tarefa> buscarTarefasPorStatusComDatasDefinidas(List<Status> status) throws ConsultaSemRetornoException {
+    public List<Tarefa> buscarTarefasPorStatusComDatasDefinidas(List<Status> status) {
         return this.tarefaDao.buscarTodasPorStatusComDatasDefinidas(status);
     } // fim do método buscarTarefasPorStatusComDatasDefinidas
 
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Map<String, BigInteger> buscarTotaisPorEquipeEPeriodoETipo(Date inicio, Date fim, TipoDemanda tipo) throws ConsultaSemRetornoException {
+    public Map<String, BigInteger> buscarTotaisPorEquipeEPeriodoETipo(Date inicio, Date fim, TipoDemanda tipo) {
         Map<String, BigInteger> mapa = new HashMap<>();
         List<Object[]> retorno;
 
@@ -192,7 +214,7 @@ public class TarefaService {
     
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Map<String, BigInteger> buscarTotaisTodosSistemaPorTipoEEquipe(Date inicio, Date fim, Long id, TipoDemanda tipo) throws ConsultaSemRetornoException {
+    public Map<String, BigInteger> buscarTotaisTodosSistemaPorTipoEEquipe(Date inicio, Date fim, Long id, TipoDemanda tipo) {
     	Map<String, BigInteger> mapa = new HashMap<>();
     	List<Object[]> retorno;
     	
@@ -217,7 +239,7 @@ public class TarefaService {
     
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Map<String, BigInteger> buscarTotaisTodosClientesPorTipoEEquipe(Date inicio, Date fim, Long id, TipoDemanda tipo) throws ConsultaSemRetornoException {
+    public Map<String, BigInteger> buscarTotaisTodosClientesPorTipoEEquipe(Date inicio, Date fim, Long id, TipoDemanda tipo) {
     	Map<String, BigInteger> mapa = new HashMap<>();
     	List<Object[]> retorno;
     	

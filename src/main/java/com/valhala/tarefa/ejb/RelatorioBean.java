@@ -1,17 +1,24 @@
 package com.valhala.tarefa.ejb;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
+import javax.inject.Inject;
+
 import com.valhala.tarefa.dao.api.TarefaDao;
-import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
 import com.valhala.tarefa.exceptions.MontagemRelatorioException;
 import com.valhala.tarefa.exceptions.ServiceException;
 import com.valhala.tarefa.model.Status;
 import com.valhala.tarefa.model.Tarefa;
 import com.valhala.tarefa.util.MontadorRelatorio;
-
-import javax.ejb.*;
-import javax.inject.Inject;
-
-import java.util.*;
 
 /**
  * Classe responsavel pela emissão dos relatórios dentro da aplicação.
@@ -22,7 +29,7 @@ import java.util.*;
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class RelatorioService {
+public class RelatorioBean {
 
     private static final String CHAVE_ABERTAS = "ABERTAS";
     private static final String CHAVE_FECHADAS = "FECHADAS";
@@ -53,19 +60,11 @@ public class RelatorioService {
         List<Tarefa> tarefasConcluidas = null;
         Map<String, List> tarefas = new HashMap<>();
 
-        try {
-            tarefasAbertas = this.tarefaDao.buscarTodasPorStatus(listaStatus);
-        } catch (ConsultaSemRetornoException e) {
-            // nesse caso não tem problema
-        } // fim do bloco try/catch
+        tarefasAbertas = this.tarefaDao.buscarTodasPorStatus(listaStatus);
 
         listaStatus.removeAll(Arrays.asList(Status.values()));
         listaStatus.add(Status.CONCLUIDO);
-        try {
-            tarefasConcluidas = this.tarefaDao.buscarTodasPorStatus(listaStatus);
-        } catch (ConsultaSemRetornoException e) {
-            // nesse caso não tem problema
-        } // fim do bloco try/catch
+        tarefasConcluidas = this.tarefaDao.buscarTodasPorStatus(listaStatus);
 
         tarefas.put(CHAVE_ABERTAS, tarefasAbertas);
         tarefas.put(CHAVE_FECHADAS, tarefasConcluidas);

@@ -19,7 +19,7 @@ import java.util.List;
 @Auditavel
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class SistemaService {
+public class SistemaBean {
 
     @Inject
     private SistemaDao sistemaDao;
@@ -32,7 +32,7 @@ public class SistemaService {
      */
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<Sistema> buscarTodosSistemas() throws ConsultaSemRetornoException {
+    public List<Sistema> buscarTodosSistemas() {
         return this.sistemaDao.listarTudo();
     } // fim do buscarTodosSistemas
 

@@ -32,10 +32,6 @@
                                     value="#{TarefaBean.tarefa.finalEfetivo}" showOn="button" required="true"
                                     requiredMessage="#{erro['message.campoObrigatorio']}" locale="pt"/>
                         <p:message for="finalEfetivoCalendar"/>
-                        <p:outputLabel value="#{recurso['label.totalHoras']}" for="totalHorasText"/>
-                        <p:inputText id="totalHorasText" value="#{TarefaBean.tarefa.totalHoras}"
-                                     required="false" requiredMessage="#{erro['message.campoObrigatorio']}"/>
-                        <p:message for="totalHorasText"/>
                         <p:outputLabel value="#{recurso['label.status']}" for="statusList"/>
                         <p:selectOneMenu id="statusList" value="#{TarefaBean.tarefa.status}" required="true"
                                          requiredMessage="#{erro['message.campoObrigatorio']}">
@@ -52,10 +48,7 @@
                                            itemLabel="#{colaborador.nome}" itemValue="#{colaborador.id}"/>
                         </p:selectOneMenu>
                         <p:message for="colaboradorList"/>
-                        <p:outputLabel value="#{recurso['label.replanejado']}" for="replanejadoBooleanCheckBox"/>
-                        <p:selectBooleanCheckbox id="replanejadoBooleanCheckBox"
-                                                 value="#{TarefaBean.tarefa.replanajado}"/>
-                    </p:panelGrid>
+                       </p:panelGrid>
                     <p:panelGrid columns="1" id="observacaoPanelGrid">
                         <f:facet name="header">#{recurso['header.observacao']}</f:facet>
                         <p:inputTextarea cols="60" rows="10" id="observacaoInputTextArea"

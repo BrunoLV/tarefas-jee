@@ -1,13 +1,11 @@
 package com.valhala.tarefa.dao.impl;
 
-import com.valhala.tarefa.dao.api.Dao;
-import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
-import com.valhala.tarefa.exceptions.DaoException;
+import java.io.Serializable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
-import java.io.Serializable;
+
+import com.valhala.tarefa.dao.api.Dao;
 
 /**
  * Implementação básica da interface Dao.
@@ -21,47 +19,30 @@ import java.io.Serializable;
 abstract class BaseDao<T> implements Dao<T> {
 
     // Propriedade que representa a entidade persistente.
-    protected Class<T> classePersistente;
+    Class<T> classePersistente;
 
     // Injeção do EntityManager que será utilizado para as operações com banco de dados.
     @PersistenceContext(name = "tarefas-PU")
-    protected EntityManager entityManager;
+    EntityManager entityManager;
 
     @Override
-    public T persistir(T entidade) throws DaoException {
-        try {
-            this.entityManager.persist(entidade);
-        } catch (PersistenceException e) {
-            throw new DaoException(String.format("Ocorreu um erro ao persistir o registro. Erro: %s", e.getMessage()), e);
-        } // fim do bloco try/catch
-        return entidade;
+    public void persistir(T entidade) {
+        this.entityManager.persist(entidade);
     } // fim do método persistir
 
     @Override
-    public T atualizar(T entidade) throws DaoException {
-        try {
-            entidade = this.entityManager.merge(entidade);
-        } catch (PersistenceException e) {
-            throw new DaoException(String.format("Ocorreu um erro ao atualizar o registro. Erro: %s", e.getMessage()), e);
-        } // fim do bloco try/catch
-        return entidade;
+    public void atualizar(T entidade) {
+        this.entityManager.merge(entidade);
     } // fim do método atualizar
 
     @Override
-    public void remover(T entidade) throws DaoException {
-        try {
-            this.entityManager.remove(entidade);
-        } catch (PersistenceException e) {
-            throw new DaoException(String.format("Ocorreu um erro ao atualizar o registro. Erro: %s", e.getMessage()), e);
-        } // fim do bloco try/catch
+    public void remover(T entidade) {
+        this.entityManager.remove(entidade);
     } // fim do método remover
 
     @Override
-    public T buscarPorId(Serializable id) throws ConsultaSemRetornoException {
+    public T buscarPorId(Serializable id) {
         T t = this.entityManager.find(this.classePersistente, id);
-        if (t == null) {
-            throw new ConsultaSemRetornoException("Consulta não trouxe resultados.");
-        } // fim do bloco if
         return t;
     } // fim do método buscarPorId
 

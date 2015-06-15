@@ -1,17 +1,17 @@
 package com.valhala.tarefa.web.beans;
 
-import com.valhala.tarefa.ejb.ColaboradorService;
-import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
-import com.valhala.tarefa.exceptions.ServiceException;
-import com.valhala.tarefa.model.Atribuicao;
-import com.valhala.tarefa.model.Colaborador;
+import java.io.Serializable;
+import java.security.Principal;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.servlet.ServletException;
-import java.io.Serializable;
-import java.security.Principal;
+
+import com.valhala.tarefa.ejb.ColaboradorBean;
+import com.valhala.tarefa.exceptions.ServiceException;
+import com.valhala.tarefa.model.Atribuicao;
+import com.valhala.tarefa.vo.ColaboradorVO;
 
 /**
  * Managed Bean utilizado para as ações de tela relacionadas a login.
@@ -20,9 +20,9 @@ import java.security.Principal;
  * @version 1.0
  * @since 23/02/2014
  */
-@Named("LoginBean")
+@Named("LoginMB")
 @RequestScoped
-public class LoginBean extends BaseJSFBean implements Serializable {
+public class LoginMB extends BaseMB implements Serializable {
 
     public static final String USUARIO_LOGADO = "USUARIO_LOGADO";
     private static final long serialVersionUID = 1L;
@@ -34,9 +34,9 @@ public class LoginBean extends BaseJSFBean implements Serializable {
     private String confirmeSenha = "";
 
     @EJB
-    private ColaboradorService colaboradorService;
+    private ColaboradorBean colaboradorService;
 
-    public LoginBean() {
+    public LoginMB() {
         this.matricula = "";
         this.senha = "";
     } // fim do método construtor
@@ -51,11 +51,11 @@ public class LoginBean extends BaseJSFBean implements Serializable {
         try {
             getRequest().login(this.matricula, this.senha);
             Principal principal = getRequest().getUserPrincipal();
-            getSession().setAttribute(LoginBean.USUARIO_LOGADO, this.colaboradorService.buscarPorMatricula(principal.getName()));
-            outcome = LoginBean.OUTCOME_SUCESSO;
-        } catch (ServletException | ConsultaSemRetornoException e) {
+            getSession().setAttribute(LoginMB.USUARIO_LOGADO, ColaboradorVO.fromModel(this.colaboradorService.buscarPorMatricula(principal.getName())));
+            outcome = LoginMB.OUTCOME_SUCESSO;
+        } catch (ServletException e) {
             System.out.println(e.getMessage());
-            outcome = LoginBean.OUTCOME_FALHA;
+            outcome = LoginMB.OUTCOME_FALHA;
         } // fim do bloco try/catch
         return outcome;
     } // fim do método login
@@ -66,10 +66,10 @@ public class LoginBean extends BaseJSFBean implements Serializable {
     public void redefinirSenha() {
         if (this.senha.equals(this.confirmeSenha)) {
             try {
-                Colaborador colaborador = (Colaborador) getSession().getAttribute(LoginBean.USUARIO_LOGADO);
+                ColaboradorVO colaborador = (ColaboradorVO) getSession().getAttribute(LoginMB.USUARIO_LOGADO);
                 colaborador.setSenha(this.senha);
-                this.colaboradorService.editarColaborador(colaborador);
-                getSession().setAttribute(LoginBean.USUARIO_LOGADO, colaborador);
+                this.colaboradorService.editarColaborador(colaborador.asModel());
+                getSession().setAttribute(LoginMB.USUARIO_LOGADO, colaborador);
                 inserirMensagemDeSucesso("Senha redefinida com sucesso.");
             } catch (ServiceException e) {
                 inserirMensagemDeErro(String.format("Ocorreu um erro durante a ação: %s", e.getMessage()));
@@ -100,7 +100,7 @@ public class LoginBean extends BaseJSFBean implements Serializable {
         if (getSession() != null) {
             getSession().invalidate();
         } // fim do bloco if
-        return LoginBean.OUTCOME_LOGOUT;
+        return LoginMB.OUTCOME_LOGOUT;
     } // fim do método logout
 
     public String getMatricula() {

@@ -1,7 +1,6 @@
 package com.valhala.tarefa.ejb;
 
 import com.valhala.tarefa.dao.api.EquipeDao;
-import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
 import com.valhala.tarefa.model.Equipe;
 import com.valhala.tarefa.qualifiers.Auditavel;
 
@@ -19,7 +18,7 @@ import java.util.List;
 @Auditavel
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class EquipeService {
+public class EquipeBean {
 
     @Inject
     private EquipeDao equipeDao;
@@ -32,7 +31,7 @@ public class EquipeService {
      */
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<Equipe> buscarTodasEquipes() throws ConsultaSemRetornoException {
+    public List<Equipe> buscarTodasEquipes() {
         return this.equipeDao.listarTudo();
     } // fim do método buscarTodasEquipes
 

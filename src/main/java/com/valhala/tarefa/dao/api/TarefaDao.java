@@ -24,7 +24,7 @@ public interface TarefaDao extends Dao<Tarefa> {
      * @return
      * @throws ConsultaSemRetornoException
      */
-    List<Tarefa> buscarTodasPorColaborador(Colaborador colaborador) throws ConsultaSemRetornoException;
+    List<Tarefa> buscarTodasPorColaborador(Colaborador colaborador);
 
     /**
      * Método utilizado para buscar todas as tarefas pertencentes a um colaborador especifico e que estejam dentro dentro
@@ -35,7 +35,7 @@ public interface TarefaDao extends Dao<Tarefa> {
      * @return
      * @throws ConsultaSemRetornoException
      */
-    List<Tarefa> buscarTodasPorColaboradorEStatus(Colaborador colaborador, List<Status> status) throws ConsultaSemRetornoException;
+    List<Tarefa> buscarTodasPorColaboradorEStatus(Colaborador colaborador, List<Status> status);
 
     /**
      * Método utilizado para buscar todas as tarefas que estejem dentro dos status passados para o método.
@@ -44,7 +44,7 @@ public interface TarefaDao extends Dao<Tarefa> {
      * @return
      * @throws ConsultaSemRetornoException
      */
-    List<Tarefa> buscarTodasPorStatus(List<Status> status) throws ConsultaSemRetornoException;
+    List<Tarefa> buscarTodasPorStatus(List<Status> status);
 
     /**
      * Método utilizado para buscar todas tarefas com datas já definidas.
@@ -52,7 +52,7 @@ public interface TarefaDao extends Dao<Tarefa> {
      * @return
      * @throws ConsultaSemRetornoException
      */
-    List<Tarefa> buscarTodasComDatasDefinidas() throws ConsultaSemRetornoException;
+    List<Tarefa> buscarTodasComDatasDefinidas();
 
     /**
      * Método utilizado para buscar todas as tarefas com datas já definidas de um determinado colaborador.
@@ -62,7 +62,7 @@ public interface TarefaDao extends Dao<Tarefa> {
      * @return
      * @throws ConsultaSemRetornoException
      */
-    List<Tarefa> buscarTodasPorColaboradorEStatusComDatasDefinidas(Colaborador colaborador, List<Status> status) throws ConsultaSemRetornoException;
+    List<Tarefa> buscarTodasPorColaboradorEStatusComDatasDefinidas(Colaborador colaborador, List<Status> status);
 
     /**
      * Método utilizado para buscar todas as tarefas com datas já definidas dentro de determinados Status.
@@ -71,7 +71,7 @@ public interface TarefaDao extends Dao<Tarefa> {
      * @return
      * @throws ConsultaSemRetornoException
      */
-    List<Tarefa> buscarTodasPorStatusComDatasDefinidas(List<Status> status) throws ConsultaSemRetornoException;
+    List<Tarefa> buscarTodasPorStatusComDatasDefinidas(List<Status> status);
 
     /**
      * Método utilizado para buscar totais de demandas e nome da equipe a qual pertencem filtrando por um periodo definido.
@@ -81,7 +81,7 @@ public interface TarefaDao extends Dao<Tarefa> {
      * @return
      * @throws ConsultaSemRetornoException
      */
-    List<Object[]> buscarTotaisDemandasPorPeriodoDeTodasEquipes(Date inicio, Date fim) throws ConsultaSemRetornoException;
+    List<Object[]> buscarTotaisDemandasPorPeriodoDeTodasEquipes(Date inicio, Date fim);
 
     /**
      * Método utilizado para buscar totais de demandas e no da equipe a qual pertencem filtrando por um periodo definido, por tipo de demanda e equipes.
@@ -92,7 +92,7 @@ public interface TarefaDao extends Dao<Tarefa> {
      * @return
      * @throws ConsultaSemRetornoException
      */
-    List<Object[]> buscarTotaisDemandasPorPeriodoEEquipePorTipo(Date inicio, Date fim, String tipo) throws ConsultaSemRetornoException;
+    List<Object[]> buscarTotaisDemandasPorPeriodoEEquipePorTipo(Date inicio, Date fim, String tipo);
     
     /**
      * Método utilizado para buscar totais de demandas e o nome do sistema a qual pertencem filtandro por um periodo definido.
@@ -102,7 +102,7 @@ public interface TarefaDao extends Dao<Tarefa> {
      * @return
      * @throws ConsultaSemRetornoException
      */
-    List<Object[]> buscarTotaisDemandasTodosSistemas(Date inicio, Date fim) throws ConsultaSemRetornoException;
+    List<Object[]> buscarTotaisDemandasTodosSistemas(Date inicio, Date fim);
     
     /**
      * Método utilizado para buscar totais de demandas e o nome do sistema a qual pertencem filtrando por um periodo definido e equipe.
@@ -113,7 +113,7 @@ public interface TarefaDao extends Dao<Tarefa> {
      * @return
      * @throws ConsultaSemRetornoException
      */
-    List<Object[]> buscarTotaisDemandasTodosSistemasPorEquipe(Date inicio, Date fim, Long id) throws ConsultaSemRetornoException;
+    List<Object[]> buscarTotaisDemandasTodosSistemasPorEquipe(Date inicio, Date fim, Long id);
     
     /**
      * Método utilizado para buscar totais de demandas e o nome do sistema a qual pertencem filtrando por um periodo definido e tipo de demanda.
@@ -124,7 +124,7 @@ public interface TarefaDao extends Dao<Tarefa> {
      * @return
      * @throws ConsultaSemRetornoException
      */
-    List<Object[]> buscarTotaisDemandasTodosSistemasPorTipo(Date inicio, Date fim, String tipo) throws ConsultaSemRetornoException;
+    List<Object[]> buscarTotaisDemandasTodosSistemasPorTipo(Date inicio, Date fim, String tipo);
     
     /**
      * Método utilizado para buscar totais de demandas e o nome do sistema a qual pertencem filtrando por um periodo definido, equipe e tipo de demanda. 
@@ -136,7 +136,7 @@ public interface TarefaDao extends Dao<Tarefa> {
      * @return
      * @throws ConsultaSemRetornoException
      */
-    List<Object[]> buscarTotaisDemandasTodosSistemasPorTipoEEquipe(Date inicio, Date fim, Long id, String tipo) throws ConsultaSemRetornoException;
+    List<Object[]> buscarTotaisDemandasTodosSistemasPorTipoEEquipe(Date inicio, Date fim, Long id, String tipo);
     
     /**
      * Método utilizado para buscar totais de demandas e nome do cliente a qual pertencem filtrando por um periodo definido.
@@ -146,7 +146,7 @@ public interface TarefaDao extends Dao<Tarefa> {
      * @return
      * @throws ConsultaSemRetornoException
      */
-    List<Object[]> buscarTotaisDemandasTodosClientes(Date inicio, Date fim) throws ConsultaSemRetornoException;
+    List<Object[]> buscarTotaisDemandasTodosClientes(Date inicio, Date fim);
     
     /**
      * Método utilizado para buscar totais de demandas e nome do cliente a qual pertencem filtrando por um periodo definido e tipo de demanda.
@@ -157,7 +157,7 @@ public interface TarefaDao extends Dao<Tarefa> {
      * @return
      * @throws ConsultaSemRetornoException
      */
-    List<Object[]> buscarTotaisDemandasTodosClientesPorTipo(Date inicio, Date fim, String tipo) throws ConsultaSemRetornoException;
+    List<Object[]> buscarTotaisDemandasTodosClientesPorTipo(Date inicio, Date fim, String tipo);
     
     /**
      * Método utilizado para buscar totais de demandas e nome do cliente a qual pertencem filtrando por um periodo definido e por equipe. 
@@ -168,7 +168,7 @@ public interface TarefaDao extends Dao<Tarefa> {
      * @return
      * @throws ConsultaSemRetornoException
      */
-    List<Object[]> buscarTotaisDemandasTodosClientesPorEquipe(Date inicio, Date fim, Long id) throws ConsultaSemRetornoException;
+    List<Object[]> buscarTotaisDemandasTodosClientesPorEquipe(Date inicio, Date fim, Long id);
     
     /**
      * Método utilizado para buscar totais de demandas e nome do cliente a qual pertencem filtrando por um periodo definido, equipe e tipo de demanda.
@@ -180,6 +180,6 @@ public interface TarefaDao extends Dao<Tarefa> {
      * @return
      * @throws ConsultaSemRetornoException
      */
-    List<Object[]> buscarTotaisDemandasTodosClientesPorEquipeETipo(Date inicio, Date fim, Long id, String tipo) throws ConsultaSemRetornoException;
+    List<Object[]> buscarTotaisDemandasTodosClientesPorEquipeETipo(Date inicio, Date fim, Long id, String tipo);
 
 } // fim da interface TarefaDao

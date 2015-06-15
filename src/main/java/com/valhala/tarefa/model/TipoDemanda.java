@@ -9,9 +9,18 @@ package com.valhala.tarefa.model;
  */
 public enum TipoDemanda {
 
-    NAO_DEFINIDO("Não Definida"), ALERTA("Alerta"), CHAMADO("Chamado"), INCIDENTE("Incidente"),
-    REQUISICAO_SERVICO("Requisição de Serviço"), DUVIDA_INFORMACAO("Dúvida/Informação"),
-    SUGESTAO("Sugestão"), PROBLEMA("Problema"), ZELADORIA("Zeladoria"), PROJETO("Projeto"), TODOS("Todos");
+    NAO_DEFINIDO("Não Definida"), 
+    ALERTA("Alerta"), 
+    CHAMADO("Chamado"), 
+    INCIDENTE("Incidente"),
+    SOLICITACAO("Solicitação"),
+    REQUISICAO_SERVICO("Requisição de Serviço"), 
+    DUVIDA_INFORMACAO("Dúvida/Informação"),
+    SUGESTAO("Sugestão"), 
+    PROBLEMA("Problema"), 
+    ZELADORIA("Zeladoria"), 
+    PROJETO("Projeto"), 
+    TODOS("Todos");
 
     private String nomeExibicao;
 

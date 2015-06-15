@@ -1,4 +1,4 @@
-package com.valhala.tarefa.util;
+package com.valhala.tarefa.file;
 
 import com.valhala.tarefa.exceptions.ArquivoUtilException;
 
@@ -16,7 +16,7 @@ import java.nio.file.Path;
  * @version 1.0
  * @since 27/06/2014
  */
-public abstract class ArquivoUtil {
+public abstract class LeitorArquivo {
 
     /**
      * Método utilizado para ler um arquivo e devolver o Stream dele do mesmo.

@@ -9,7 +9,12 @@ package com.valhala.tarefa.model;
  */
 public enum Prioridade {
 
-    NAO_DEFINIDA("Não Definida"), PLANEJADA("Planejada"), BAIXA("Baixa"), MEDIA("Média"), ALTA("Alta"), CRITICA("Crítica");
+    NAO_DEFINIDA("Não Definida"), 
+    PLANEJADA("Planejada"), 
+    BAIXA("Baixa"), 
+    MEDIA("Média"), 
+    ALTA("Alta"), 
+    CRITICA("Crítica");
 
     private String nomeExibicao;
 

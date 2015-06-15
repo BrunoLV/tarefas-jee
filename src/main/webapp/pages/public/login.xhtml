@@ -17,15 +17,15 @@
                         #{recurso['header.login']}
                     </f:facet>
                     <h:outputLabel value="#{recurso['label.matricula']}" for="matriculaText"/>
-                    <p:inputText id="matriculaText" value="#{LoginBean.matricula}" required="true"
+                    <p:inputText id="matriculaText" value="#{LoginMB.matricula}" required="true"
                                  requiredMessage="#{erro['message.campoObrigatorio']}"/>
                     <p:message for="matriculaText"/>
                     <h:outputLabel value="#{recurso['label.senha']}" for="senhaPassword"/>
-                    <p:password id="senhaPassword" value="#{LoginBean.senha}" required="true"
+                    <p:password id="senhaPassword" value="#{LoginMB.senha}" required="true"
                                 requiredMessage="#{erro['message.campoObrigatorio']}"/>
                     <p:message for="senhaPassword"/>
                     <f:facet name="footer">
-                        <p:commandButton id="loginCommandButton" action="#{LoginBean.login()}" ajax="false"
+                        <p:commandButton id="loginCommandButton" action="#{LoginMB.login()}" ajax="false"
                                          immediate="false" icon="ui-icon-unlocked"/>
                         <p:tooltip for="loginCommandButton" value="#{recurso['tooltip.login']}"/>
                     </f:facet>

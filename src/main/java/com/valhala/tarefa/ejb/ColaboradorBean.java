@@ -1,18 +1,20 @@
 package com.valhala.tarefa.ejb;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
+import javax.inject.Inject;
+
 import com.valhala.tarefa.dao.api.ColaboradorDao;
 import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
-import com.valhala.tarefa.exceptions.CopiaDePropriedadesException;
-import com.valhala.tarefa.exceptions.DaoException;
 import com.valhala.tarefa.exceptions.ServiceException;
 import com.valhala.tarefa.model.Colaborador;
 import com.valhala.tarefa.qualifiers.Auditavel;
-import com.valhala.tarefa.util.Copiador;
-
-import javax.ejb.*;
-import javax.inject.Inject;
-import java.io.Serializable;
-import java.util.List;
 
 /**
  * EJB responsavel pela regra de negócio relacionada a Colaborador
@@ -24,7 +26,7 @@ import java.util.List;
 @Auditavel
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class ColaboradorService {
+public class ColaboradorBean {
 
     @Inject
     private ColaboradorDao colaboradorDao;
@@ -38,11 +40,7 @@ public class ColaboradorService {
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void cadastrarColaborador(Colaborador colaborador) throws ServiceException {
-        try {
-            this.colaboradorDao.persistir(colaborador);
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage(), e);
-        }
+        this.colaboradorDao.persistir(colaborador);
     } // fim do método cadastrarColaborador
 
     /**
@@ -54,14 +52,7 @@ public class ColaboradorService {
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void editarColaborador(Colaborador colaborador) throws ServiceException {
-        Colaborador colaboradorPersistente;
-        try {
-            colaboradorPersistente = this.colaboradorDao.buscarPorId(colaborador.getId());
-            Copiador.copiar(Colaborador.class, colaboradorPersistente, colaborador);
-            this.colaboradorDao.atualizar(colaboradorPersistente);
-        } catch (ConsultaSemRetornoException | CopiaDePropriedadesException | DaoException e) {
-            throw new ServiceException(e.getMessage(), e);
-        } // fim do bloco try/catch
+        this.colaboradorDao.atualizar(colaborador);
     } // fim do método editarColaborador
 
     /**
@@ -73,11 +64,7 @@ public class ColaboradorService {
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void removerColaborador(Serializable id) throws ServiceException {
-        try {
-            this.colaboradorDao.remover(this.colaboradorDao.buscarPorId(id));
-        } catch (ConsultaSemRetornoException | DaoException e) {
-            throw new ServiceException(e.getMessage(), e);
-        } // fim do bloco try/catch
+        this.colaboradorDao.remover(this.colaboradorDao.buscarPorId(id));
     } // fim do método removerColaborador
 
     /**
@@ -89,7 +76,7 @@ public class ColaboradorService {
      */
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Colaborador buscarPorId(Serializable id) throws ConsultaSemRetornoException {
+    public Colaborador buscarPorId(Serializable id) {
         return this.colaboradorDao.buscarPorId(id);
     } // fim do método buscarPorId
 
@@ -101,7 +88,7 @@ public class ColaboradorService {
      */
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<Colaborador> buscarTodosColaboradores() throws ConsultaSemRetornoException {
+    public List<Colaborador> buscarTodosColaboradores() {
         return this.colaboradorDao.listarTudo();
     } // fim do método buscarTodosColaboradores
 
@@ -114,7 +101,7 @@ public class ColaboradorService {
      */
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Colaborador buscarPorMatricula(String matricula) throws ConsultaSemRetornoException {
+    public Colaborador buscarPorMatricula(String matricula) {
         return this.colaboradorDao.buscarPorMatricula(matricula);
     } // fim do método buscarPorMatricula
 

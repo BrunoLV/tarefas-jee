@@ -16,13 +16,11 @@
             <p:growl autoUpdate="true" globalOnly="true" showDetail="true" showSummary="false"
                      id="globalMessageGrowl" life="3000"/>
             <p:menubar>
-                <p:submenu label="#{recurso['menu.lideranca']}" rendered="#{LoginBean.lider}">
+                <p:submenu label="#{recurso['menu.lideranca']}" rendered="#{LoginMB.lider}">
                     <p:menuitem value="#{recurso['menu.carga']}" url="/pages/lider/cargas_administrativas.xhtml"/>
                 </p:submenu>
                 
                 <p:menuitem value="#{recurso['menu.tarefas']}" url="/pages/public/visualizacao-tarefas.xhtml"/>
-                
-                <p:menuitem value="#{recurso['menu.calendario']}" url="/pages/public/visualizacao-calendario.xhtml"/>
                 
                 <p:menuitem value="#{recurso['menu.relatorio.tarefas']}" ajax="false"
                             onclick="PrimeFaces.monitorDownload(start, stop);"

@@ -1,58 +1,47 @@
 package com.valhala.tarefa.dao.api;
 
-import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
-import com.valhala.tarefa.exceptions.DaoException;
-
 import java.io.Serializable;
 import java.util.List;
 
 /**
  * Interface base para todas os DAO's da aplicação.
- *
- * @param <T>
+ * @param <T> representa o tipo genérico definido para a interface.
  * @author Bruno Luiz Viana
- * @version 1.0
+ * @version 1.0s
  * @since 23/02/2013
  */
 public interface Dao<T> {
 
     /**
-     * Método utilizado para persistir uma entidade no banco de dados.
-     *
-     * @param entidade
+     * Método definido para execução da inserção de um registro no banco de dados.
+     * @param t objeto que será inserido no banco de dados.
      */
-    T persistir(T entidade) throws DaoException;
+    void persistir(T t);
 
     /**
-     * Método utilizado para atualizar uma entidade no banco de dados.
-     *
-     * @param entidade
-     * @return
+     * Método definido para execução da edição/atualização de um registro no banco de dados.
+     * @param t objeto que será editado/atualizado no banco de dados.
      */
-    T atualizar(T entidade) throws DaoException;
+    void atualizar(T t);
 
     /**
-     * Método utilizado para remover um entidade do banco de dados.
-     *
-     * @param entidade
+     * Método definido para execução da remoção de um registrp no banco de dados.
+     * @param t objeto que será removido no banco de dados.
      */
-    void remover(T entidade) throws DaoException;
+    void remover(T t);
 
     /**
-     * Método utilizado para realizar um consulta no banco de dados utilizando o id da entidade.
-     *
-     * @param id
-     * @return
-     * @throws ConsultaSemRetornoException
+     * Método determinado para ação de recuperar um registro do banco de dados utilizando a chave primária como
+     * paramentro de consulta.
+     * @param id representa a chave primaria para realização da consulta.
+     * @return objeto retornado do banco de dados.
      */
-    T buscarPorId(Serializable id) throws ConsultaSemRetornoException;
+    T buscarPorId(Serializable id);
 
     /**
-     * Método utilizado para buscar todos as entidades de determinado tipo cadastradas no banco de dados.
-     *
-     * @return
-     * @throws ConsultaSemRetornoException
+     * Método determinado para ação de recuperar todos os registros do banco de dados.
+     * @return lista com os objetos obtidos.
      */
-    List<T> listarTudo() throws ConsultaSemRetornoException;
+    List<T> listarTudo();
 
 } // fim da interface Dao

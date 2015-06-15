@@ -1,7 +1,6 @@
 package com.valhala.tarefa.ejb;
 
 import com.valhala.tarefa.dao.api.ClienteDao;
-import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
 import com.valhala.tarefa.model.Cliente;
 import com.valhala.tarefa.qualifiers.Auditavel;
 
@@ -19,7 +18,7 @@ import java.util.List;
 @Auditavel
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class ClienteService {
+public class ClienteBean {
 
     @Inject
     private ClienteDao clienteDao;
@@ -32,7 +31,7 @@ public class ClienteService {
      */
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<Cliente> buscarTodosClientes() throws ConsultaSemRetornoException {
+    public List<Cliente> buscarTodosClientes() {
         return this.clienteDao.listarTudo();
     } // dim do método buscarTodosClientes
 

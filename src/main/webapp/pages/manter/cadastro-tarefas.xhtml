@@ -65,6 +65,13 @@
                                            itemLabel="#{prioridade.nomeExibicao}"/>
                         </p:selectOneMenu>
                         <p:message for="prioridadeList"/>
+                        
+                        <p:outputLabel value="#{recurso['label.abertura']}" for="aberturaCalendar"/>
+                        <p:calendar id="aberturaCalendar" pattern="dd/MM/yyyy" value="#{TarefaBean.tarefa.abertura}"
+                                    showOn="button" required="false"
+                                    requiredMessage="#{erro['message.campoObrigatorio']}" locale="pt"/>
+                        <p:message for="aberturaCalendar"/>
+                        
                         <p:outputLabel value="#{recurso['label.dataInicio']}" for="inicioCalendar"/>
                         <p:calendar id="inicioCalendar" pattern="dd/MM/yyyy" value="#{TarefaBean.tarefa.inicio}"
                                     showOn="button" required="false"
@@ -93,10 +100,19 @@
                                            itemLabel="#{status.nomeExibicao}"/>
                         </p:selectOneMenu>
                         <p:message for="statusList"/>
-                        <p:outputLabel value="#{recurso['label.totalHoras']}" for="totalHorasText"/>
-                        <p:inputText id="totalHorasText" value="#{TarefaBean.tarefa.totalHoras}"
-                                     required="false" requiredMessage="#{erro['message.campoObrigatorio']}"/>
-                        <p:message for="totalHorasText"/>
+                        <p:outputLabel value="#{recurso['label.categoria']}" for="categoriaText" />
+                        <p:inputText id="categoriaText" value="#{TarefaBean.tarefa.categoria}" required="true"
+                                     requiredMessage="#{erro['message.campoObrigatorio']}"/>
+                        <p:message for="categoriaText" />
+                        
+                        <p:outputLabel value="#{recurso['label.violado']}" for="violadoList"/>
+                        <p:selectOneMenu id="violadoList" value="#{TarefaBean.tarefa.statusSla}" required="false"
+                                         requiredMessage="#{erro['message.campoObrigatorio']}">
+                            <f:selectItem noSelectionOption="true" itemLabel="#{recurso['text.selecione']}"/>
+                            <f:selectItems value="#{TarefaBean.statusSla}" var="statusSla"
+                                           itemLabel="#{statusSla.descricaoViolacao}"/>
+                        </p:selectOneMenu>
+                        <p:message for="violadoList" />
                         <p:outputLabel value="#{recurso['label.colaborador']}" for="colaboradorList"/>
                         <p:selectOneMenu id="colaboradorList" value="#{TarefaBean.tarefa.colaborador.id}"
                                          required="true" requiredMessage="#{erro['message.campoObrigatorio']}">
@@ -105,11 +121,6 @@
                                            itemLabel="#{colaborador.nome}" itemValue="#{colaborador.id}"/>
                         </p:selectOneMenu>
                         <p:message for="colaboradorList"/>
-                        <p:outputLabel value="#{recurso['label.replanejado']}" for="replanejadoBooleanCheckBox"/>
-                        <p:selectBooleanCheckbox id="replanejadoBooleanCheckBox"
-                                                 value="#{TarefaBean.tarefa.replanajado}" required="false"
-                                                 requiredMessage="#{erro['message.campoObrigatorio']}"/>
-                        <p:message for="replanejadoBooleanCheckBox"/>
                     </p:panelGrid>
                     <p:panelGrid columns="1" id="observacaoPanelGrid">
                         <f:facet name="header">#{recurso['header.observacao']}</f:facet>

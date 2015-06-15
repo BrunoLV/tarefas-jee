@@ -7,7 +7,7 @@ package com.valhala.tarefa.exceptions;
  * @version 1.0
  * @since 04/06/2014
  */
-public class StreamConverterException extends Exception {
+public class StreamConverterException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 

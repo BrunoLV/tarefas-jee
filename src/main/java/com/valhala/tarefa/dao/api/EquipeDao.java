@@ -19,6 +19,6 @@ public interface EquipeDao extends Dao<Equipe> {
      * @return
      * @throws ConsultaSemRetornoException
      */
-    Equipe buscarPorNome(String nome) throws ConsultaSemRetornoException;
+    Equipe buscarPorNome(String nome);
 
 } // fim da interface EquipeDao
