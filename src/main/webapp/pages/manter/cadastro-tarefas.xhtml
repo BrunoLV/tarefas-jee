@@ -12,112 +12,112 @@
             <h:form id="cadastroForm">
                 <p:growl autoUpdate="true" globalOnly="true" showDetail="true" showSummary="false"
                          id="globalMessageGrowl" life="3000"/>
-                <h:inputHidden value="#{TarefaBean.tarefa.id}"/>
+                <h:inputHidden value="#{TarefaMB.tarefa.id}"/>
                 <p:panelGrid columns="1" id="geralDataGrid">
                     <f:facet name="header">#{recurso['header.cadastroTarefa']}</f:facet>
                     <p:panelGrid columns="3" id="cadastroPanelGrid">
                         <f:facet name="header">#{recurso['header.dadosGerais']}</f:facet>
                         <p:outputLabel value="#{recurso['label.numDemanda']}" for="numDemandaText"/>
-                        <p:inputText id="numDemandaText" value="#{TarefaBean.tarefa.numeroDemanda}" required="true"
+                        <p:inputText id="numDemandaText" value="#{TarefaMB.tarefa.numeroDemanda}" required="true"
                                      requiredMessage="#{erro['message.campoObrigatorio']}"/>
                         <p:message for="numDemandaText"/>
                         <p:outputLabel value="#{recurso['label.titulo']}" for="tituloText"/>
-                        <p:inputText id="tituloText" value="#{TarefaBean.tarefa.titulo}" required="true"
+                        <p:inputText id="tituloText" value="#{TarefaMB.tarefa.titulo}" required="true"
                                      requiredMessage="#{erro['message.campoObrigatorio']}"/>
                         <p:message for="tituloText"/>
                         <p:outputLabel value="#{recurso['label.tipoDemanda']}" for="tipoDemandaList"/>
-                        <p:selectOneMenu id="tipoDemandaList" value="#{TarefaBean.tarefa.tipoDemanda}" required="true"
+                        <p:selectOneMenu id="tipoDemandaList" value="#{TarefaMB.tarefa.tipoDemanda}" required="true"
                                          requiredMessage="#{erro['message.campoObrigatorio']}">
                             <f:selectItem itemLabel="#{recurso['text.selecione']}" noSelectionOption="true"/>
-                            <f:selectItems value="#{TarefaBean.tiposDemanda}" var="tipoDemanda"
+                            <f:selectItems value="#{TarefaMB.tiposDemanda}" var="tipoDemanda"
                                            itemLabel="#{tipoDemanda.nomeExibicao}"/>
                         </p:selectOneMenu>
                         <p:message for="tipoDemandaList"/>
                         <p:outputLabel value="#{recurso['label.areaSolicitante']}" for="areaSolicitanteOneMenu"/>
-                        <p:selectOneMenu id="areaSolicitanteOneMenu" value="#{TarefaBean.tarefa.cliente.id}"
+                        <p:selectOneMenu id="areaSolicitanteOneMenu" value="#{TarefaMB.tarefa.cliente.id}"
                                          required="true" requiredMessage="#{erro['message.campoObrigatorio']}">
                             <f:selectItem itemLabel="#{recurso['text.selecione']}" noSelectionOption="true"/>
-                            <f:selectItems value="#{TarefaBean.clientes}" var="cliente" itemLabel="#{cliente.nome}"
+                            <f:selectItems value="#{TarefaMB.clientes}" var="cliente" itemLabel="#{cliente.nome}"
                                            itemValue="#{cliente.id}"/>
                         </p:selectOneMenu>
                         <p:message for="areaSolicitanteOneMenu"/>
                         <p:outputLabel value="#{recurso['label.equipe']}" for="equipeOneMenu"/>
-                        <p:selectOneMenu id="equipeOneMenu" value="#{TarefaBean.tarefa.equipe.id}" required="true"
+                        <p:selectOneMenu id="equipeOneMenu" value="#{TarefaMB.tarefa.equipe.id}" required="true"
                                          requiredMessage="#{erro['message.campoObrigatorio']}">
                             <f:selectItem itemLabel="#{recurso['text.selecione']}" noSelectionOption="true"/>
-                            <f:selectItems value="#{TarefaBean.equipes}" var="equipe" itemLabel="#{equipe.nome}"
+                            <f:selectItems value="#{TarefaMB.equipes}" var="equipe" itemLabel="#{equipe.nome}"
                                            itemValue="#{equipe.id}"/>
                         </p:selectOneMenu>
                         <p:message for="equipeOneMenu"/>
                         <p:outputLabel value="#{recurso['label.sistema']}" for="sistemaOneMenu"/>
-                        <p:selectOneMenu id="sistemaOneMenu" value="#{TarefaBean.tarefa.sistema.id}" required="true"
+                        <p:selectOneMenu id="sistemaOneMenu" value="#{TarefaMB.tarefa.sistema.id}" required="true"
                                          requiredMessage="#{erro['message.campoObrigatorio']}">
                             <f:selectItem itemLabel="#{recurso['text.selecione']}" noSelectionOption="true"/>
-                            <f:selectItems value="#{TarefaBean.sistemas}" var="sistema" itemLabel="#{sistema.nome}"
+                            <f:selectItems value="#{TarefaMB.sistemas}" var="sistema" itemLabel="#{sistema.nome}"
                                            itemValue="#{sistema.id}"/>
                         </p:selectOneMenu>
                         <p:message for="sistemaOneMenu"/>
                         <p:outputLabel value="#{recurso['label.prioridade']}" for="prioridadeList"/>
-                        <p:selectOneMenu id="prioridadeList" value="#{TarefaBean.tarefa.prioridade}" required="true"
+                        <p:selectOneMenu id="prioridadeList" value="#{TarefaMB.tarefa.prioridade}" required="true"
                                          requiredMessage="#{erro['message.campoObrigatorio']}">
                             <f:selectItem noSelectionOption="true" itemLabel="#{recurso['text.selecione']}"/>
-                            <f:selectItems value="#{TarefaBean.prioridades}" var="prioridade"
+                            <f:selectItems value="#{TarefaMB.prioridades}" var="prioridade"
                                            itemLabel="#{prioridade.nomeExibicao}"/>
                         </p:selectOneMenu>
                         <p:message for="prioridadeList"/>
                         
                         <p:outputLabel value="#{recurso['label.abertura']}" for="aberturaCalendar"/>
-                        <p:calendar id="aberturaCalendar" pattern="dd/MM/yyyy" value="#{TarefaBean.tarefa.abertura}"
+                        <p:calendar id="aberturaCalendar" pattern="dd/MM/yyyy" value="#{TarefaMB.tarefa.abertura}"
                                     showOn="button" required="false"
                                     requiredMessage="#{erro['message.campoObrigatorio']}" locale="pt"/>
                         <p:message for="aberturaCalendar"/>
                         
                         <p:outputLabel value="#{recurso['label.dataInicio']}" for="inicioCalendar"/>
-                        <p:calendar id="inicioCalendar" pattern="dd/MM/yyyy" value="#{TarefaBean.tarefa.inicio}"
+                        <p:calendar id="inicioCalendar" pattern="dd/MM/yyyy" value="#{TarefaMB.tarefa.inicio}"
                                     showOn="button" required="false"
                                     requiredMessage="#{erro['message.campoObrigatorio']}" locale="pt"/>
                         <p:message for="inicioCalendar"/>
                         <p:outputLabel value="#{recurso['label.dataDesenvolvimento']}" for="desenvolvimentoCalendar"/>
-                        <p:calendar id="desenvolvimentoCalendar" pattern="dd/MM/yyyy" value="#{TarefaBean.tarefa.desenvolvimento}"
+                        <p:calendar id="desenvolvimentoCalendar" pattern="dd/MM/yyyy" value="#{TarefaMB.tarefa.desenvolvimento}"
                                     showOn="button" required="false"
                                     requiredMessage="#{erro['message.campoObrigatorio']}" locale="pt"/>
                         <p:message for="desenvolvimentoCalendar"/>
                         <p:outputLabel value="#{recurso['label.dataHomologacao']}" for="homologacaoCalendar"/>
-                        <p:calendar id="homologacaoCalendar" pattern="dd/MM/yyyy" value="#{TarefaBean.tarefa.homologacao}"
+                        <p:calendar id="homologacaoCalendar" pattern="dd/MM/yyyy" value="#{TarefaMB.tarefa.homologacao}"
                                     showOn="button" required="false"
                                     requiredMessage="#{erro['message.campoObrigatorio']}" locale="pt"/>
                         <p:message for="homologacaoCalendar"/>
                         <p:outputLabel value="#{recurso['label.dataFinalPlanejado']}" for="finalPlanejadoCalendar"/>
                         <p:calendar id="finalPlanejadoCalendar" pattern="dd/MM/yyyy"
-                                    value="#{TarefaBean.tarefa.finalPlanejado}" showOn="button" required="false"
+                                    value="#{TarefaMB.tarefa.finalPlanejado}" showOn="button" required="false"
                                     requiredMessage="#{erro['message.campoObrigatorio']}" locale="pt"/>
                         <p:message for="finalPlanejadoCalendar"/>
                         <p:outputLabel value="#{recurso['label.status']}" for="statusList"/>
-                        <p:selectOneMenu id="statusList" value="#{TarefaBean.tarefa.status}" required="false"
+                        <p:selectOneMenu id="statusList" value="#{TarefaMB.tarefa.status}" required="false"
                                          requiredMessage="#{erro['message.campoObrigatorio']}">
                             <f:selectItem noSelectionOption="true" itemLabel="#{recurso['text.selecione']}"/>
-                            <f:selectItems value="#{TarefaBean.status}" var="status"
+                            <f:selectItems value="#{TarefaMB.status}" var="status"
                                            itemLabel="#{status.nomeExibicao}"/>
                         </p:selectOneMenu>
                         <p:message for="statusList"/>
                         <p:outputLabel value="#{recurso['label.categoria']}" for="categoriaText" />
-                        <p:inputText id="categoriaText" value="#{TarefaBean.tarefa.categoria}" required="true"
+                        <p:inputText id="categoriaText" value="#{TarefaMB.tarefa.categoria}" required="true"
                                      requiredMessage="#{erro['message.campoObrigatorio']}"/>
                         <p:message for="categoriaText" />
                         
                         <p:outputLabel value="#{recurso['label.violado']}" for="violadoList"/>
-                        <p:selectOneMenu id="violadoList" value="#{TarefaBean.tarefa.statusSla}" required="false"
+                        <p:selectOneMenu id="violadoList" value="#{TarefaMB.tarefa.statusSla}" required="false"
                                          requiredMessage="#{erro['message.campoObrigatorio']}">
                             <f:selectItem noSelectionOption="true" itemLabel="#{recurso['text.selecione']}"/>
-                            <f:selectItems value="#{TarefaBean.statusSla}" var="statusSla"
+                            <f:selectItems value="#{TarefaMB.statusSla}" var="statusSla"
                                            itemLabel="#{statusSla.descricaoViolacao}"/>
                         </p:selectOneMenu>
                         <p:message for="violadoList" />
                         <p:outputLabel value="#{recurso['label.colaborador']}" for="colaboradorList"/>
-                        <p:selectOneMenu id="colaboradorList" value="#{TarefaBean.tarefa.colaborador.id}"
+                        <p:selectOneMenu id="colaboradorList" value="#{TarefaMB.tarefa.colaborador.id}"
                                          required="true" requiredMessage="#{erro['message.campoObrigatorio']}">
                             <f:selectItem noSelectionOption="true" itemLabel="#{recurso['text.selecione']}"/>
-                            <f:selectItems value="#{ColaboradorBean.colaboradores}" var="colaborador"
+                            <f:selectItems value="#{ColaboradorMB.colaboradores}" var="colaborador"
                                            itemLabel="#{colaborador.nome}" itemValue="#{colaborador.id}"/>
                         </p:selectOneMenu>
                         <p:message for="colaboradorList"/>
@@ -125,11 +125,11 @@
                     <p:panelGrid columns="1" id="observacaoPanelGrid">
                         <f:facet name="header">#{recurso['header.observacao']}</f:facet>
                         <p:inputTextarea cols="60" rows="10" id="observacaoInputTextArea"
-                                         value="#{TarefaBean.tarefa.observacao}"/>
+                                         value="#{TarefaMB.tarefa.observacao}"/>
                     </p:panelGrid>
                     <f:facet name="footer">
                         <p:commandButton id="salvarCommandButton" icon="ui-icon-disk" ajax="true" update="@form"
-                                         actionListener="#{TarefaBean.salvarTarefa()}"/>
+                                         actionListener="#{TarefaMB.salvarTarefa()}"/>
                         <p:tooltip for="salvarCommandButton" value="#{recurso['tooltip.gravar']}" showEffect="fade"
                                    hideEffect="fade"/>
                         <p:commandButton id="cancelarCommandButton" icon="ui-icon-close"

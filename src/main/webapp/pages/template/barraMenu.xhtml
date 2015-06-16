@@ -25,7 +25,7 @@
                 <p:menuitem value="#{recurso['menu.relatorio.tarefas']}" ajax="false"
                             onclick="PrimeFaces.monitorDownload(start, stop);"
                             icon="ui-icon-arrowthick-1-s">
-                    <p:fileDownload value="#{RelatorioBean.gerarRelatorioTarefasCompleto()}"/>
+                    <p:fileDownload value="#{RelatorioMB.gerarRelatorioTarefasCompleto()}"/>
                 </p:menuitem>
                 
                 <p:submenu label="#{recurso['menu.graficos']}">

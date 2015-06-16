@@ -25,7 +25,7 @@ import com.valhala.tarefa.util.PropertiesUtil;
  * @version 1.0
  * @since 23/06/2014
  */
-@Named("RelatorioBean")
+@Named("RelatorioMB")
 @RequestScoped
 public class RelatorioMB extends BaseMB implements Serializable {
 

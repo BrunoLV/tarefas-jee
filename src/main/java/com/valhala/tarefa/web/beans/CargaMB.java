@@ -27,7 +27,7 @@ import com.valhala.tarefa.file.converter.TarefaStreamConverter;
  * @version 1.0
  * @since 23/06/2014
  */
-@Named("CargaBean")
+@Named("CargaMB")
 @RequestScoped
 public class CargaMB extends BaseMB implements Serializable {
 

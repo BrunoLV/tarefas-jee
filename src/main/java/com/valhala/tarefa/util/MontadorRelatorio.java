@@ -63,12 +63,12 @@ private static final String[] ROTULOS_PLANILHA_TAREFA = {"DEMANDA", "TITULO", "T
     /*
     Método utilizado para montar as planilhas dentro da pasta do arquivo de relatório.
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-	private void montarSheets(HSSFWorkbook workbook, Map<String, List> sheets, String[] rotulos, TipoRelatorio tipo) {
+	private void montarSheets(HSSFWorkbook workbook, @SuppressWarnings("rawtypes") Map<String, List> sheets, String[] rotulos, TipoRelatorio tipo) {
         for (String key : sheets.keySet()) {
             HSSFSheet sheet = workbook.createSheet(key);
             montarLinhaComRotulos(sheet, rotulos);
-            List<Object> lista = sheets.get(key);
+            @SuppressWarnings("unchecked")
+			List<Object> lista = sheets.get(key);
             switch (tipo) {
                 case TAREFAS:
                     montarSheetTarefa(lista, sheet);

@@ -12,14 +12,14 @@
             <p:messages globalOnly="true" closable="true" autoUpdate="true"/>
             <p:panel header="#{recurso['header.cargaAdministrativa']}">
                 <p:panelGrid columns="4">
-                    <p:fileUpload id="uploadArquivo" value="#{CargaBean.file}" mode="simple"/>
-                    <p:selectOneMenu id="tipoCargaSelectOneMenu" value="#{CargaBean.tipoCarga}" required="true"
+                    <p:fileUpload id="uploadArquivo" value="#{CargaMB.file}" mode="simple"/>
+                    <p:selectOneMenu id="tipoCargaSelectOneMenu" value="#{CargaMB.tipoCarga}" required="true"
                                      requiredMessage="#{erro['message.campoObrigatorioCarga']}">
                         <f:selectItem itemLabel="#{recurso['text.tipoCarga']}" noSelectionOption="true"/>
-                        <f:selectItems value="#{CargaBean.tiposCarga()}"/>
+                        <f:selectItems value="#{CargaMB.tiposCarga()}"/>
                     </p:selectOneMenu>
                     <p:commandButton value="#{recurso['button.upload']}" ajax="false"
-                                     actionListener="#{CargaBean.upload()}"/>
+                                     actionListener="#{CargaMB.upload()}"/>
                     <p:message for="tipoCargaSelectOneMenu" />
                 </p:panelGrid>
             </p:panel>

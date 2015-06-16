@@ -12,22 +12,22 @@
 				<p:panel id="panelDemandaSistemas" header="#{recurso['title.grafico.geral']}">
 					<p:panelGrid columns="6">
 						<p:outputLabel for="tiposSelectOneMenu" value="#{recurso['label.tipoDemanda']}" />
-						<p:selectOneMenu id="tiposSelectOneMenu" value="#{GraficoBean.tipoDemanda}">
-							<f:selectItems value="#{GraficoBean.tipo}" var="tipo" itemLabel="#{tipo.nomeExibicao}" />
+						<p:selectOneMenu id="tiposSelectOneMenu" value="#{GraficoMB.tipoDemanda}">
+							<f:selectItems value="#{GraficoMB.tipo}" var="tipo" itemLabel="#{tipo.nomeExibicao}" />
 						</p:selectOneMenu>
 						<p:outputLabel for="dataInicialCalendar" value="#{recurso['label.dataInicial']}" />
-						<p:calendar id="dataInicialCalendar" value="#{GraficoBean.dataInicial}" />
+						<p:calendar id="dataInicialCalendar" value="#{GraficoMB.dataInicial}" />
 						<p:outputLabel for="dataFinalCalendar" value="#{recurso['label.dataFinal']}" />
-						<p:calendar id="dataFinalCalendar" value="#{GraficoBean.dataFinal}" />
+						<p:calendar id="dataFinalCalendar" value="#{GraficoMB.dataFinal}" />
 					</p:panelGrid>
 					<p:commandButton value="#{recurso['button.atualizarGraficoGeral']}" 
-						actionListener="#{GraficoBean.atualizarGraficoEquipe}"
+						actionListener="#{GraficoMB.atualizarGraficoEquipe}"
 						update="@form"
 						ajax="false" />
 					<br />
 
 					<p:pieChart id="demandasEquipePieChart"
-						value="#{GraficoBean.graficoDemandasEquipes}"
+						value="#{GraficoMB.graficoDemandasEquipes}"
 						title="#{recurso['title.grafico.geral']}"
 						legendPosition="e"
 						showDataLabels="true" 
@@ -37,7 +37,7 @@
 					<br />
 					
 					<p:pieChart id="demandasEquipePieChart2"
-						value="#{GraficoBean.graficoDemandasEquipes}"
+						value="#{GraficoMB.graficoDemandasEquipes}"
 						title="#{recurso['title.grafico.geral']}" 
 						legendPosition="e"
 						showDataLabels="true" 

@@ -1,6 +1,7 @@
 package com.valhala.tarefa.web.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -19,7 +20,7 @@ import com.valhala.tarefa.vo.ColaboradorVO;
  * @version 1.0
  * @since 23/02/2014
  */
-@Named("ColaboradorBean")
+@Named("ColaboradorMB")
 @RequestScoped
 public class ColaboradorMB implements Serializable {
 
@@ -29,7 +30,7 @@ public class ColaboradorMB implements Serializable {
     private ColaboradorBean colaboradorService;
 
     private ColaboradorVO colaborador;
-    private List<Colaborador> colaboradores;
+    private List<ColaboradorVO> colaboradores;
 
     public ColaboradorMB() {
     }
@@ -48,16 +49,20 @@ public class ColaboradorMB implements Serializable {
         this.colaborador = colaborador;
     }
 
-    public List<Colaborador> getColaboradores() {
+    public List<ColaboradorVO> getColaboradores() {
         return colaboradores;
     }
 
-    public void setColaboradores(List<Colaborador> colaboradores) {
+    public void setColaboradores(List<ColaboradorVO> colaboradores) {
         this.colaboradores = colaboradores;
     }
 
     private void inicializarColaboradores() {
-        this.colaboradores = this.colaboradorService.buscarTodosColaboradores();
+        this.colaboradores = new ArrayList<>();
+        List<Colaborador> auxiliarList = this.colaboradorService.buscarTodosColaboradores();
+        for (Colaborador colaborador : auxiliarList) {
+			colaboradores.add(ColaboradorVO.fromModel(colaborador));
+		}
     } // fim do método inicializarColaboradores
 
 } // fim da classe ColaboradorBean

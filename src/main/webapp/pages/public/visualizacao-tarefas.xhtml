@@ -24,7 +24,7 @@
 				<p:tabView id="listagemTabView" effect="fade">
 
 					<p:tab title="#{recurso['tab.todos']}">
-						<p:dataTable value="#{TarefaBean.tarefasNaoConcluidas}"
+						<p:dataTable value="#{TarefaMB.tarefasNaoConcluidas}"
 							var="tarefa" emptyMessage="#{erro['message.emptyTable']}"
 							paginator="true" rows="10"
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -32,9 +32,9 @@
 							<p:column>
 								<p:rowToggler />
 							</p:column>
-        <p:column headerText="#{recurso['column.id']}">
-            <h:outputText value="#{tarefa.id}"/>
-        </p:column>
+							<p:column headerText="#{recurso['column.id']}">
+								<h:outputText value="#{tarefa.id}" />
+							</p:column>
 							<p:column headerText="#{recurso['column.numDemanda']}"
 								sortBy="#{tarefa.numeroDemanda}">
 								<h:outputText value="#{tarefa.numeroDemanda}" />
@@ -56,11 +56,11 @@
 								<h:outputText value="#{tarefa.titulo}" />
 							</p:column>
 							<p:column headerText="#{recurso['column.categoria']}">
-									<h:outputText value="#{tarefa.categoria}"
-										rendered="#{not empty tarefa.categoria}" />
-									<h:outputText value="#{recurso['text.naoInformado']}"
-										rendered="#{empty tarefa.categoria}" />
-								</p:column>
+								<h:outputText value="#{tarefa.categoria}"
+									rendered="#{not empty tarefa.categoria}" />
+								<h:outputText value="#{recurso['text.naoInformado']}"
+									rendered="#{empty tarefa.categoria}" />
+							</p:column>
 							<p:column headerText="#{recurso['column.sistema']}">
 								<h:outputText value="#{tarefa.sistema.nome}"
 									rendered="#{not empty tarefa.sistema.nome}" />
@@ -96,13 +96,13 @@
 							<p:column
 								rendered="#{not empty sessionScope['USUARIO_LOGADO'] and LoginMB.lider}">
 								<p:commandButton id="editarCommandButton" icon="ui-icon-pencil"
-									action="#{TarefaBean.enviarTarefaParaEdicao(tarefa.id)}"
+									action="#{TarefaMB.enviarTarefaParaEdicao(tarefa.id)}"
 									immediate="true" ajax="false" process="@this" />
 								<p:tooltip for="editarCommandButton"
 									value="#{recurso['tooltip.editar']}" showEffect="fade"
 									hideEffect="fade" />
 								<p:commandButton id="deletarCommandButton" icon="ui-icon-trash"
-									actionListener="#{TarefaBean.removerTarefa(tarefa.id)}"
+									actionListener="#{TarefaMB.removerTarefa(tarefa.id)}"
 									immediate="true" ajax="true" process="@this" update="@form" />
 								<p:tooltip for="deletarCommandButton"
 									value="#{recurso['tooltip.remover']}" showEffect="fade"
@@ -157,10 +157,10 @@
 					</p:tab>
 
 					<c:forEach var="colaborador"
-						items="#{ColaboradorBean.colaboradores}">
+						items="#{ColaboradorMB.colaboradores}">
 						<p:tab title="#{colaborador.nome}">
 							<p:dataTable
-								value="#{TarefaBean.listarPorColaborador(colaborador)}"
+								value="#{TarefaMB.listarPorColaborador(colaborador)}"
 								var="tarefa" emptyMessage="#{erro['message.emptyTable']}"
 								paginator="true" rows="10"
 								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -168,9 +168,9 @@
 								<p:column exportable="false">
 									<p:rowToggler />
 								</p:column>
-			<p:column headerText="#{recurso['column.id']}">
-                <h:outputText value="#{tarefa.id}"/>
-            </p:column>
+								<p:column headerText="#{recurso['column.id']}">
+									<h:outputText value="#{tarefa.id}" />
+								</p:column>
 								<p:column headerText="#{recurso['column.numDemanda']}"
 									sortBy="#{tarefa.numeroDemanda}">
 									<h:outputText value="#{tarefa.numeroDemanda}" />
@@ -233,7 +233,7 @@
 								<p:column
 									rendered="#{not empty sessionScope['USUARIO_LOGADO'] and LoginMB.liderOrManter}">
 									<p:commandButton id="editarCommandButton" icon="ui-icon-pencil"
-										action="#{TarefaBean.enviarTarefaParaEdicao(tarefa.id)}"
+										action="#{TarefaMB.enviarTarefaParaEdicao(tarefa.id)}"
 										immediate="true" ajax="false" process="@this"
 										rendered="#{tarefa.colaborador.id == sessionScope['USUARIO_LOGADO'].id}" />
 									<p:tooltip for="editarCommandButton"
@@ -249,7 +249,8 @@
 										</h:outputFormat>
 										<h:outputText value="#{recurso['text.naoInformado']}"
 											rendered="#{empty tarefa.inicio}" />
-										<p:outputLabel value="column.dataDesenvolvimento" />
+										<p:outputLabel
+											value="#{recurso['column.dataDesenvolvimento']}" />
 										<h:outputFormat value="#{tarefa.inicio}"
 											rendered="#{not empty tarefa.desenvolvimento}">
 											<f:convertDateTime pattern="dd/MM/yyyy" />
@@ -291,7 +292,7 @@
 
 					<p:tab id="concluidosTab" title="#{recurso['tab.concluidos']}">
 						<p:dataTable id="concluidosDataTable"
-							value="#{TarefaBean.buscarTodosConcluidos()}" var="tarefa"
+							value="#{TarefaMB.buscarTodosConcluidos()}" var="tarefa"
 							emptyMessage="#{erro['message.emptyTable']}" paginator="true"
 							rows="10"
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -326,11 +327,11 @@
 								<h:outputText value="#{tarefa.titulo}" />
 							</p:column>
 							<p:column headerText="#{recurso['column.categoria']}">
-									<h:outputText value="#{tarefa.categoria}"
-										rendered="#{not empty tarefa.categoria}" />
-									<h:outputText value="#{recurso['text.naoInformado']}"
-										rendered="#{empty tarefa.categoria}" />
-								</p:column>
+								<h:outputText value="#{tarefa.categoria}"
+									rendered="#{not empty tarefa.categoria}" />
+								<h:outputText value="#{recurso['text.naoInformado']}"
+									rendered="#{empty tarefa.categoria}" />
+							</p:column>
 							<p:column>
 								<f:facet name="header">
 									<h:outputText value="#{recurso['column.status']}" />
@@ -357,7 +358,7 @@
 							<p:column exportable="false"
 								rendered="#{not empty sessionScope['USUARIO_LOGADO'] and LoginMB.lider}">
 								<p:commandButton id="ajustarCommandButton" icon="ui-icon-wrench"
-									action="#{TarefaBean.enviarTarefaParaAjusteAdministrativo(tarefa.id)}"
+									action="#{TarefaMB.enviarTarefaParaAjusteAdministrativo(tarefa.id)}"
 									immediate="true" ajax="false" process="@this" />
 								<p:tooltip for="ajustarCommandButton"
 									value="#{recurso['tooltip.ajustar']}" showEffect="fade"

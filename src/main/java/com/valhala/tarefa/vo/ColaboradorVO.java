@@ -51,7 +51,7 @@ public class ColaboradorVO implements Serializable {
 	}
 
 	public void setSenha(String senha) {
-		this.senha = senha;
+		this.senha = senha; 
 	}
 
 	public Set<Atribuicao> getAtribuicoes() {
@@ -74,6 +74,7 @@ public class ColaboradorVO implements Serializable {
 	
 	public Colaborador asModel() {
 		Colaborador colaborador = new Colaborador.Builder(this.nome, this.matricula).
+				id(this.id != null ? this.id : null).
 				senha(this.senha).
 				atribuicoes(this.atribuicoes).build();
 		return colaborador;

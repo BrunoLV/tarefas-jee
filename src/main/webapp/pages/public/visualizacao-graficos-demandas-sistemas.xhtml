@@ -13,28 +13,28 @@
 				<p:panel id="panelDemandaSistemas" header="#{recurso['title.grafico.demandas']}">
 					<p:panelGrid columns="8">
 						<p:outputLabel for="tiposSelectOneMenu" value="#{recurso['label.tipoDemanda']}" />
-						<p:selectOneMenu id="tiposSelectOneMenu" value="#{GraficoBean.tipoDemanda}">
-							<f:selectItems value="#{GraficoBean.tipo}" var="tipo" itemLabel="#{tipo.nomeExibicao}" />
+						<p:selectOneMenu id="tiposSelectOneMenu" value="#{GraficoMB.tipoDemanda}">
+							<f:selectItems value="#{GraficoMB.tipo}" var="tipo" itemLabel="#{tipo.nomeExibicao}" />
 						</p:selectOneMenu>
 						<p:outputLabel for="equipesSelectOneMenu" value="#{recurso['label.equipe']}" />
-						<p:selectOneMenu id="equipesSelectOneMenu" value="#{GraficoBean.idEquipe}">
+						<p:selectOneMenu id="equipesSelectOneMenu" value="#{GraficoMB.idEquipe}">
 							<f:selectItem itemLabel="Todos" itemValue="0" />
-							<f:selectItems value="#{GraficoBean.equipes}" var="equipe" itemLabel="#{equipe.nome}" itemValue="#{equipe.id}" />
+							<f:selectItems value="#{GraficoMB.equipes}" var="equipe" itemLabel="#{equipe.nome}" itemValue="#{equipe.id}" />
 						</p:selectOneMenu>
 						<p:outputLabel for="dataInicialCalendar" value="#{recurso['label.dataInicial']}" />
-						<p:calendar id="dataInicialCalendar" value="#{GraficoBean.dataInicial}" />
+						<p:calendar id="dataInicialCalendar" value="#{GraficoMB.dataInicial}" />
 						<p:outputLabel for="dataFinalCalendar" value="#{recurso['label.dataFinal']}" />
-						<p:calendar id="dataFinalCalendar" value="#{GraficoBean.dataFinal}" />
+						<p:calendar id="dataFinalCalendar" value="#{GraficoMB.dataFinal}" />
 					</p:panelGrid>
 					<p:commandButton
 						value="#{recurso['button.atualizarGraficoDemandas']}"
-						actionListener="#{GraficoBean.atualizarGraficoTarefa}"
+						actionListener="#{GraficoMB.atualizarGraficoTarefa}"
 						update="demandasSistemasPieChart"
 						ajax="false" />
 					<br />
 
 					<p:pieChart id="demandasSistemasPieChart"
-						value="#{GraficoBean.graficoDemandasSistemas}"
+						value="#{GraficoMB.graficoDemandasSistemas}"
 						title="#{recurso['title.grafico.demandas']}" 
 						legendPosition="e"
 						showDataLabels="true" 
@@ -44,7 +44,7 @@
 					<br />
 					
 					<p:pieChart id="demandasSistemasPieChart2"
-						value="#{GraficoBean.graficoDemandasSistemas}"
+						value="#{GraficoMB.graficoDemandasSistemas}"
 						title="#{recurso['title.grafico.demandas']}" 
 						legendPosition="e"
 						dataFormat="value"

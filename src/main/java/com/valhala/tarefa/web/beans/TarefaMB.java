@@ -27,6 +27,10 @@ import com.valhala.tarefa.model.Status;
 import com.valhala.tarefa.model.StatusSla;
 import com.valhala.tarefa.model.Tarefa;
 import com.valhala.tarefa.model.TipoDemanda;
+import com.valhala.tarefa.vo.ClienteVO;
+import com.valhala.tarefa.vo.ColaboradorVO;
+import com.valhala.tarefa.vo.EquipeVO;
+import com.valhala.tarefa.vo.SistemaVO;
 import com.valhala.tarefa.vo.TarefaVO;
 
 /**
@@ -36,7 +40,7 @@ import com.valhala.tarefa.vo.TarefaVO;
  * @version 1.0
  * @since 23/02/2014
  */
-@Named("TarefaBean")
+@Named("TarefaMB")
 @RequestScoped
 public class TarefaMB extends BaseMB implements Serializable {
 
@@ -45,8 +49,7 @@ public class TarefaMB extends BaseMB implements Serializable {
     private static final String CHAVE_OBJETO_EDICAO = "TAREFA_EDICAO";
 
     private static final String OUTCOME_ENVIAR_EDICAO = "/pages/manter/cadastro-tarefas.xhtml?faces-redirect=true";
-    private static final String OUTCOME_ENVIAR_AJUSTE = "/pages/lider/ajuste-tarefas-administrativo.xhtml?faces-redirect=true";
-
+    
     @EJB private TarefaBean tarefaService;
     @EJB private ClienteBean clienteService;
     @EJB private SistemaBean sistemaService;
@@ -87,11 +90,11 @@ public class TarefaMB extends BaseMB implements Serializable {
         } // fim do bloco if/else
     } // fim do método
 
-    public List<Tarefa> listarPorColaborador(Colaborador colaborador) {
+    public List<Tarefa> listarPorColaborador(ColaboradorVO colaborador) {
         List<Tarefa> tarefas;
         List<Status> status = new ArrayList<>(Arrays.asList(Status.values()));
 		status.remove(Status.CONCLUIDO);
-		tarefas = this.tarefaService.buscarTarefasPorColaboradorEStatus(colaborador, status);
+		tarefas = this.tarefaService.buscarTarefasPorColaboradorEStatus(colaborador.asModel(), status);
         return tarefas;
     }
 
@@ -155,28 +158,43 @@ public class TarefaMB extends BaseMB implements Serializable {
         TarefaVO tarefa = TarefaVO.fromModel(this.tarefaService.buscarPorId(id));
 		//inserirObjetoNoFlashScope(TarefaBean.CHAVE_OBJETO_EDICAO, tarefa);
 		inserirObjetoNaSession(TarefaMB.CHAVE_OBJETO_EDICAO, tarefa);
-		outcome = TarefaMB.OUTCOME_ENVIAR_AJUSTE;
+		outcome = TarefaMB.OUTCOME_ENVIAR_EDICAO;
         return outcome;
     }
 
-    public List<Sistema> getSistemas() {
-        List<Sistema> sistemas;
-        sistemas = this.sistemaService.buscarTodosSistemas();
+    public List<SistemaVO> getSistemas() {
+        List<SistemaVO> sistemas = new ArrayList<>();
+        List<Sistema> auxiliarList = this.sistemaService.buscarTodosSistemas();
+        for (Sistema sistema : auxiliarList) {
+			sistemas.add(SistemaVO.fromModel(sistema));
+		}
         return sistemas;
     }
 
-    public List<Cliente> getClientes() {
-        List<Cliente> clientes = this.clienteService.buscarTodosClientes();
+    public List<ClienteVO> getClientes() {
+        List<ClienteVO> clientes = new ArrayList<>();
+        List<Cliente> auxiliarList = this.clienteService.buscarTodosClientes();
+        for (Cliente cliente : auxiliarList) {
+			clientes.add(ClienteVO.fromModel(cliente));
+		}
         return clientes;
     }
 
-    public List<Equipe> getEquipes() {
-        List<Equipe> equipes = this.equipeService.buscarTodasEquipes();
+    public List<EquipeVO> getEquipes() {
+        List<EquipeVO> equipes = new ArrayList<>();
+        List<Equipe> auxiliarList = this.equipeService.buscarTodasEquipes();
+        for (Equipe equipe : auxiliarList) {
+			equipes.add(EquipeVO.fromModel(equipe));
+		}
         return equipes;
     }
 
-    public List<Colaborador> getColaboradores() {
-        List<Colaborador> colaboradores = this.colaboradorService.buscarTodosColaboradores();
+    public List<ColaboradorVO> getColaboradores() {
+        List<ColaboradorVO> colaboradores = new ArrayList<>();
+        List<Colaborador> auxiliarList = this.colaboradorService.buscarTodosColaboradores();
+        for (Colaborador colaborador : auxiliarList) {
+			colaboradores.add(ColaboradorVO.fromModel(colaborador));
+		}
         return colaboradores;
     }
 

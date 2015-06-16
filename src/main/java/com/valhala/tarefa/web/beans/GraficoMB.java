@@ -33,7 +33,7 @@ import com.valhala.tarefa.model.TipoDemanda;
  * @version 1.0
  * @since 09/07/2014
  */
-@Named("GraficoBean")
+@Named("GraficoMB")
 @RequestScoped
 public class GraficoMB extends BaseMB implements Serializable {
 
