@@ -13,7 +13,8 @@ import com.valhala.tarefa.model.Colaborador;
 public interface ColaboradorDao extends Dao<Colaborador> {
 
     /**
-     * Método utilizado para buscar um colaborador no banco de dados utilizando matricula.
+     * Método utilizado para buscar um colaborador no banco de dados utilizando
+     * matricula.
      *
      * @param matricula
      * @return
@@ -22,7 +23,8 @@ public interface ColaboradorDao extends Dao<Colaborador> {
     Colaborador buscarPorMatricula(final String matricula);
 
     /**
-     * Método utilizado para buscar um colaborador no banco de dados utilizando o nome.
+     * Método utilizado para buscar um colaborador no banco de dados utilizando
+     * o nome.
      *
      * @param nome
      * @return

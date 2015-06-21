@@ -3,6 +3,7 @@ package com.valhala.tarefa.ejb;
 import com.valhala.tarefa.dao.api.EquipeDao;
 import com.valhala.tarefa.model.Equipe;
 import com.valhala.tarefa.qualifiers.Auditavel;
+import java.io.Serializable;
 
 import javax.ejb.*;
 import javax.inject.Inject;
@@ -18,16 +19,22 @@ import java.util.List;
 @Auditavel
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class EquipeBean {
+public class EquipeEJB {
 
     @Inject
     private EquipeDao equipeDao;
 
+    @Auditavel
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Equipe buscarPorId(Serializable id) {
+        return this.equipeDao.buscarPorId(id);
+    }
+
     /**
-     * Método utilizado para retornar a lista de todas as equipes registradas no sistema.
+     * Método utilizado para retornar a lista de todas as equipes registradas no
+     * sistema.
      *
      * @return
-     * @throws ConsultaSemRetornoException
      */
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)

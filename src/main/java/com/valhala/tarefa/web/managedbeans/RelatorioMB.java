@@ -1,4 +1,4 @@
-package com.valhala.tarefa.web.beans;
+package com.valhala.tarefa.web.managedbeans;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -12,14 +12,15 @@ import javax.inject.Named;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
-import com.valhala.tarefa.ejb.RelatorioBean;
+import com.valhala.tarefa.ejb.RelatorioEJB;
 import com.valhala.tarefa.exceptions.ArquivoUtilException;
 import com.valhala.tarefa.exceptions.ServiceException;
 import com.valhala.tarefa.file.LeitorArquivo;
 import com.valhala.tarefa.util.PropertiesUtil;
 
 /**
- * ManagedBean reponsavel pela interação de tela que envolve a emissão de relatórios.
+ * ManagedBean reponsavel pela interação de tela que envolve a emissão de
+ * relatórios.
  *
  * @author Bruno Luiz Viana
  * @version 1.0
@@ -35,7 +36,7 @@ public class RelatorioMB extends BaseMB implements Serializable {
     private StreamedContent content;
 
     @EJB
-    private RelatorioBean relatorioService;
+    private RelatorioEJB relatorioService;
 
     public RelatorioMB() {
     } // fim do método construtor

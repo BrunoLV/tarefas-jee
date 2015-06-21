@@ -1,4 +1,4 @@
-package com.valhala.tarefa.web.beans;
+package com.valhala.tarefa.web.managedbeans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,11 +11,11 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
-import com.valhala.tarefa.ejb.ClienteBean;
-import com.valhala.tarefa.ejb.ColaboradorBean;
-import com.valhala.tarefa.ejb.EquipeBean;
-import com.valhala.tarefa.ejb.SistemaBean;
-import com.valhala.tarefa.ejb.TarefaBean;
+import com.valhala.tarefa.ejb.ClienteEJB;
+import com.valhala.tarefa.ejb.ColaboradorEJB;
+import com.valhala.tarefa.ejb.EquipeEJB;
+import com.valhala.tarefa.ejb.SistemaEJB;
+import com.valhala.tarefa.ejb.TarefaEJB;
 import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
 import com.valhala.tarefa.exceptions.ServiceException;
 import com.valhala.tarefa.model.Cliente;
@@ -27,11 +27,11 @@ import com.valhala.tarefa.model.Status;
 import com.valhala.tarefa.model.StatusSla;
 import com.valhala.tarefa.model.Tarefa;
 import com.valhala.tarefa.model.TipoDemanda;
-import com.valhala.tarefa.vo.ClienteVO;
-import com.valhala.tarefa.vo.ColaboradorVO;
-import com.valhala.tarefa.vo.EquipeVO;
-import com.valhala.tarefa.vo.SistemaVO;
-import com.valhala.tarefa.vo.TarefaVO;
+import com.valhala.tarefa.dtos.ClienteDTO;
+import com.valhala.tarefa.dtos.ColaboradorDTO;
+import com.valhala.tarefa.dtos.EquipeDTO;
+import com.valhala.tarefa.dtos.SistemaDTO;
+import com.valhala.tarefa.dtos.TarefaDTO;
 
 /**
  * Managed Bean utilizado para as ações de tela relacionadas a tarefas.
@@ -49,26 +49,31 @@ public class TarefaMB extends BaseMB implements Serializable {
     private static final String CHAVE_OBJETO_EDICAO = "TAREFA_EDICAO";
 
     private static final String OUTCOME_ENVIAR_EDICAO = "/pages/manter/cadastro-tarefas.xhtml?faces-redirect=true";
-    
-    @EJB private TarefaBean tarefaService;
-    @EJB private ClienteBean clienteService;
-    @EJB private SistemaBean sistemaService;
-    @EJB private EquipeBean equipeService;
-    @EJB private ColaboradorBean colaboradorService;
 
-    private TarefaVO tarefa;
+    @EJB
+    private TarefaEJB tarefaService;
+    @EJB
+    private ClienteEJB clienteService;
+    @EJB
+    private SistemaEJB sistemaService;
+    @EJB
+    private EquipeEJB equipeService;
+    @EJB
+    private ColaboradorEJB colaboradorService;
+
+    private TarefaDTO tarefa;
 
     private Long idConsultaSchedule;
 
     public TarefaMB() {
-    	super();
+        super();
     }
 
-    public TarefaVO getTarefa() {
+    public TarefaDTO getTarefa() {
         return tarefa;
     }
 
-    public void setTarefa(TarefaVO tarefa) {
+    public void setTarefa(TarefaDTO tarefa) {
         this.tarefa = tarefa;
     }
 
@@ -83,18 +88,18 @@ public class TarefaMB extends BaseMB implements Serializable {
     @PostConstruct
     public void inicializarBean() {
         if (obterObjectDaSession(TarefaMB.CHAVE_OBJETO_EDICAO) != null) {
-            this.tarefa = (TarefaVO) obterObjectDaSession(TarefaMB.CHAVE_OBJETO_EDICAO);
-			removerObjetoDaSession(TarefaMB.CHAVE_OBJETO_EDICAO);
+            this.tarefa = (TarefaDTO) obterObjectDaSession(TarefaMB.CHAVE_OBJETO_EDICAO);
+            removerObjetoDaSession(TarefaMB.CHAVE_OBJETO_EDICAO);
         } else {
-            this.tarefa = new TarefaVO();
+            this.tarefa = new TarefaDTO();
         } // fim do bloco if/else
     } // fim do método
 
-    public List<Tarefa> listarPorColaborador(ColaboradorVO colaborador) {
+    public List<Tarefa> listarPorColaborador(ColaboradorDTO colaborador) {
         List<Tarefa> tarefas;
         List<Status> status = new ArrayList<>(Arrays.asList(Status.values()));
-		status.remove(Status.CONCLUIDO);
-		tarefas = this.tarefaService.buscarTarefasPorColaboradorEStatus(colaborador.asModel(), status);
+        status.remove(Status.CONCLUIDO);
+        tarefas = this.tarefaService.buscarTarefasPorColaboradorEStatus(colaborador.asModel(), status);
         return tarefas;
     }
 
@@ -113,9 +118,9 @@ public class TarefaMB extends BaseMB implements Serializable {
     public Status[] getStatus() {
         return Status.values();
     }
-    
+
     public StatusSla[] getStatusSla() {
-    	return StatusSla.values();
+        return StatusSla.values();
     }
 
     public TipoDemanda[] getTiposDemanda() {
@@ -126,12 +131,12 @@ public class TarefaMB extends BaseMB implements Serializable {
         tarefa.setFinalEfetivo(tarefa.getStatus().equals(Status.CONCLUIDO) ? new Date() : null);
         try {
             if (tarefa.getId() != null && tarefa.getId() > 0) {
-            	this.tarefaService.editarTarefa(tarefa.asModel());
+                this.tarefaService.editarTarefa(tarefa.asModel());
                 inserirMensagemDeSucesso("Registro atualizado com sucesso.");
             } else {
-            	tarefa.setId(null);
+                tarefa.setId(null);
                 this.tarefaService.cadastrarTarefa(tarefa.asModel());
-                tarefa = new TarefaVO();
+                tarefa = new TarefaDTO();
                 inserirMensagemDeSucesso("Registro inserido com sucesso.");
             }
         } catch (ServiceException e) {
@@ -141,60 +146,60 @@ public class TarefaMB extends BaseMB implements Serializable {
 
     public void removerTarefa(Serializable id) {
         this.tarefaService.removerTarefa(id);
-		inserirMensagemDeSucesso("Registro removido com sucesso.");
+        inserirMensagemDeSucesso("Registro removido com sucesso.");
     }
 
     public String enviarTarefaParaEdicao(Serializable id) {
         String outcome = null;
-        TarefaVO tarefa = TarefaVO.fromModel(this.tarefaService.buscarPorId(id));
+        TarefaDTO tarefa = TarefaDTO.fromModel(this.tarefaService.buscarPorId(id));
         //inserirObjetoNoFlashScope(TarefaBean.CHAVE_OBJETO_EDICAO, tarefa);
-		inserirObjetoNaSession(TarefaMB.CHAVE_OBJETO_EDICAO, tarefa);
-		outcome = TarefaMB.OUTCOME_ENVIAR_EDICAO;
+        inserirObjetoNaSession(TarefaMB.CHAVE_OBJETO_EDICAO, tarefa);
+        outcome = TarefaMB.OUTCOME_ENVIAR_EDICAO;
         return outcome;
     }
 
     public String enviarTarefaParaAjusteAdministrativo(Serializable id) {
         String outcome = null;
-        TarefaVO tarefa = TarefaVO.fromModel(this.tarefaService.buscarPorId(id));
-		//inserirObjetoNoFlashScope(TarefaBean.CHAVE_OBJETO_EDICAO, tarefa);
-		inserirObjetoNaSession(TarefaMB.CHAVE_OBJETO_EDICAO, tarefa);
-		outcome = TarefaMB.OUTCOME_ENVIAR_EDICAO;
+        TarefaDTO tarefa = TarefaDTO.fromModel(this.tarefaService.buscarPorId(id));
+        //inserirObjetoNoFlashScope(TarefaBean.CHAVE_OBJETO_EDICAO, tarefa);
+        inserirObjetoNaSession(TarefaMB.CHAVE_OBJETO_EDICAO, tarefa);
+        outcome = TarefaMB.OUTCOME_ENVIAR_EDICAO;
         return outcome;
     }
 
-    public List<SistemaVO> getSistemas() {
-        List<SistemaVO> sistemas = new ArrayList<>();
+    public List<SistemaDTO> getSistemas() {
+        List<SistemaDTO> sistemas = new ArrayList<>();
         List<Sistema> auxiliarList = this.sistemaService.buscarTodosSistemas();
         for (Sistema sistema : auxiliarList) {
-			sistemas.add(SistemaVO.fromModel(sistema));
-		}
+            sistemas.add(SistemaDTO.fromModel(sistema));
+        }
         return sistemas;
     }
 
-    public List<ClienteVO> getClientes() {
-        List<ClienteVO> clientes = new ArrayList<>();
+    public List<ClienteDTO> getClientes() {
+        List<ClienteDTO> clientes = new ArrayList<>();
         List<Cliente> auxiliarList = this.clienteService.buscarTodosClientes();
         for (Cliente cliente : auxiliarList) {
-			clientes.add(ClienteVO.fromModel(cliente));
-		}
+            clientes.add(ClienteDTO.fromModel(cliente));
+        }
         return clientes;
     }
 
-    public List<EquipeVO> getEquipes() {
-        List<EquipeVO> equipes = new ArrayList<>();
+    public List<EquipeDTO> getEquipes() {
+        List<EquipeDTO> equipes = new ArrayList<>();
         List<Equipe> auxiliarList = this.equipeService.buscarTodasEquipes();
         for (Equipe equipe : auxiliarList) {
-			equipes.add(EquipeVO.fromModel(equipe));
-		}
+            equipes.add(EquipeDTO.fromModel(equipe));
+        }
         return equipes;
     }
 
-    public List<ColaboradorVO> getColaboradores() {
-        List<ColaboradorVO> colaboradores = new ArrayList<>();
+    public List<ColaboradorDTO> getColaboradores() {
+        List<ColaboradorDTO> colaboradores = new ArrayList<>();
         List<Colaborador> auxiliarList = this.colaboradorService.buscarTodosColaboradores();
         for (Colaborador colaborador : auxiliarList) {
-			colaboradores.add(ColaboradorVO.fromModel(colaborador));
-		}
+            colaboradores.add(ColaboradorDTO.fromModel(colaborador));
+        }
         return colaboradores;
     }
 

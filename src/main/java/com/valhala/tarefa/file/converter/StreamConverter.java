@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.util.Set;
 
 public interface StreamConverter<T> {
-	
-	Set<T> converterParaColecao(final InputStream stream);
+
+    Set<T> converterParaColecao(final InputStream stream);
 
 }

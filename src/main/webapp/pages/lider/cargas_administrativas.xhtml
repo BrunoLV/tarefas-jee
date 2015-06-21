@@ -1,29 +1,29 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns="http://www.w3.org/1999/xhtml">
 
-<ui:composition template="/pages/template/layout.xhtml">
-    <ui:define name="content">
-        <h:form id="cargaForm" enctype="multipart/form-data">
-            <p:messages globalOnly="true" closable="true" autoUpdate="true"/>
-            <p:panel header="#{recurso['header.cargaAdministrativa']}">
-                <p:panelGrid columns="4">
-                    <p:fileUpload id="uploadArquivo" value="#{CargaMB.file}" mode="simple"/>
-                    <p:selectOneMenu id="tipoCargaSelectOneMenu" value="#{CargaMB.tipoCarga}" required="true"
-                                     requiredMessage="#{erro['message.campoObrigatorioCarga']}">
-                        <f:selectItem itemLabel="#{recurso['text.tipoCarga']}" noSelectionOption="true"/>
-                        <f:selectItems value="#{CargaMB.tiposCarga()}"/>
-                    </p:selectOneMenu>
-                    <p:commandButton value="#{recurso['button.upload']}" ajax="false"
-                                     actionListener="#{CargaMB.upload()}"/>
-                    <p:message for="tipoCargaSelectOneMenu" />
-                </p:panelGrid>
-            </p:panel>
-        </h:form>
-    </ui:define>
-</ui:composition>
+    <ui:composition template="/pages/template/layout.xhtml">
+        <ui:define name="content">
+            <h:form id="cargaForm" enctype="multipart/form-data">
+                <p:messages globalOnly="true" closable="true" autoUpdate="true"/>
+                <p:panel header="#{recurso['header.cargaAdministrativa']}">
+                    <p:panelGrid columns="4">
+                        <p:fileUpload id="uploadArquivo" value="#{CargaMB.file}" mode="simple"/>
+                        <p:selectOneMenu id="tipoCargaSelectOneMenu" value="#{CargaMB.tipoCarga}" required="true"
+                                         requiredMessage="#{erro['message.campoObrigatorioCarga']}">
+                            <f:selectItem itemLabel="#{recurso['text.tipoCarga']}" noSelectionOption="true"/>
+                            <f:selectItems value="#{CargaMB.tiposCarga()}"/>
+                        </p:selectOneMenu>
+                        <p:commandButton value="#{recurso['button.upload']}" ajax="false"
+                                         actionListener="#{CargaMB.upload()}"/>
+                        <p:message for="tipoCargaSelectOneMenu" />
+                    </p:panelGrid>
+                </p:panel>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 </html>

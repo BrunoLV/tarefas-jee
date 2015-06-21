@@ -1,7 +1,8 @@
 package com.valhala.tarefa.util;
 
 /**
- * Enum que define os possíveis tipos de relatório que podem ser emitidos no sistema.
+ * Enum que define os possíveis tipos de relatório que podem ser emitidos no
+ * sistema.
  *
  * @author Bruno Luiz Viana
  * @version 1.0

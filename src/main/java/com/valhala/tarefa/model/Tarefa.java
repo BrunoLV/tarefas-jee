@@ -34,86 +34,92 @@ import javax.persistence.Version;
 @Entity
 @Table(name = "tb_tarefa")
 @SqlResultSetMappings({
-        @SqlResultSetMapping(name = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_EQUIPE, columns = {@ColumnResult(name = "nome"), @ColumnResult(name = "total")}),
-        @SqlResultSetMapping(name = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_SISTEMA, columns = {@ColumnResult(name = "nome"), @ColumnResult(name = "total")}),
-        @SqlResultSetMapping(name = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_CLIENTE, columns = {@ColumnResult(name = "nome"), @ColumnResult(name = "total")})
+    @SqlResultSetMapping(name = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_EQUIPE, columns = {
+        @ColumnResult(name = "nome"),
+        @ColumnResult(name = "total")}),
+    @SqlResultSetMapping(name = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_SISTEMA, columns = {
+        @ColumnResult(name = "nome"),
+        @ColumnResult(name = "total")}),
+    @SqlResultSetMapping(name = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_CLIENTE, columns = {
+        @ColumnResult(name = "nome"),
+        @ColumnResult(name = "total")})
 }) // fim da declaracao dos SqlResultSetMappings
 @NamedQueries({
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_TODOS, query = "select t from Tarefa as t"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_COLABORADOR, query = "select t from Tarefa as t where t.colaborador = :colaborador"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_COLABORADOR_E_STATUS, query = "select t from Tarefa as t where t.colaborador = :colaborador and t.status in (:status)"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_STATUS, query = "select t from Tarefa as t where t.status in (:status)"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_EQUIPE, query = "select t from Tarefa as t where t.equipe = :equipe"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_CLIENTE, query = "select t from Tarefa as t where t.cliente = :cliente"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_SISTEMA, query = "select t from Tarefa as t where t.sistema = :sistema"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_STATUS_DATAS_DEFINIDAS, query = "select t from Tarefa as t where t.status in (:status) and t.inicio is not null and t.finalPlanejado is not null"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_TODOS_DATAS_DEFINIDAS, query = "select t from Tarefa as t where t.inicio is not null and t.finalPlanejado is not null"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_COLABORADOR_E_STATUS_DATAS_DEFINIDAS, query = "select t from Tarefa as t where t.colaborador = :colaborador and t.status in (:status) and t.inicio is not null and t.finalPlanejado is not null"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_EQUIPE_E_DATAS, query = "select t from Tarefa as t where t.equipe = :equipe and t.abertura between :dataInicio and :dataFim"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_CLIENTE_E_DATAS, query = "select t from Tarefa as  t where t.cliente = :cliente and t.abertura between :dataInicio and :dataFim"),
-        @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_SISTEMA_E_DATAS, query = "select t from Tarefa as t where t.sistema = :sistema and t.abertura between :dataInicio and :dataFim")
+    @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_TODOS, query = "select t from Tarefa as t"),
+    @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_COLABORADOR, query = "select t from Tarefa as t where t.colaborador = :colaborador"),
+    @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_COLABORADOR_E_STATUS, query = "select t from Tarefa as t where t.colaborador = :colaborador and t.status in (:status)"),
+    @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_STATUS, query = "select t from Tarefa as t where t.status in (:status)"),
+    @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_EQUIPE, query = "select t from Tarefa as t where t.equipe = :equipe"),
+    @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_CLIENTE, query = "select t from Tarefa as t where t.cliente = :cliente"),
+    @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_SISTEMA, query = "select t from Tarefa as t where t.sistema = :sistema"),
+    @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_STATUS_DATAS_DEFINIDAS, query = "select t from Tarefa as t where t.status in (:status) and t.inicio is not null and t.finalPlanejado is not null"),
+    @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_TODOS_DATAS_DEFINIDAS, query = "select t from Tarefa as t where t.inicio is not null and t.finalPlanejado is not null"),
+    @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_COLABORADOR_E_STATUS_DATAS_DEFINIDAS, query = "select t from Tarefa as t where t.colaborador = :colaborador and t.status in (:status) and t.inicio is not null and t.finalPlanejado is not null"),
+    @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_EQUIPE_E_DATAS, query = "select t from Tarefa as t where t.equipe = :equipe and t.abertura between :dataInicio and :dataFim"),
+    @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_CLIENTE_E_DATAS, query = "select t from Tarefa as  t where t.cliente = :cliente and t.abertura between :dataInicio and :dataFim"),
+    @NamedQuery(name = Tarefa.NAMED_QUERY_BUSCAR_POR_SISTEMA_E_DATAS, query = "select t from Tarefa as t where t.sistema = :sistema and t.abertura between :dataInicio and :dataFim")
 }) // fim da declaracao de namedqueries
 @NamedNativeQueries({
-        @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_TODAS_EQUIPES_POR_TIPO, 
-        	query = "select b.nome_equipe as nome, count(*) as total "
-        			+ "from tb_tarefa a, tb_equipe b "
-        			+ "where a.data_abertura between ? and ? and a.equipe_id_equipe = b.id_equipe and a.tipo_demanda = ? "
-        			+ "group by b.nome_equipe",
+    @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_TODAS_EQUIPES_POR_TIPO,
+            query = "select b.nome_equipe as nome, count(*) as total "
+            + "from tb_tarefa a, tb_equipe b "
+            + "where a.data_abertura between ? and ? and a.equipe_id_equipe = b.id_equipe and a.tipo_demanda = ? "
+            + "group by b.nome_equipe",
             resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_EQUIPE),
-        @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_TODAS_EQUIPES, 
-        	query = "select b.nome_equipe as nome, count(*) as total "
-        			+ "from tb_tarefa a, tb_equipe b "
-        			+ "where a.data_abertura between ? and ? and a.equipe_id_equipe = b.id_equipe "
-        			+ "group by b.nome_equipe",
+    @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_TODAS_EQUIPES,
+            query = "select b.nome_equipe as nome, count(*) as total "
+            + "from tb_tarefa a, tb_equipe b "
+            + "where a.data_abertura between ? and ? and a.equipe_id_equipe = b.id_equipe "
+            + "group by b.nome_equipe",
             resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_EQUIPE),
-        @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS, 
-        	query = "select b.nome_sistema as nome, count(*) as total "
-        			+ "from tb_tarefa a, tb_sistema b "
-        			+ "where a.data_abertura between ? and ? and a.sistema_id_sistema = b.id_sistema "
-        			+ "group by b.nome_sistema",
-        	resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_SISTEMA),
-        @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_EQUIPE, 
-        	query = "select b.nome_sistema as nome, count(*) as total "
-        			+ "from tb_tarefa a, tb_sistema b, tb_equipe c "
-        			+ "where a.data_abertura between ? and ? and a.sistema_id_sistema = b.id_sistema and a.equipe_id_equipe = c.id_equipe and c.id_equipe = ? "
-        			+ "group by b.nome_sistema",
-        	resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_SISTEMA),
-        @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_TIPO,
-        	query = "select b.nome_sistema as nome, count(*) as total "
-        			+ "from tb_tarefa a, tb_sistema b "
-        			+ "where a.data_abertura between ? and ? and a.sistema_id_sistema = b.id_sistema and a.tipo_demanda = ?"
-        			+ "group by b.nome_sistema",
-        	resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_SISTEMA),
-        @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_EQUIPE_E_TIPO,
-        	query = "select b.nome_sistema as nome, count(*) as total "
-        			+ "from tb_tarefa a, tb_sistema b, tb_equipe c "
-        			+ "where a.data_abertura between ? and ? and a.sistema_id_sistema = b.id_sistema and a.equipe_id_equipe = c.id_equipe and c.id_equipe = ? and a.tipo_demanda = ? "
-        			+ "group by b.nome_sistema",
-        	resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_SISTEMA),
-        @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_CLIENTES,
-        	query = "select c.nome_cliente as nome, count(*) as total "
-        			+ "from tb_tarefa t, tb_cliente c "
-        			+ "where t.data_abertura between ? and ? and t.cliente_id_cliente = c.id_cliente "
-        			+ "group by c.nome_cliente",
-        	resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_CLIENTE),
-        @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_CLIENTES_POR_EQUIPE,
-        	query = "select c.nome_cliente as nome, count(*) as total "
-        			+ "from tb_tarefa t, tb_cliente c, tb_equipe e "
-        			+ "where t.data_abertura between ? and ? and t.cliente_id_cliente = c.id_cliente and t.equipe_id_equipe = e.id_equipe and e.id_equipe = ?"
-        			+ "group by c.nome_cliente",
-        	resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_CLIENTE),
-        @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_CLIENTES_POR_TIPO,
-        	query = "select c.nome_cliente as nome, count(*) as total "
-        			+ "from tb_tarefa t, tb_cliente c "
-        			+ "where t.data_abertura between ? and ? and t.cliente_id_cliente = c.id_cliente and t.tipo_demanda = ? "
-        			+ "group by c.nome_cliente",
-        	resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_CLIENTE),
-        @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_QUERY_DEMANDAS_TODOS_CLIENTES_POR_EQUIPE_E_TIPO,
-        	query = "select c.nome_cliente as nome, count(*) as total "
-        			+ "from tb_tarefa t, tb_cliente c, tb_equipe e "
-        			+ "where t.data_abertura between ? and ? and t.cliente_id_cliente = c.id_cliente and t.equipe_id_equipe = e.id_equipe and e.id_equipe = ? and t.tipo_demanda = ? "
-        			+ "group by c.nome_cliente",
-        	resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_CLIENTE)
+    @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS,
+            query = "select b.nome_sistema as nome, count(*) as total "
+            + "from tb_tarefa a, tb_sistema b "
+            + "where a.data_abertura between ? and ? and a.sistema_id_sistema = b.id_sistema "
+            + "group by b.nome_sistema",
+            resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_SISTEMA),
+    @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_EQUIPE,
+            query = "select b.nome_sistema as nome, count(*) as total "
+            + "from tb_tarefa a, tb_sistema b, tb_equipe c "
+            + "where a.data_abertura between ? and ? and a.sistema_id_sistema = b.id_sistema and a.equipe_id_equipe = c.id_equipe and c.id_equipe = ? "
+            + "group by b.nome_sistema",
+            resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_SISTEMA),
+    @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_TIPO,
+            query = "select b.nome_sistema as nome, count(*) as total "
+            + "from tb_tarefa a, tb_sistema b "
+            + "where a.data_abertura between ? and ? and a.sistema_id_sistema = b.id_sistema and a.tipo_demanda = ?"
+            + "group by b.nome_sistema",
+            resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_SISTEMA),
+    @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_EQUIPE_E_TIPO,
+            query = "select b.nome_sistema as nome, count(*) as total "
+            + "from tb_tarefa a, tb_sistema b, tb_equipe c "
+            + "where a.data_abertura between ? and ? and a.sistema_id_sistema = b.id_sistema and a.equipe_id_equipe = c.id_equipe and c.id_equipe = ? and a.tipo_demanda = ? "
+            + "group by b.nome_sistema",
+            resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_SISTEMA),
+    @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_CLIENTES,
+            query = "select c.nome_cliente as nome, count(*) as total "
+            + "from tb_tarefa t, tb_cliente c "
+            + "where t.data_abertura between ? and ? and t.cliente_id_cliente = c.id_cliente "
+            + "group by c.nome_cliente",
+            resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_CLIENTE),
+    @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_CLIENTES_POR_EQUIPE,
+            query = "select c.nome_cliente as nome, count(*) as total "
+            + "from tb_tarefa t, tb_cliente c, tb_equipe e "
+            + "where t.data_abertura between ? and ? and t.cliente_id_cliente = c.id_cliente and t.equipe_id_equipe = e.id_equipe and e.id_equipe = ?"
+            + "group by c.nome_cliente",
+            resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_CLIENTE),
+    @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_CLIENTES_POR_TIPO,
+            query = "select c.nome_cliente as nome, count(*) as total "
+            + "from tb_tarefa t, tb_cliente c "
+            + "where t.data_abertura between ? and ? and t.cliente_id_cliente = c.id_cliente and t.tipo_demanda = ? "
+            + "group by c.nome_cliente",
+            resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_CLIENTE),
+    @NamedNativeQuery(name = Tarefa.NAMED_NATIVE_QUERY_QUERY_DEMANDAS_TODOS_CLIENTES_POR_EQUIPE_E_TIPO,
+            query = "select c.nome_cliente as nome, count(*) as total "
+            + "from tb_tarefa t, tb_cliente c, tb_equipe e "
+            + "where t.data_abertura between ? and ? and t.cliente_id_cliente = c.id_cliente and t.equipe_id_equipe = e.id_equipe and e.id_equipe = ? and t.tipo_demanda = ? "
+            + "group by c.nome_cliente",
+            resultSetMapping = Tarefa.MAPPING_TOTAL_DEMANDAS_POR_CLIENTE)
 })// fim da declaracao de namednativequeries
 public class Tarefa implements Serializable {
 
@@ -187,7 +193,7 @@ public class Tarefa implements Serializable {
     private Date finalEfetivo;
     @Enumerated(EnumType.STRING)
     @Column(name = "status_tarefa", nullable = false, length = 80)
-    private Status status;	
+    private Status status;
     @Enumerated(EnumType.STRING)
     @Column(name = "status_sla", nullable = false, length = 50)
     private StatusSla statusSla;
@@ -211,39 +217,39 @@ public class Tarefa implements Serializable {
     }
 
     public Tarefa(Builder builder) {
-    	super();
-    	this.id = builder.id;
-    	this.numeroDemanda = builder.numeroDemanda;
-    	this.titulo = builder.titulo;
-    	this.prioridade = builder.prioridade;
-    	this.tipoDemanda = builder.tipoDemanda;
-    	this.categoria = builder.categoria;
-    	this.abertura = builder.abertura;
-    	this.inicio = builder.inicio;
-    	this.desenvolvimento = builder.desenvolvimento;
-    	this.homologacao = builder.homologacao;
-    	this.finalPlanejado = builder.finalPlanejado;
-    	this.finalEfetivo = builder.finalEfetivo;
-    	this.status = builder.status;
-    	this.statusSla = builder.statusSla;
-    	this.observacao = builder.observacao;
-    	this.colaborador = builder.colaborador;
-    	this.cliente = builder.cliente;
-    	this.equipe = builder.equipe;
-    	this.sistema = builder.sistema;
-	}
-    
+        super();
+        this.id = builder.id;
+        this.numeroDemanda = builder.numeroDemanda;
+        this.titulo = builder.titulo;
+        this.prioridade = builder.prioridade;
+        this.tipoDemanda = builder.tipoDemanda;
+        this.categoria = builder.categoria;
+        this.abertura = builder.abertura;
+        this.inicio = builder.inicio;
+        this.desenvolvimento = builder.desenvolvimento;
+        this.homologacao = builder.homologacao;
+        this.finalPlanejado = builder.finalPlanejado;
+        this.finalEfetivo = builder.finalEfetivo;
+        this.status = builder.status;
+        this.statusSla = builder.statusSla;
+        this.observacao = builder.observacao;
+        this.colaborador = builder.colaborador;
+        this.cliente = builder.cliente;
+        this.equipe = builder.equipe;
+        this.sistema = builder.sistema;
+    }
+
     public Long getId() {
         return id;
     }
-    
+
     public Long getNumeroDemanda() {
         return numeroDemanda;
     }
-    
+
     public String getCategoria() {
-		return categoria;
-	}
+        return categoria;
+    }
 
     public String getTitulo() {
         return titulo;
@@ -264,14 +270,14 @@ public class Tarefa implements Serializable {
     public Date getInicio() {
         return inicio == null ? null : new Date(inicio.getTime());
     }
-    
+
     public Date getDesenvolvimento() {
-		return desenvolvimento == null ? null : new Date(desenvolvimento.getTime());
-	}
-    
+        return desenvolvimento == null ? null : new Date(desenvolvimento.getTime());
+    }
+
     public Date getHomologacao() {
-		return homologacao == null ? null : new Date(homologacao.getTime());
-	}
+        return homologacao == null ? null : new Date(homologacao.getTime());
+    }
 
     public Date getFinalPlanejado() {
         return finalPlanejado == null ? null : new Date(finalPlanejado.getTime());
@@ -284,11 +290,11 @@ public class Tarefa implements Serializable {
     public Status getStatus() {
         return status;
     }
-    
+
     public StatusSla getStatusSla() {
-		return statusSla;
-	}
-    
+        return statusSla;
+    }
+
     public String getObservacao() {
         return observacao;
     }
@@ -308,9 +314,10 @@ public class Tarefa implements Serializable {
     public Sistema getSistema() {
         return sistema;
     }
-    
+
     public static class Builder {
-    	private Long id = null;
+
+        private Long id = null;
         private Long numeroDemanda;
         private String titulo;
         private Prioridade prioridade;
@@ -322,208 +329,208 @@ public class Tarefa implements Serializable {
         private Date homologacao = null;
         private Date finalPlanejado = null;
         private Date finalEfetivo = null;
-        private Status status = Status.ABERTO;	
+        private Status status = Status.ABERTO;
         private StatusSla statusSla = StatusSla.NAO_VIOLADO;
         private String observacao = "";
         private Colaborador colaborador = new Colaborador();
         private Cliente cliente = new Cliente();
         private Equipe equipe = new Equipe();
         private Sistema sistema = new Sistema();
-        
+
         public Builder(final Long numeroDemanda, final String titulo, final Prioridade prioridade, final TipoDemanda demanda) {
-        	this.numeroDemanda = numeroDemanda;
-        	this.titulo = titulo;
-        	this.prioridade = prioridade;
-        	this.tipoDemanda = demanda;
+            this.numeroDemanda = numeroDemanda;
+            this.titulo = titulo;
+            this.prioridade = prioridade;
+            this.tipoDemanda = demanda;
         }
-        
+
         public Builder id(final Long id) {
-        	this.id = id;
-        	return this;
+            this.id = id;
+            return this;
         }
-        
+
         public Builder categoria(final String categoria) {
-        	this.categoria = categoria;
-        	return this;
+            this.categoria = categoria;
+            return this;
         }
-        
+
         public Builder abertura(final Date abertura) {
-        	this.abertura = abertura;
-        	return this;
+            this.abertura = abertura;
+            return this;
         }
-        
+
         public Builder inicio(final Date inicio) {
-        	this.inicio = inicio;
-        	return this;
+            this.inicio = inicio;
+            return this;
         }
-        
+
         public Builder desenvolvimento(final Date desenvolvimento) {
-        	this.desenvolvimento = desenvolvimento;
-        	return this;
+            this.desenvolvimento = desenvolvimento;
+            return this;
         }
-        
+
         public Builder homologacao(final Date homologacao) {
-        	this.homologacao = homologacao;
-        	return this;
+            this.homologacao = homologacao;
+            return this;
         }
-        
+
         public Builder finalPlanejado(final Date finalPlanejado) {
-        	this.finalPlanejado = finalPlanejado;
-        	return this;
+            this.finalPlanejado = finalPlanejado;
+            return this;
         }
-        
+
         public Builder finalEfetivo(final Date finalEfetivo) {
-        	this.finalEfetivo = finalEfetivo;
-        	return this;
+            this.finalEfetivo = finalEfetivo;
+            return this;
         }
-        
+
         public Builder status(final Status status) {
-        	this.status = status;
-        	return this;
+            this.status = status;
+            return this;
         }
-        
+
         public Builder statusSla(final StatusSla statusSla) {
-        	this.statusSla = statusSla;
-        	return this;
+            this.statusSla = statusSla;
+            return this;
         }
-        
+
         public Builder observacao(final String observacao) {
-        	this.observacao = observacao;
-        	return this;
+            this.observacao = observacao;
+            return this;
         }
-        
+
         public Builder colaborador(final Colaborador colaborador) {
-        	this.colaborador = colaborador;
-        	return this;
+            this.colaborador = colaborador;
+            return this;
         }
-        
+
         public Builder cliente(final Cliente cliente) {
-        	this.cliente = cliente;
-        	return this;
+            this.cliente = cliente;
+            return this;
         }
-        
+
         public Builder equipe(final Equipe equipe) {
-        	this.equipe = equipe;
-        	return this;
+            this.equipe = equipe;
+            return this;
         }
-        
+
         public Builder sistema(final Sistema sistema) {
-        	this.sistema = sistema;
-        	return this;
+            this.sistema = sistema;
+            return this;
         }
-        
+
         public Tarefa build() {
-        	return new Tarefa(this);
+            return new Tarefa(this);
         }
-        
+
     }
-    
+
     @Override
     public boolean equals(Object obj) {
-    	if (obj == this) {
-			return true;
-		}
-    	if (!(obj instanceof Tarefa)) {
-			return false;
-		}
-    	Tarefa tarefa = (Tarefa) obj;
-    	return tarefa.getNumeroDemanda().equals(this.getNumeroDemanda()) && tarefa.getTipoDemanda().equals(this.getTipoDemanda());
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Tarefa)) {
+            return false;
+        }
+        Tarefa tarefa = (Tarefa) obj;
+        return tarefa.getNumeroDemanda().equals(this.getNumeroDemanda()) && tarefa.getTipoDemanda().equals(this.getTipoDemanda());
     }
-    
+
     @Override
     public int hashCode() {
-    	int result = 21;
-    	result = 31 * result + (this.getNumeroDemanda() == null ? 0 : this.getNumeroDemanda().hashCode());
-    	result = 31 * result + (this.getTipoDemanda() == null ? 0 : this.getTipoDemanda().hashCode());
-    	return result;
+        int result = 21;
+        result = 31 * result + (this.getNumeroDemanda() == null ? 0 : this.getNumeroDemanda().hashCode());
+        result = 31 * result + (this.getTipoDemanda() == null ? 0 : this.getTipoDemanda().hashCode());
+        return result;
     }
-    
+
     @Override
     public String toString() {
-    	return this.getTipoDemanda() + " - Numero: " + this.getNumeroDemanda();
+        return this.getTipoDemanda() + " - Numero: " + this.getNumeroDemanda();
     }
-	
-	public void setId(Long id) {
-		this.id = id;
-	}
 
-	public void setNumeroDemanda(Long numeroDemanda) {
-		this.numeroDemanda = numeroDemanda;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
+    public void setNumeroDemanda(Long numeroDemanda) {
+        this.numeroDemanda = numeroDemanda;
+    }
 
-	public void setPrioridade(Prioridade prioridade) {
-		this.prioridade = prioridade;
-	}
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
 
-	public void setCategoria(String categoria) {
-		this.categoria = categoria;
-	}
+    public void setPrioridade(Prioridade prioridade) {
+        this.prioridade = prioridade;
+    }
 
-	public void setTipoDemanda(TipoDemanda tipoDemanda) {
-		this.tipoDemanda = tipoDemanda;
-	}
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
 
-	public void setAbertura(Date abertura) {
-		this.abertura = abertura;
-	}
+    public void setTipoDemanda(TipoDemanda tipoDemanda) {
+        this.tipoDemanda = tipoDemanda;
+    }
 
-	public void setInicio(Date inicio) {
-		this.inicio = inicio;
-	}
+    public void setAbertura(Date abertura) {
+        this.abertura = abertura;
+    }
 
-	public void setDesenvolvimento(Date desenvolvimento) {
-		this.desenvolvimento = desenvolvimento;
-	}
+    public void setInicio(Date inicio) {
+        this.inicio = inicio;
+    }
 
-	public void setHomologacao(Date homologacao) {
-		this.homologacao = homologacao;
-	}
+    public void setDesenvolvimento(Date desenvolvimento) {
+        this.desenvolvimento = desenvolvimento;
+    }
 
-	public void setFinalPlanejado(Date finalPlanejado) {
-		this.finalPlanejado = finalPlanejado;
-	}
+    public void setHomologacao(Date homologacao) {
+        this.homologacao = homologacao;
+    }
 
-	public void setFinalEfetivo(Date finalEfetivo) {
-		this.finalEfetivo = finalEfetivo;
-	}
+    public void setFinalPlanejado(Date finalPlanejado) {
+        this.finalPlanejado = finalPlanejado;
+    }
 
-	public void setStatus(Status status) {
-		this.status = status;
-	}
+    public void setFinalEfetivo(Date finalEfetivo) {
+        this.finalEfetivo = finalEfetivo;
+    }
 
-	public void setStatusSla(StatusSla statusSla) {
-		this.statusSla = statusSla;
-	}
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
-	public void setObservacao(String observacao) {
-		this.observacao = observacao;
-	}
+    public void setStatusSla(StatusSla statusSla) {
+        this.statusSla = statusSla;
+    }
 
-	public void setColaborador(Colaborador colaborador) {
-		this.colaborador = colaborador;
-	}
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
+    public void setColaborador(Colaborador colaborador) {
+        this.colaborador = colaborador;
+    }
 
-	public void setEquipe(Equipe equipe) {
-		this.equipe = equipe;
-	}
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
 
-	public void setSistema(Sistema sistema) {
-		this.sistema = sistema;
-	}
+    public void setEquipe(Equipe equipe) {
+        this.equipe = equipe;
+    }
 
-	public Long retornarQuantidadeDeDiasAberto() {
-		Date hoje = new Date();
-		long diferencaDatas = (hoje.getTime() - this.getAbertura().getTime()) + 3600000;
-		long diferencaDias = diferencaDatas / 86400000L;
-		return Long.valueOf(diferencaDias);
-	}
-    
+    public void setSistema(Sistema sistema) {
+        this.sistema = sistema;
+    }
+
+    public Long retornarQuantidadeDeDiasAberto() {
+        Date hoje = new Date();
+        long diferencaDatas = (hoje.getTime() - this.getAbertura().getTime()) + 3600000;
+        long diferencaDias = diferencaDatas / 86400000L;
+        return Long.valueOf(diferencaDias);
+    }
+
 } // fim da classe Tarefa

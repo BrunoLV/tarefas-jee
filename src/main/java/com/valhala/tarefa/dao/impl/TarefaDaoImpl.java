@@ -88,107 +88,107 @@ public class TarefaDaoImpl extends BaseDao<Tarefa> implements TarefaDao {
         query.setParameter(1, inicio);
         query.setParameter(2, fim);
         @SuppressWarnings("unchecked")
-		List<Object[]> totais = query.getResultList();
+        List<Object[]> totais = query.getResultList();
         return totais;
     } // fim do método buscarTotaisTarefasPorPeriodoDeTodasEquipes
 
-	@Override
+    @Override
     public List<Object[]> buscarTotaisDemandasPorPeriodoEEquipePorTipo(Date inicio, Date fim, String tipo) {
         Query query = this.entityManager.createNamedQuery(Tarefa.NAMED_NATIVE_QUERY_TOTAL_TODAS_EQUIPES_POR_TIPO);
         query.setParameter(1, inicio);
         query.setParameter(2, fim);
         query.setParameter(3, tipo);
         @SuppressWarnings("unchecked")
-		List<Object[]> totais = query.getResultList();
+        List<Object[]> totais = query.getResultList();
         return totais;
     } // fim do método buscarTotaisTarefasPorPeriodoEEquipePorTipo
 
-	@Override
-	public List<Object[]> buscarTotaisDemandasTodosSistemas(Date inicio, Date fim) {
-		Query query = this.entityManager.createNamedQuery(Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS);
-		query.setParameter(1, inicio);
-		query.setParameter(2, fim);
-		@SuppressWarnings("unchecked")
-		List<Object[]> totais = query.getResultList();
-		return totais;
-	} // fim do método buscarTotaisIncidentesTodosSistemas
+    @Override
+    public List<Object[]> buscarTotaisDemandasTodosSistemas(Date inicio, Date fim) {
+        Query query = this.entityManager.createNamedQuery(Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS);
+        query.setParameter(1, inicio);
+        query.setParameter(2, fim);
+        @SuppressWarnings("unchecked")
+        List<Object[]> totais = query.getResultList();
+        return totais;
+    } // fim do método buscarTotaisIncidentesTodosSistemas
 
-	@Override
-	public List<Object[]> buscarTotaisDemandasTodosSistemasPorEquipe(Date inicio, Date fim, Long id) {
-		Query query = this.entityManager.createNamedQuery(Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_EQUIPE);
-		query.setParameter(1, inicio);
-		query.setParameter(2, fim);
-		query.setParameter(3, id);
-		@SuppressWarnings("unchecked")
-		List<Object[]> totais = query.getResultList();
-		return totais;
-	} // fim do método buscarTotaisIncidentesTodosSistemasPorEquipe
+    @Override
+    public List<Object[]> buscarTotaisDemandasTodosSistemasPorEquipe(Date inicio, Date fim, Long id) {
+        Query query = this.entityManager.createNamedQuery(Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_EQUIPE);
+        query.setParameter(1, inicio);
+        query.setParameter(2, fim);
+        query.setParameter(3, id);
+        @SuppressWarnings("unchecked")
+        List<Object[]> totais = query.getResultList();
+        return totais;
+    } // fim do método buscarTotaisIncidentesTodosSistemasPorEquipe
 
-	@Override
-	public List<Object[]> buscarTotaisDemandasTodosSistemasPorTipo(Date inicio, Date fim, String tipo) {
-		Query query = this.entityManager.createNamedQuery(Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_TIPO);
-		query.setParameter(1, inicio);
-		query.setParameter(2, fim);
-		query.setParameter(3, tipo);
-		@SuppressWarnings("unchecked")
-		List<Object[]> totais = query.getResultList();
-		return totais;
-	} // fim do método buscarTotaisIncidentesTodosSistemasPorTipo
+    @Override
+    public List<Object[]> buscarTotaisDemandasTodosSistemasPorTipo(Date inicio, Date fim, String tipo) {
+        Query query = this.entityManager.createNamedQuery(Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_TIPO);
+        query.setParameter(1, inicio);
+        query.setParameter(2, fim);
+        query.setParameter(3, tipo);
+        @SuppressWarnings("unchecked")
+        List<Object[]> totais = query.getResultList();
+        return totais;
+    } // fim do método buscarTotaisIncidentesTodosSistemasPorTipo
 
-	@Override
-	public List<Object[]> buscarTotaisDemandasTodosSistemasPorTipoEEquipe(Date inicio, Date fim, Long id, String tipo) {
-		Query query = this.entityManager.createNamedQuery(Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_EQUIPE_E_TIPO);
-		query.setParameter(1, inicio);
-		query.setParameter(2, fim);
-		query.setParameter(3, id);
-		query.setParameter(4, tipo);
-		@SuppressWarnings("unchecked")
-		List<Object[]> totais = query.getResultList();
-		return totais;
-	} // fim do método buscarTotaisIncidentesTodosSistemasPorTipoEEquipe
+    @Override
+    public List<Object[]> buscarTotaisDemandasTodosSistemasPorTipoEEquipe(Date inicio, Date fim, Long id, String tipo) {
+        Query query = this.entityManager.createNamedQuery(Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_EQUIPE_E_TIPO);
+        query.setParameter(1, inicio);
+        query.setParameter(2, fim);
+        query.setParameter(3, id);
+        query.setParameter(4, tipo);
+        @SuppressWarnings("unchecked")
+        List<Object[]> totais = query.getResultList();
+        return totais;
+    } // fim do método buscarTotaisIncidentesTodosSistemasPorTipoEEquipe
 
-	@Override
-	public List<Object[]> buscarTotaisDemandasTodosClientes(Date inicio, Date fim) {
-		Query query = this.entityManager.createNamedQuery(Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_CLIENTES);
-		query.setParameter(1, inicio);
-		query.setParameter(2, fim);
-		@SuppressWarnings("unchecked")
-		List<Object[]> totais = query.getResultList();
-		return totais;
-	} // fim do método buscarTotaisDemandasTodosClientes
+    @Override
+    public List<Object[]> buscarTotaisDemandasTodosClientes(Date inicio, Date fim) {
+        Query query = this.entityManager.createNamedQuery(Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_CLIENTES);
+        query.setParameter(1, inicio);
+        query.setParameter(2, fim);
+        @SuppressWarnings("unchecked")
+        List<Object[]> totais = query.getResultList();
+        return totais;
+    } // fim do método buscarTotaisDemandasTodosClientes
 
-	@Override
-	public List<Object[]> buscarTotaisDemandasTodosClientesPorTipo(Date inicio, Date fim, String tipo) {
-		Query query = this.entityManager.createNamedQuery(Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_CLIENTES_POR_TIPO);
-		query.setParameter(1, inicio);
-		query.setParameter(2, fim);
-		query.setParameter(3, tipo);
-		@SuppressWarnings("unchecked")
-		List<Object[]> totais = query.getResultList();
-		return totais;
-	} // fim do método buscarTotaisDemandasTodosClientesPorTipo
+    @Override
+    public List<Object[]> buscarTotaisDemandasTodosClientesPorTipo(Date inicio, Date fim, String tipo) {
+        Query query = this.entityManager.createNamedQuery(Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_CLIENTES_POR_TIPO);
+        query.setParameter(1, inicio);
+        query.setParameter(2, fim);
+        query.setParameter(3, tipo);
+        @SuppressWarnings("unchecked")
+        List<Object[]> totais = query.getResultList();
+        return totais;
+    } // fim do método buscarTotaisDemandasTodosClientesPorTipo
 
-	@Override
-	public List<Object[]> buscarTotaisDemandasTodosClientesPorEquipe(Date inicio, Date fim, Long id) {
-		Query query = this.entityManager.createNamedQuery(Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_EQUIPE);
-		query.setParameter(1, inicio);
-		query.setParameter(2, fim);
-		query.setParameter(3, id);
-		@SuppressWarnings("unchecked")
-		List<Object[]> totais = query.getResultList();
-		return totais;
-	} // fim do método buscarTotaisDemandasTodosClientesPorEquipe
+    @Override
+    public List<Object[]> buscarTotaisDemandasTodosClientesPorEquipe(Date inicio, Date fim, Long id) {
+        Query query = this.entityManager.createNamedQuery(Tarefa.NAMED_NATIVE_QUERY_TOTAL_DEMANDAS_TODOS_SISTEMAS_POR_EQUIPE);
+        query.setParameter(1, inicio);
+        query.setParameter(2, fim);
+        query.setParameter(3, id);
+        @SuppressWarnings("unchecked")
+        List<Object[]> totais = query.getResultList();
+        return totais;
+    } // fim do método buscarTotaisDemandasTodosClientesPorEquipe
 
-	@Override
-	public List<Object[]> buscarTotaisDemandasTodosClientesPorEquipeETipo(Date inicio, Date fim, Long id, String tipo) {
-		Query query = this.entityManager.createNamedQuery(Tarefa.NAMED_NATIVE_QUERY_QUERY_DEMANDAS_TODOS_CLIENTES_POR_EQUIPE_E_TIPO);
-		query.setParameter(1, inicio);
-		query.setParameter(2, fim);
-		query.setParameter(3, id);
-		query.setParameter(4, tipo);
-		@SuppressWarnings("unchecked")
-		List<Object[]> totais = query.getResultList();
-		return totais;
-	} // fim do método buscarTotaisDemandasTodosClientePorEquipeETipo
+    @Override
+    public List<Object[]> buscarTotaisDemandasTodosClientesPorEquipeETipo(Date inicio, Date fim, Long id, String tipo) {
+        Query query = this.entityManager.createNamedQuery(Tarefa.NAMED_NATIVE_QUERY_QUERY_DEMANDAS_TODOS_CLIENTES_POR_EQUIPE_E_TIPO);
+        query.setParameter(1, inicio);
+        query.setParameter(2, fim);
+        query.setParameter(3, id);
+        query.setParameter(4, tipo);
+        @SuppressWarnings("unchecked")
+        List<Object[]> totais = query.getResultList();
+        return totais;
+    } // fim do método buscarTotaisDemandasTodosClientePorEquipeETipo
 
 } // fim da classe TarefaDaoImpl

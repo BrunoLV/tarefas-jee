@@ -1,4 +1,4 @@
-package com.valhala.tarefa.web.beans;
+package com.valhala.tarefa.web.managedbeans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,9 +9,9 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
-import com.valhala.tarefa.ejb.ColaboradorBean;
+import com.valhala.tarefa.ejb.ColaboradorEJB;
 import com.valhala.tarefa.model.Colaborador;
-import com.valhala.tarefa.vo.ColaboradorVO;
+import com.valhala.tarefa.dtos.ColaboradorDTO;
 
 /**
  * Managed Bean utilizado para as ações de tela relacionadas a colaboradores.
@@ -27,33 +27,33 @@ public class ColaboradorMB implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EJB
-    private ColaboradorBean colaboradorService;
+    private ColaboradorEJB colaboradorService;
 
-    private ColaboradorVO colaborador;
-    private List<ColaboradorVO> colaboradores;
+    private ColaboradorDTO colaborador;
+    private List<ColaboradorDTO> colaboradores;
 
     public ColaboradorMB() {
     }
 
     @PostConstruct
     public void init() {
-        this.colaborador = new ColaboradorVO();
+        this.colaborador = new ColaboradorDTO();
         this.inicializarColaboradores();
     } // fim do método init
 
-    public ColaboradorVO getColaborador() {
+    public ColaboradorDTO getColaborador() {
         return colaborador;
     }
 
-    public void setColaborador(ColaboradorVO colaborador) {
+    public void setColaborador(ColaboradorDTO colaborador) {
         this.colaborador = colaborador;
     }
 
-    public List<ColaboradorVO> getColaboradores() {
+    public List<ColaboradorDTO> getColaboradores() {
         return colaboradores;
     }
 
-    public void setColaboradores(List<ColaboradorVO> colaboradores) {
+    public void setColaboradores(List<ColaboradorDTO> colaboradores) {
         this.colaboradores = colaboradores;
     }
 
@@ -61,8 +61,8 @@ public class ColaboradorMB implements Serializable {
         this.colaboradores = new ArrayList<>();
         List<Colaborador> auxiliarList = this.colaboradorService.buscarTodosColaboradores();
         for (Colaborador colaborador : auxiliarList) {
-			colaboradores.add(ColaboradorVO.fromModel(colaborador));
-		}
+            colaboradores.add(ColaboradorDTO.fromModel(colaborador));
+        }
     } // fim do método inicializarColaboradores
 
 } // fim da classe ColaboradorBean

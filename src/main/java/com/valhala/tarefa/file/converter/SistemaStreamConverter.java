@@ -11,13 +11,13 @@ import com.valhala.tarefa.model.Sistema;
 
 public final class SistemaStreamConverter implements StreamConverter<Sistema> {
 
-	private SistemaStreamConverter() {
-		super();
-	}
-	
-	@Override
-	public Set<Sistema> converterParaColecao(InputStream stream) {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+    private SistemaStreamConverter() {
+        super();
+    }
+
+    @Override
+    public Set<Sistema> converterParaColecao(InputStream stream) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
         Set<Sistema> sistemas = new HashSet<>();
         String linha;
         int linhaLida = 1;
@@ -30,10 +30,10 @@ public final class SistemaStreamConverter implements StreamConverter<Sistema> {
             throw new StreamConverterException(String.format("Ocorreu um erro de processamento na linha %d - Erro: %s", linhaLida, e.getMessage()), e);
         } // fim do bloco try/catch
         return sistemas;
-	}
-	
-	public static SistemaStreamConverter obterConversorStream() {
-		return new SistemaStreamConverter();
-	}
+    }
+
+    public static SistemaStreamConverter obterConversorStream() {
+        return new SistemaStreamConverter();
+    }
 
 }

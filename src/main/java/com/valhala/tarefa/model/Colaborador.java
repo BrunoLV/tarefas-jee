@@ -28,17 +28,17 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tb_colaborador")
 @NamedQueries({
-        @NamedQuery(name = Colaborador.NAMEDQUERY_BUSCAR_TODOS, query = "select c from Colaborador c"),
-        @NamedQuery(name = Colaborador.NAMEDQUERY_BUSCAR_POR_MATRICULA, query = "select c from Colaborador c where c.matricula = :matricula"),
-        @NamedQuery(name = Colaborador.NAMEDQUERY_BUSCAR_POR_NOME, query = "select c from Colaborador c where c.nome = :nome")})
+    @NamedQuery(name = Colaborador.NAMEDQUERY_BUSCAR_TODOS, query = "select c from Colaborador c"),
+    @NamedQuery(name = Colaborador.NAMEDQUERY_BUSCAR_POR_MATRICULA, query = "select c from Colaborador c where c.matricula = :matricula"),
+    @NamedQuery(name = Colaborador.NAMEDQUERY_BUSCAR_POR_NOME, query = "select c from Colaborador c where c.nome = :nome")})
 public class Colaborador implements Serializable {
 
     public static final String NAMEDQUERY_BUSCAR_TODOS = "buscarTodosColaboradores";
     public static final String NAMEDQUERY_BUSCAR_POR_MATRICULA = "buscarColaboradorPorMatricula";
     public static final String NAMEDQUERY_BUSCAR_POR_NOME = "buscarColaboradorPorNome";
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_colaborador", insertable = false, updatable = false)
@@ -49,7 +49,7 @@ public class Colaborador implements Serializable {
     private String matricula;
     @Column(name = "senha_colaborador", length = 255, unique = false, nullable = false)
     private String senha;
-    
+
     @ElementCollection(targetClass = Atribuicao.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<Atribuicao> atribuicoes = new HashSet<>();
@@ -59,14 +59,14 @@ public class Colaborador implements Serializable {
     }
 
     private Colaborador(Builder builder) {
-		this.id = builder.id;
-		this.nome = builder.nome;
-		this.matricula = builder.matricula;
-		this.senha = builder.senha;
-		this.atribuicoes = builder.atribuicoes;
-	}
+        this.id = builder.id;
+        this.nome = builder.nome;
+        this.matricula = builder.matricula;
+        this.senha = builder.senha;
+        this.atribuicoes = builder.atribuicoes;
+    }
 
-	public Long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -85,82 +85,83 @@ public class Colaborador implements Serializable {
     public Set<Atribuicao> getAtribuicoes() {
         return Collections.unmodifiableSet(this.atribuicoes);
     }
-    
+
     public static class Builder {
-    	private Long id = null;
+
+        private Long id = null;
         private String nome;
         private String matricula;
-        private String senha = "";        
+        private String senha = "";
         private Set<Atribuicao> atribuicoes = new HashSet<>();
-        
+
         public Builder(final String nome, final String matricula) {
-        	this.nome = nome;
-        	this.matricula = matricula;
+            this.nome = nome;
+            this.matricula = matricula;
         }
-        
+
         public Builder id(final Long id) {
-        	this.id = id;
-        	return this;
+            this.id = id;
+            return this;
         }
-        
+
         public Builder senha(final String senha) {
-        	this.senha = senha;
-        	return this;
+            this.senha = senha;
+            return this;
         }
-        
+
         public Builder atribuicoes(final Set<Atribuicao> atribuicoes) {
-        	this.atribuicoes = atribuicoes;
-        	return this;
+            this.atribuicoes = atribuicoes;
+            return this;
         }
-        
+
         public Colaborador build() {
-        	return new Colaborador(this);
+            return new Colaborador(this);
         }
     }
-    
+
     @Override
     public boolean equals(Object obj) {
-    	if(obj == this) {
-    		return true;
-    	}
-    	if(!(obj instanceof Colaborador)) {
-    		return false;
-    	}
-    	Colaborador colaborador = (Colaborador) obj;
-    	return colaborador.getNome().equals(this.getNome()) && colaborador.getMatricula().equals(this.getMatricula());
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Colaborador)) {
+            return false;
+        }
+        Colaborador colaborador = (Colaborador) obj;
+        return colaborador.getNome().equals(this.getNome()) && colaborador.getMatricula().equals(this.getMatricula());
     }
-    
+
     @Override
     public int hashCode() {
-    	int result = 21;
-    	result = 31 * result + (this.getNome() == null ? 0 : this.getNome().hashCode());
-    	result = 31 * result + (this.getMatricula() == null ? 0 : this.getMatricula().hashCode());
-    	return result;
+        int result = 21;
+        result = 31 * result + (this.getNome() == null ? 0 : this.getNome().hashCode());
+        result = 31 * result + (this.getMatricula() == null ? 0 : this.getMatricula().hashCode());
+        return result;
     }
-    
+
     @Override
     public String toString() {
-    	return this.getNome() + " - " + this.getMatricula();
+        return this.getNome() + " - " + this.getMatricula();
     }
-    
+
     public void setId(Long id) {
-		this.id = id;
-	}
-    
+        this.id = id;
+    }
+
     public void setNome(String nome) {
-		this.nome = nome;
-	}
-    
+        this.nome = nome;
+    }
+
     public void setMatricula(String matricula) {
-		this.matricula = matricula;
-	}
-    
+        this.matricula = matricula;
+    }
+
     public void setSenha(String senha) {
-		this.senha = senha;
-	}
-    
+        this.senha = senha;
+    }
+
     public void setAtribuicoes(Set<Atribuicao> atribuicoes) {
-		this.atribuicoes = atribuicoes;
-	}
+        this.atribuicoes = atribuicoes;
+    }
 
 } // fim da classe Colaborador

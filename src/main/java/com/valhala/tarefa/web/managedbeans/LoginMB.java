@@ -1,4 +1,4 @@
-package com.valhala.tarefa.web.beans;
+package com.valhala.tarefa.web.managedbeans;
 
 import java.io.Serializable;
 import java.security.Principal;
@@ -8,10 +8,10 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 
-import com.valhala.tarefa.ejb.ColaboradorBean;
+import com.valhala.tarefa.ejb.ColaboradorEJB;
 import com.valhala.tarefa.exceptions.ServiceException;
 import com.valhala.tarefa.model.Atribuicao;
-import com.valhala.tarefa.vo.ColaboradorVO;
+import com.valhala.tarefa.dtos.ColaboradorDTO;
 
 /**
  * Managed Bean utilizado para as ações de tela relacionadas a login.
@@ -34,7 +34,7 @@ public class LoginMB extends BaseMB implements Serializable {
     private String confirmeSenha = "";
 
     @EJB
-    private ColaboradorBean colaboradorService;
+    private ColaboradorEJB colaboradorService;
 
     public LoginMB() {
         this.matricula = "";
@@ -51,7 +51,7 @@ public class LoginMB extends BaseMB implements Serializable {
         try {
             getRequest().login(this.matricula, this.senha);
             Principal principal = getRequest().getUserPrincipal();
-            getSession().setAttribute(LoginMB.USUARIO_LOGADO, ColaboradorVO.fromModel(this.colaboradorService.buscarPorMatricula(principal.getName())));
+            getSession().setAttribute(LoginMB.USUARIO_LOGADO, ColaboradorDTO.fromModel(this.colaboradorService.buscarPorMatricula(principal.getName())));
             outcome = LoginMB.OUTCOME_SUCESSO;
         } catch (ServletException e) {
             System.out.println(e.getMessage());
@@ -66,7 +66,7 @@ public class LoginMB extends BaseMB implements Serializable {
     public void redefinirSenha() {
         if (this.senha.equals(this.confirmeSenha)) {
             try {
-                ColaboradorVO colaborador = (ColaboradorVO) getSession().getAttribute(LoginMB.USUARIO_LOGADO);
+                ColaboradorDTO colaborador = (ColaboradorDTO) getSession().getAttribute(LoginMB.USUARIO_LOGADO);
                 colaborador.setSenha(this.senha);
                 this.colaboradorService.editarColaborador(colaborador.asModel());
                 getSession().setAttribute(LoginMB.USUARIO_LOGADO, colaborador);

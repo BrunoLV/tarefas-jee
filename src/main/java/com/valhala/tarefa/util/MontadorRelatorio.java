@@ -18,7 +18,8 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * Classe utilizada para montar os relatórios que podem ser emitidos na aplicação.
+ * Classe utilizada para montar os relatórios que podem ser emitidos na
+ * aplicação.
  *
  * @author Bruno Luiz Viana
  * @version 1.0
@@ -26,7 +27,7 @@ import java.util.Properties;
  */
 public class MontadorRelatorio {
 
-private static final String[] ROTULOS_PLANILHA_TAREFA = {"DEMANDA", "TITULO", "TIPO", "PRIORIDADE", "CLIENTE", "SISTEMA", "ABERTURA", "INICIO", "DESENVOLVIMENTO", "HOMOLOGACAO", "FINAL PLANEJADO", "FINAL EFETIVO", "STATUS", "COLABORADOR", "OBSERVACAO"};
+    private static final String[] ROTULOS_PLANILHA_TAREFA = {"DEMANDA", "TITULO", "TIPO", "PRIORIDADE", "CLIENTE", "SISTEMA", "ABERTURA", "INICIO", "DESENVOLVIMENTO", "HOMOLOGACAO", "FINAL PLANEJADO", "FINAL EFETIVO", "STATUS", "COLABORADOR", "OBSERVACAO"};
     private static final int NUMERO_LINHA_ROTULO = 0;
     private static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy");
     private static final SimpleDateFormat SDF_ARQUIVO = new SimpleDateFormat("dd-MM-yyyy_hh-mm-ss");
@@ -38,15 +39,15 @@ private static final String[] ROTULOS_PLANILHA_TAREFA = {"DEMANDA", "TITULO", "T
     } // fim do método init
 
     /**
-     * Método utilizado para emitir o relatório de tarefas completo.
-     * Esse método gera um excel que contém todas as tarefas em andamento e as concluidas.
+     * Método utilizado para emitir o relatório de tarefas completo. Esse método
+     * gera um excel que contém todas as tarefas em andamento e as concluidas.
      *
      * @param mapa
      * @return
      * @throws MontagemRelatorioException
      */
     @SuppressWarnings("rawtypes")
-	public String montarRelatorioTarefaCompleto(Map<String, List> mapa) throws MontagemRelatorioException {
+    public String montarRelatorioTarefaCompleto(Map<String, List> mapa) throws MontagemRelatorioException {
         String nomeArquivo = String.format("%s%s%s", properties.getProperty("arquivo.tarefa.prefix"), SDF_ARQUIVO.format(new Date()), properties.getProperty("arquivo.tarefa.extensao"));
         String nomeArquivoInteiro = String.format("%s%s", properties.getProperty("arquivo.caminho"), nomeArquivo);
         try (OutputStream stream = new FileOutputStream(nomeArquivoInteiro)) {
@@ -61,34 +62,34 @@ private static final String[] ROTULOS_PLANILHA_TAREFA = {"DEMANDA", "TITULO", "T
     } // fim do método MontadorRelatorio
 
     /*
-    Método utilizado para montar as planilhas dentro da pasta do arquivo de relatório.
+     Método utilizado para montar as planilhas dentro da pasta do arquivo de relatório.
      */
-	private void montarSheets(HSSFWorkbook workbook, @SuppressWarnings("rawtypes") Map<String, List> sheets, String[] rotulos, TipoRelatorio tipo) {
+    private void montarSheets(HSSFWorkbook workbook, @SuppressWarnings("rawtypes") Map<String, List> sheets, String[] rotulos, TipoRelatorio tipo) {
         for (String key : sheets.keySet()) {
             HSSFSheet sheet = workbook.createSheet(key);
             montarLinhaComRotulos(sheet, rotulos);
             @SuppressWarnings("unchecked")
-			List<Object> lista = sheets.get(key);
+            List<Object> lista = sheets.get(key);
             switch (tipo) {
                 case TAREFAS:
                     montarSheetTarefa(lista, sheet);
                     break;
                 case CLIENTE:
-                	break;
+                    break;
                 case COLABORADORES:
-                	break;
+                    break;
                 case EQUIPE:
-                	break;
+                    break;
                 case SISTEMAS:
-                	break;
+                    break;
                 default:
-                	break;
+                    break;
             } // fim do bloco switch
         } // fim do bloco for
     } // fim do método monstarSheets
 
     /*
-    Método utilizado para montar as planilhas na pasta do relatório de Tarefas
+     Método utilizado para montar as planilhas na pasta do relatório de Tarefas
      */
     private void montarSheetTarefa(List<Object> tarefas, HSSFSheet sheet) {
         if (tarefas != null && !tarefas.isEmpty()) {
@@ -103,7 +104,7 @@ private static final String[] ROTULOS_PLANILHA_TAREFA = {"DEMANDA", "TITULO", "T
     } // fim do método montarSheets
 
     /*
-    Método utilizado para montar a linha de rótulos da planilha.
+     Método utilizado para montar a linha de rótulos da planilha.
      */
     private void montarLinhaComRotulos(HSSFSheet sheet, String[] rotulos) {
         HSSFRow linha = sheet.createRow(NUMERO_LINHA_ROTULO);
@@ -114,7 +115,7 @@ private static final String[] ROTULOS_PLANILHA_TAREFA = {"DEMANDA", "TITULO", "T
     } // fim do bloco montarLinhaComRotulos
 
     /*
-    Método utilizado para montar as linhas da planilha de tarefas.
+     Método utilizado para montar as linhas da planilha de tarefas.
      */
     private void montarLinhaTarefa(Tarefa tarefa, HSSFSheet sheet, int numeroLinha) {
         HSSFRow linha = sheet.createRow(numeroLinha);
@@ -136,7 +137,7 @@ private static final String[] ROTULOS_PLANILHA_TAREFA = {"DEMANDA", "TITULO", "T
     } // fim do método monstarLinhaTarefa
 
     /*
-    Método utilizado para montar a linha que indica que não a registros para serem mostrados no relatório.
+     Método utilizado para montar a linha que indica que não a registros para serem mostrados no relatório.
      */
     private void montarLinhaAusenciaResultado(HSSFSheet sheet, int numeroLinha, String mensagem) {
         HSSFRow linha = sheet.createRow(numeroLinha);

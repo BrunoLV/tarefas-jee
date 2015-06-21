@@ -8,7 +8,8 @@ import com.valhala.tarefa.dao.api.ClienteDao;
 import com.valhala.tarefa.model.Cliente;
 
 /**
- * Classe que implementa ClienteDao para 
+ * Classe que implementa ClienteDao para
+ *
  * @author Bruno Luiz Viana
  * @version 1.0
  * @since 23/06/2014

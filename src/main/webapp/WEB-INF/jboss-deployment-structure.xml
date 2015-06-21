@@ -4,9 +4,9 @@
 
     <deployment>
         <!--
-            Declarando a dependencia do arquivo de propriedades
-            que foi mapeado como um módulo na aplicação.
-         -->
+           Declarando a dependencia do arquivo de propriedades
+           que foi mapeado como um módulo na aplicação.
+        -->
         <dependencies>
             <module name="com.valhala"/>
         </dependencies>

@@ -1,7 +1,8 @@
 package com.valhala.tarefa.file.carga;
 
 /**
- * Enum que define os possiveis tipos de carga que podem ser executados no sistema.
+ * Enum que define os possiveis tipos de carga que podem ser executados no
+ * sistema.
  *
  * @author Bruno Luiz Viana
  * @version 1.0
@@ -9,10 +10,10 @@ package com.valhala.tarefa.file.carga;
  */
 public enum TipoCarga {
 
-	SISTEMAS,
-	CLIENTES, 
-	EQUIPES, 
-	TAREFAS, 
-	COLABORADORES;
+    SISTEMAS,
+    CLIENTES,
+    EQUIPES,
+    TAREFAS,
+    COLABORADORES;
 
 } // fim da enum tipoCarga

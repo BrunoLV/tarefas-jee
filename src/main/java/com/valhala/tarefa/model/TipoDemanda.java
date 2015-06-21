@@ -1,7 +1,8 @@
 package com.valhala.tarefa.model;
 
 /**
- * Enum que define as constantes que representam os possiveis tipos de demanda dentro da aplicação.
+ * Enum que define as constantes que representam os possiveis tipos de demanda
+ * dentro da aplicação.
  *
  * @author Bruno Luiz Viana
  * @version 1.0
@@ -9,17 +10,17 @@ package com.valhala.tarefa.model;
  */
 public enum TipoDemanda {
 
-    NAO_DEFINIDO("Não Definida"), 
-    ALERTA("Alerta"), 
-    CHAMADO("Chamado"), 
+    NAO_DEFINIDO("Não Definida"),
+    ALERTA("Alerta"),
+    CHAMADO("Chamado"),
     INCIDENTE("Incidente"),
     SOLICITACAO("Solicitação"),
-    REQUISICAO_SERVICO("Requisição de Serviço"), 
+    REQUISICAO_SERVICO("Requisição de Serviço"),
     DUVIDA_INFORMACAO("Dúvida/Informação"),
-    SUGESTAO("Sugestão"), 
-    PROBLEMA("Problema"), 
-    ZELADORIA("Zeladoria"), 
-    PROJETO("Projeto"), 
+    SUGESTAO("Sugestão"),
+    PROBLEMA("Problema"),
+    ZELADORIA("Zeladoria"),
+    PROJETO("Projeto"),
     TODOS("Todos");
 
     private String nomeExibicao;

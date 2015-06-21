@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "tb_sistema")
 @NamedQueries({
-        @NamedQuery(name = Sistema.NAMEDQUERY_BUSCAR_TODOS, query = "select s from Sistema s")
+    @NamedQuery(name = Sistema.NAMEDQUERY_BUSCAR_TODOS, query = "select s from Sistema s")
 })
 public class Sistema implements Serializable {
 
@@ -32,67 +32,68 @@ public class Sistema implements Serializable {
     } // fim do método construtor
 
     private Sistema(Builder builder) {
-    	super();
-    	this.id = builder.id;
-    	this.nome = builder.nome;
-	}
+        super();
+        this.id = builder.id;
+        this.nome = builder.nome;
+    }
 
-	public Long getId() {
+    public Long getId() {
         return id;
     }
 
     public String getNome() {
         return nome;
     }
-    
-    public static class Builder{
-    	private Long id = null;
-    	private String nome;
-    	
-    	public Builder(final String nome) {
-    		this.nome = nome;
-    	}
-    	
-    	public Builder id(final Long id) {
-    		this.id = id;
-    		return this;
-    	}
-    	
-    	public Sistema build() {
-    		return new Sistema(this);
-    	}
+
+    public static class Builder {
+
+        private Long id = null;
+        private String nome;
+
+        public Builder(final String nome) {
+            this.nome = nome;
+        }
+
+        public Builder id(final Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Sistema build() {
+            return new Sistema(this);
+        }
     }
-    
+
     @Override
     public boolean equals(Object obj) {
-    	if(obj == this) {
-    		return true;
-    	}
-    	if(!(obj instanceof Sistema)) {
-    		return false;
-    	}
-    	Sistema sistema = (Sistema) obj;
-    	return sistema.getNome().equals(this.getNome());
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Sistema)) {
+            return false;
+        }
+        Sistema sistema = (Sistema) obj;
+        return sistema.getNome().equals(this.getNome());
     }
-    
+
     @Override
     public int hashCode() {
-    	int result = 21;
-    	result = 31 * result + (this.getNome() == null ? 0 : this.getNome().hashCode());
-    	return result;
+        int result = 21;
+        result = 31 * result + (this.getNome() == null ? 0 : this.getNome().hashCode());
+        return result;
     }
-    
+
     @Override
     public String toString() {
-    	return this.getNome();
+        return this.getNome();
     }
-    
+
     public void setId(Long id) {
-		this.id = id;
-	}
-    
+        this.id = id;
+    }
+
     public void setNome(String nome) {
-		this.nome = nome;
-	}
+        this.nome = nome;
+    }
 
 } // fim da classe Sistema

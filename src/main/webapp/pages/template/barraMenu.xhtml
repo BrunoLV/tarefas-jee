@@ -1,60 +1,60 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns="http://www.w3.org/1999/xhtml">
 
-<h:body>
-    <div id="menuDiv">
-        <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false"
-                  resizable="false">
-            <p:graphicImage name="/demo/images/ajaxloadingbar.gif"/>
-        </p:dialog>
-        <h:form id="menuForm">
-            <p:growl autoUpdate="true" globalOnly="true" showDetail="true" showSummary="false"
-                     id="globalMessageGrowl" life="3000"/>
-            <p:menubar>
-                <p:submenu label="#{recurso['menu.lideranca']}" rendered="#{LoginMB.lider}">
-                    <p:menuitem value="#{recurso['menu.carga']}" url="/pages/lider/cargas_administrativas.xhtml"/>
-                </p:submenu>
-                
-                <p:menuitem value="#{recurso['menu.tarefas']}" url="/pages/public/visualizacao-tarefas.xhtml"/>
-                
-                <p:menuitem value="#{recurso['menu.relatorio.tarefas']}" ajax="false"
-                            onclick="PrimeFaces.monitorDownload(start, stop);"
-                            icon="ui-icon-arrowthick-1-s">
-                    <p:fileDownload value="#{RelatorioMB.gerarRelatorioTarefasCompleto()}"/>
-                </p:menuitem>
-                
-                <p:submenu label="#{recurso['menu.graficos']}">
-                	<p:menuitem value="#{recurso['menu.grafico.demandaEquipe']}" url="/pages/public/visualizacao-graficos-demandas-equipes.xhtml"/>
-                	<p:menuitem value="#{recurso['menu.grafico.demandaSistema']}" url="/pages/public/visualizacao-graficos-demandas-sistemas.xhtml"/>
-                	<p:menuitem value="#{recurso['menu.grafico.demandaCliente']}" url="/pages/public/visualizacao-graficos-demandas-clientes.xhtml"/>
-                </p:submenu>
-                
-                <p:menuitem value="#{recurso['menu.mudar.senha']}" url="/pages/public/mudanca-senha.xhtml"
-                            rendered="#{not empty sessionScope['USUARIO_LOGADO']}"/>
+    <h:body>
+        <div id="menuDiv">
+            <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false"
+                      resizable="false">
+                <p:graphicImage name="/demo/images/ajaxloadingbar.gif"/>
+            </p:dialog>
+            <h:form id="menuForm">
+                <p:growl autoUpdate="true" globalOnly="true" showDetail="true" showSummary="false"
+                         id="globalMessageGrowl" life="3000"/>
+                <p:menubar>
+                    <p:submenu label="#{recurso['menu.lideranca']}" rendered="#{LoginMB.lider}">
+                        <p:menuitem value="#{recurso['menu.carga']}" url="/pages/lider/cargas_administrativas.xhtml"/>
+                    </p:submenu>
 
-                <f:facet name="options">
-                    <h:outputText value="#{sessionScope['USUARIO_LOGADO'].nome}"/>
-                    <c:choose>
-                        <c:when test="#{not empty sessionScope['USUARIO_LOGADO']}">
-                            <p:commandButton id="logoutCommandButton" action="#{LoginBean.logout()}"
-                                             icon="ui-icon-locked"/>
-                            <p:tooltip for="logoutCommandButton" value="#{recurso['tooltip.logout']}"/>
-                        </c:when>
-                        <c:otherwise>
-                            <p:button id="loginButton" outcome="/pages/public/login.xhtml"
-                                      icon="ui-icon-unlocked"></p:button>
-                            <p:tooltip for="loginButton" value="#{recurso['tooltip.login']}"/>
-                        </c:otherwise>
-                    </c:choose>
-                </f:facet>
-            </p:menubar>
-        </h:form>
-    </div>
-</h:body>
+                    <p:menuitem value="#{recurso['menu.tarefas']}" url="/pages/public/visualizacao-tarefas.xhtml"/>
+
+                    <p:menuitem value="#{recurso['menu.relatorio.tarefas']}" ajax="false"
+                                onclick="PrimeFaces.monitorDownload(start, stop);"
+                                icon="ui-icon-arrowthick-1-s">
+                        <p:fileDownload value="#{RelatorioMB.gerarRelatorioTarefasCompleto()}"/>
+                    </p:menuitem>
+
+                    <p:submenu label="#{recurso['menu.graficos']}">
+                        <p:menuitem value="#{recurso['menu.grafico.demandaEquipe']}" url="/pages/public/visualizacao-graficos-demandas-equipes.xhtml"/>
+                        <p:menuitem value="#{recurso['menu.grafico.demandaSistema']}" url="/pages/public/visualizacao-graficos-demandas-sistemas.xhtml"/>
+                        <p:menuitem value="#{recurso['menu.grafico.demandaCliente']}" url="/pages/public/visualizacao-graficos-demandas-clientes.xhtml"/>
+                    </p:submenu>
+
+                    <p:menuitem value="#{recurso['menu.mudar.senha']}" url="/pages/public/mudanca-senha.xhtml"
+                                rendered="#{not empty sessionScope['USUARIO_LOGADO']}"/>
+
+                    <f:facet name="options">
+                        <h:outputText value="#{sessionScope['USUARIO_LOGADO'].nome}"/>
+                        <c:choose>
+                            <c:when test="#{not empty sessionScope['USUARIO_LOGADO']}">
+                                <p:commandButton id="logoutCommandButton" action="#{LoginBean.logout()}"
+                                                 icon="ui-icon-locked"/>
+                                <p:tooltip for="logoutCommandButton" value="#{recurso['tooltip.logout']}"/>
+                            </c:when>
+                            <c:otherwise>
+                                <p:button id="loginButton" outcome="/pages/public/login.xhtml"
+                                          icon="ui-icon-unlocked"></p:button>
+                                <p:tooltip for="loginButton" value="#{recurso['tooltip.login']}"/>
+                            </c:otherwise>
+                        </c:choose>
+                    </f:facet>
+                </p:menubar>
+            </h:form>
+        </div>
+    </h:body>
 
 </html>

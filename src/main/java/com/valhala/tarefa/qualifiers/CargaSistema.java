@@ -9,7 +9,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation personalizada utilizada para marcar os eventos relacionados a carga de Sistemas.
+ * Annotation personalizada utilizada para marcar os eventos relacionados a
+ * carga de Sistemas.
  *
  * @author Bruno Luiz Viana
  * @version 1.0

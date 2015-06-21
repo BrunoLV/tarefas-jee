@@ -11,7 +11,6 @@ import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 
 import com.valhala.tarefa.dao.api.ColaboradorDao;
-import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
 import com.valhala.tarefa.exceptions.ServiceException;
 import com.valhala.tarefa.model.Colaborador;
 import com.valhala.tarefa.qualifiers.Auditavel;
@@ -26,7 +25,7 @@ import com.valhala.tarefa.qualifiers.Auditavel;
 @Auditavel
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class ColaboradorBean {
+public class ColaboradorEJB {
 
     @Inject
     private ColaboradorDao colaboradorDao;
@@ -72,7 +71,6 @@ public class ColaboradorBean {
      *
      * @param id
      * @return
-     * @throws ConsultaSemRetornoException
      */
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
@@ -81,10 +79,10 @@ public class ColaboradorBean {
     } // fim do método buscarPorId
 
     /**
-     * Método utilizado para realizar a ação de buscar todos os colaborador cadastrados.
+     * Método utilizado para realizar a ação de buscar todos os colaborador
+     * cadastrados.
      *
      * @return
-     * @throws ConsultaSemRetornoException
      */
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
@@ -93,11 +91,11 @@ public class ColaboradorBean {
     } // fim do método buscarTodosColaboradores
 
     /**
-     * Método utilizado para realizar a ação de buscar um colaborador pela sua matricula.
+     * Método utilizado para realizar a ação de buscar um colaborador pela sua
+     * matricula.
      *
      * @param matricula
      * @return
-     * @throws ConsultaSemRetornoException
      */
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)

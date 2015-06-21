@@ -29,7 +29,7 @@ import com.valhala.tarefa.util.MontadorRelatorio;
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class RelatorioBean {
+public class RelatorioEJB {
 
     private static final String CHAVE_ABERTAS = "ABERTAS";
     private static final String CHAVE_FECHADAS = "FECHADAS";
@@ -40,15 +40,15 @@ public class RelatorioBean {
     private MontadorRelatorio montadorRelatorio;
 
     /**
-     * Método utilizado para gerar o relatório de tarefas completo que contém todas as tarefas concluídas e em andamento
-     * registradas no sistema.
+     * Método utilizado para gerar o relatório de tarefas completo que contém
+     * todas as tarefas concluídas e em andamento registradas no sistema.
      * Retorna o nome do arquivo que foi gerado em caso de sucesso.
      *
      * @return
      * @throws ServiceException
      */
     @SuppressWarnings("rawtypes")
-	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public String gerarRelatorioTarefasCompleto() throws ServiceException {
 
         String caminhoArquivoGerado;

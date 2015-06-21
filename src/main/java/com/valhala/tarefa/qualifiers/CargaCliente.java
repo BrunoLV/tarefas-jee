@@ -9,7 +9,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation personalizada para marcar os eventos CDI relacionador a carga de clientes.
+ * Annotation personalizada para marcar os eventos CDI relacionador a carga de
+ * clientes.
  *
  * @author Bruno Luiz Viana
  * @version 1.0

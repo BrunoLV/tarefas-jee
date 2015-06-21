@@ -17,16 +17,16 @@ import com.valhala.tarefa.model.Tarefa;
 import com.valhala.tarefa.model.TipoDemanda;
 
 public final class TarefaStreamConverter implements StreamConverter<Tarefa> {
-	
-	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 
-	private TarefaStreamConverter() {
-		super();
-	}
-	
-	@Override
-	public Set<Tarefa> converterParaColecao(InputStream stream) {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+
+    private TarefaStreamConverter() {
+        super();
+    }
+
+    @Override
+    public Set<Tarefa> converterParaColecao(InputStream stream) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
         Set<Tarefa> tarefas = new HashSet<>();
         String linha;
         int linhaLida = 1;
@@ -35,12 +35,12 @@ public final class TarefaStreamConverter implements StreamConverter<Tarefa> {
                 String[] atributos = linha.split(";");
                 System.out.println(atributos[6]);
                 Tarefa tarefa = new Tarefa.Builder(Long.parseLong(atributos[0]), atributos[8], Prioridade.valueOf(atributos[2]), TipoDemanda.valueOf(atributos[3])).
-                		equipe(atributos[1] != null && !atributos[1].trim().equals("") ? new Equipe.Builder(atributos[1]).build() : null).
-                		abertura(DATE_FORMAT.parse(atributos[4])).
-                		status(Status.valueOf(atributos[5])).
-                		categoria(atributos[6]).
-                		statusSla(StatusSla.valueOf(atributos[7])).
-                		colaborador(atributos[9] != null && !atributos[9].trim().equals("") ? new Colaborador.Builder(atributos[9], null).build() : null).build();
+                        equipe(atributos[1] != null && !atributos[1].trim().equals("") ? new Equipe.Builder(atributos[1]).build() : null).
+                        abertura(DATE_FORMAT.parse(atributos[4])).
+                        status(Status.valueOf(atributos[5])).
+                        categoria(atributos[6]).
+                        statusSla(StatusSla.valueOf(atributos[7])).
+                        colaborador(atributos[9] != null && !atributos[9].trim().equals("") ? new Colaborador.Builder(atributos[9], null).build() : null).build();
                 System.out.println("CATEGORIA: " + tarefa.getCategoria());
                 tarefas.add(tarefa);
                 linhaLida += 1;
@@ -49,10 +49,10 @@ public final class TarefaStreamConverter implements StreamConverter<Tarefa> {
             throw new StreamConverterException(String.format("Ocorreu um erro de processamento na linha %d - Erro: %s", linhaLida, e.getMessage()), e);
         } // fim do bloco try/catch
         return tarefas;
-	}
-	
-	public static TarefaStreamConverter obterConversorStream() {
-		return new TarefaStreamConverter();
-	}
+    }
+
+    public static TarefaStreamConverter obterConversorStream() {
+        return new TarefaStreamConverter();
+    }
 
 }

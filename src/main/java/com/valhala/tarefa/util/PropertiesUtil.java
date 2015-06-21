@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * Classe utilizada ler arquivos de propriedades definidos no ambiente onde a aplicação esta sendo executada.
+ * Classe utilizada ler arquivos de propriedades definidos no ambiente onde a
+ * aplicação esta sendo executada.
  *
  * @author Bruno Luiz Viana
  * @version 1.0
@@ -17,7 +18,8 @@ import java.util.Properties;
 public class PropertiesUtil {
 
     /**
-     * Método utilizado para obter um objeto Properties com as propriedades especificadas no arquivo informado.
+     * Método utilizado para obter um objeto Properties com as propriedades
+     * especificadas no arquivo informado.
      *
      * @param nomeArquivo
      * @return

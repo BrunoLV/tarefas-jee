@@ -10,14 +10,14 @@ import com.valhala.tarefa.exceptions.StreamConverterException;
 import com.valhala.tarefa.model.Cliente;
 
 public final class ClienteStreamConverter implements StreamConverter<Cliente> {
-	
-	private ClienteStreamConverter() {
-		super();
-	}
 
-	@Override
-	public Set<Cliente> converterParaColecao(InputStream stream) {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+    private ClienteStreamConverter() {
+        super();
+    }
+
+    @Override
+    public Set<Cliente> converterParaColecao(InputStream stream) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
         Set<Cliente> clientes = new HashSet<>();
         String linha;
         int linhaLida = 1;
@@ -30,10 +30,10 @@ public final class ClienteStreamConverter implements StreamConverter<Cliente> {
             throw new StreamConverterException(String.format("Ocorreu um erro de processamento na linha %d - Erro: %s", linhaLida, e.getMessage()), e);
         } // fim do bloco try/catch
         return clientes;
-	}
-	
-	public static ClienteStreamConverter obterConversorStream() {
-		return new ClienteStreamConverter();
-	}
+    }
+
+    public static ClienteStreamConverter obterConversorStream() {
+        return new ClienteStreamConverter();
+    }
 
 }

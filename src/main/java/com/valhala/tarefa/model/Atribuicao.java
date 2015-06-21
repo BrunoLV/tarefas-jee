@@ -1,7 +1,8 @@
 package com.valhala.tarefa.model;
 
 /**
- * Enum que representa os possiveis papeis de sistema que podem ser utilizados na aplicação.
+ * Enum que representa os possiveis papeis de sistema que podem ser utilizados
+ * na aplicação.
  *
  * @author Bruno Luiz Viana
  * @version 1.0
@@ -9,8 +10,8 @@ package com.valhala.tarefa.model;
  */
 public enum Atribuicao {
 
-    MANTER, 
-    LIDER, 
+    MANTER,
+    LIDER,
     CONVIDADO
 
 } // fim da enum Atribuicao

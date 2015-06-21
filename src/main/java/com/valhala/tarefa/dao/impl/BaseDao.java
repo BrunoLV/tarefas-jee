@@ -8,8 +8,8 @@ import javax.persistence.PersistenceContext;
 import com.valhala.tarefa.dao.api.Dao;
 
 /**
- * Implementação básica da interface Dao.
- * Implementa os métodos básicos e serve como classe pai das outras DAO implementadas no sistema.
+ * Implementação básica da interface Dao. Implementa os métodos básicos e serve
+ * como classe pai das outras DAO implementadas no sistema.
  *
  * @param <T>
  * @author Bruno Luiz Viana

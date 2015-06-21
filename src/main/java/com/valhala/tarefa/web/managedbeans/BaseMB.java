@@ -1,4 +1,4 @@
-package com.valhala.tarefa.web.beans;
+package com.valhala.tarefa.web.managedbeans;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
@@ -8,9 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- * Classe base dos managed beas da aplicação.
- * Essa classe possui os métodos comuns aos managed beans para manopulação de mensagem no contexto
- * e sessão.
+ * Classe base dos managed beas da aplicação. Essa classe possui os métodos
+ * comuns aos managed beans para manopulação de mensagem no contexto e sessão.
  *
  * @author Bruno Luiz Viana
  * @version 1.0
@@ -94,7 +93,8 @@ public class BaseMB {
     } // fim do método inserirObjetoNoFlashScope
 
     /**
-     * Método utilizado para verificar a existencia de determinado objeto no FlashScope
+     * Método utilizado para verificar a existencia de determinado objeto no
+     * FlashScope
      *
      * @param chave
      * @return

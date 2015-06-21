@@ -3,6 +3,7 @@ package com.valhala.tarefa.ejb;
 import com.valhala.tarefa.dao.api.ClienteDao;
 import com.valhala.tarefa.model.Cliente;
 import com.valhala.tarefa.qualifiers.Auditavel;
+import java.io.Serializable;
 
 import javax.ejb.*;
 import javax.inject.Inject;
@@ -18,16 +19,21 @@ import java.util.List;
 @Auditavel
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class ClienteBean {
+public class ClienteEJB {
 
     @Inject
     private ClienteDao clienteDao;
+
+    @Auditavel
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Cliente buscarPorId(Serializable id) {
+        return this.clienteDao.buscarPorId(id);
+    }
 
     /**
      * Método utilizado para retorna a lista de clientes registrados no sistema.
      *
      * @return
-     * @throws ConsultaSemRetornoException
      */
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)

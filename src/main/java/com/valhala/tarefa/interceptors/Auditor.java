@@ -10,7 +10,8 @@ import javax.interceptor.InvocationContext;
 import java.lang.reflect.Method;
 
 /**
- * Interceptador utilizado para interceptar a execução de métodos das classes que precisam ser auditadas.
+ * Interceptador utilizado para interceptar a execução de métodos das classes
+ * que precisam ser auditadas.
  *
  * @author Bruno Luiz Viana
  * @version 1.0
@@ -24,7 +25,8 @@ public class Auditor {
     private Logger logger;
 
     /**
-     * Método utilizado para auditar as via log as operações executadas no sistema.
+     * Método utilizado para auditar as via log as operações executadas no
+     * sistema.
      *
      * @param context
      * @return

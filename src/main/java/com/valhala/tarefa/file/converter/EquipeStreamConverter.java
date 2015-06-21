@@ -11,13 +11,13 @@ import com.valhala.tarefa.model.Equipe;
 
 public final class EquipeStreamConverter implements StreamConverter<Equipe> {
 
-	private EquipeStreamConverter() {
-		super();
-	}
-	
-	@Override
-	public Set<Equipe> converterParaColecao(InputStream stream) {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+    private EquipeStreamConverter() {
+        super();
+    }
+
+    @Override
+    public Set<Equipe> converterParaColecao(InputStream stream) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
         Set<Equipe> equipes = new HashSet<>();
         String linha;
         int linhaLida = 1;
@@ -30,10 +30,10 @@ public final class EquipeStreamConverter implements StreamConverter<Equipe> {
             throw new StreamConverterException(String.format("Ocorreu um erro de processamento na linha %d - Erro: %s", linhaLida, e.getMessage()), e);
         } // fim do bloco try/catch
         return equipes;
-	}
-	
-	public static EquipeStreamConverter obterConversorStream() {
-		return new EquipeStreamConverter();
-	}
+    }
+
+    public static EquipeStreamConverter obterConversorStream() {
+        return new EquipeStreamConverter();
+    }
 
 }

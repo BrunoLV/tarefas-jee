@@ -9,23 +9,23 @@ package com.valhala.tarefa.model;
  */
 public enum Status {
 
-    ABERTO("Aberto"),  
+    ABERTO("Aberto"),
     AGUARDANDO("Aguardando"),
     AGUARDANDO_CLIENTE("Aguardando cliente"),
     AGUARDANDO_FORNECEDOR("Aguardando fornecedor"),
-    AGUARDANDO_INFORMACAO_DO_CLIENTE("Aguardando informação do cliente"), 
+    AGUARDANDO_INFORMACAO_DO_CLIENTE("Aguardando informação do cliente"),
     AGUARDANDO_RDM("Aguardando RDM"),
     EM_ATENDIMENTO("Em atendimento"),
     EM_ANALISE("Em analise"),
     EM_APROVACAO("Em aprovação"),
-    EM_APROVACAO_TECNICA("Em aprovação técnica"), 
-    EM_COTACAO("Em cotação"), 
-    EM_HOMOLOGACAO("Em homologação"), 
+    EM_APROVACAO_TECNICA("Em aprovação técnica"),
+    EM_COTACAO("Em cotação"),
+    EM_HOMOLOGACAO("Em homologação"),
     EM_HOMOLOGACAO_PELO_CLIENTE("Em homologação pelo cliente"),
-    EM_PLANEJAMENTO("Em planejamento"), 
-    HOMOLOGADO("Homologado"), 
-    PLANEJADO("Planejado"), 
-    TRIAGEM("Triagem"), 
+    EM_PLANEJAMENTO("Em planejamento"),
+    HOMOLOGADO("Homologado"),
+    PLANEJADO("Planejado"),
+    TRIAGEM("Triagem"),
     CONCLUIDO("Concluído");
 
     private String nomeExibicao;
