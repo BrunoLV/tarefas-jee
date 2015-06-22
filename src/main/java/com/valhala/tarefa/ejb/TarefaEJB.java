@@ -3,10 +3,10 @@ package com.valhala.tarefa.ejb;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -21,7 +21,6 @@ import com.valhala.tarefa.model.Status;
 import com.valhala.tarefa.model.Tarefa;
 import com.valhala.tarefa.model.TipoDemanda;
 import com.valhala.tarefa.qualifiers.Auditavel;
-import javax.ejb.EJB;
 
 /**
  * EJB responsavel pela regra de negócio relacionada a Tarefa
@@ -30,21 +29,15 @@ import javax.ejb.EJB;
  * @version 1.0
  * @since 23/02/2014
  */
-@Auditavel
-@Stateless
+@Auditavel @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class TarefaEJB {
 
-    @Inject
-    private TarefaDao tarefaDao;
-    @EJB
-    private ColaboradorEJB colaboradorEJB;
-    @EJB
-    private EquipeEJB equipeEJB;
-    @EJB
-    private SistemaEJB sistemaEJB;
-    @EJB
-    private ClienteEJB clienteEJB;
+    @Inject private TarefaDao tarefaDao;
+    @EJB private ColaboradorEJB colaboradorEJB;
+    @EJB private EquipeEJB equipeEJB;
+    @EJB private SistemaEJB sistemaEJB;
+    @EJB private ClienteEJB clienteEJB;
 
     /**
      * Método utilizado para executar a ação de cadastrar uma tarefa no sistema.
@@ -171,18 +164,11 @@ public class TarefaEJB {
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Map<String, BigInteger> buscarTotaisPorEquipeEPeriodoETipo(Date inicio, Date fim, TipoDemanda tipo) {
-        Map<String, BigInteger> mapa = new HashMap<>();
-        List<Object[]> retorno;
-
-        retorno = tipo.equals(TipoDemanda.TODOS)
+        Map<String, BigInteger> mapa;
+        
+        mapa = tipo.equals(TipoDemanda.TODOS)
                 ? this.tarefaDao.buscarTotaisDemandasPorPeriodoDeTodasEquipes(inicio, fim)
                 : this.tarefaDao.buscarTotaisDemandasPorPeriodoEEquipePorTipo(inicio, fim, tipo.name());
-
-        for (Object[] objeto : retorno) {
-            String nome = (String) objeto[0];
-            BigInteger total = (BigInteger) objeto[1];
-            mapa.put(nome, total);
-        } // fim do bloco for
 
         return mapa;
     } // fim do método buscarTotaisPorEquipeEPeriodo
@@ -190,24 +176,17 @@ public class TarefaEJB {
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Map<String, BigInteger> buscarTotaisTodosSistemaPorTipoEEquipe(Date inicio, Date fim, Long id, TipoDemanda tipo) {
-        Map<String, BigInteger> mapa = new HashMap<>();
-        List<Object[]> retorno;
-
+        Map<String, BigInteger> mapa;
+        
         if (id != null && !id.equals(0l)) {
-            retorno = tipo.equals(TipoDemanda.TODOS)
+            mapa = tipo.equals(TipoDemanda.TODOS)
                     ? this.tarefaDao.buscarTotaisDemandasTodosSistemasPorEquipe(inicio, fim, id)
                     : this.tarefaDao.buscarTotaisDemandasTodosSistemasPorTipoEEquipe(inicio, fim, id, tipo.name());
         } else {
-            retorno = tipo.equals(TipoDemanda.TODOS)
+            mapa = tipo.equals(TipoDemanda.TODOS)
                     ? this.tarefaDao.buscarTotaisDemandasTodosSistemas(inicio, fim)
                     : this.tarefaDao.buscarTotaisDemandasTodosSistemasPorTipo(inicio, fim, tipo.name());
         } // fim do bloco if/else
-
-        for (Object[] objeto : retorno) {
-            String nome = (String) objeto[0];
-            BigInteger total = (BigInteger) objeto[1];
-            mapa.put(nome, total);
-        } // fim do bloco for
 
         return mapa;
     } // fim do método buscarTotaisTodosSistemaPorTipoEEquipe
@@ -215,24 +194,17 @@ public class TarefaEJB {
     @Auditavel
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Map<String, BigInteger> buscarTotaisTodosClientesPorTipoEEquipe(Date inicio, Date fim, Long id, TipoDemanda tipo) {
-        Map<String, BigInteger> mapa = new HashMap<>();
-        List<Object[]> retorno;
+        Map<String, BigInteger> mapa;
 
         if (id != null && !id.equals(0l)) {
-            retorno = tipo.equals(TipoDemanda.TODOS)
+            mapa = tipo.equals(TipoDemanda.TODOS)
                     ? this.tarefaDao.buscarTotaisDemandasTodosClientesPorEquipe(inicio, fim, id)
                     : this.tarefaDao.buscarTotaisDemandasTodosClientesPorEquipeETipo(inicio, fim, id, tipo.name());
         } else {
-            retorno = tipo.equals(TipoDemanda.TODOS)
+            mapa = tipo.equals(TipoDemanda.TODOS)
                     ? this.tarefaDao.buscarTotaisDemandasTodosClientes(inicio, fim)
                     : this.tarefaDao.buscarTotaisDemandasTodosClientesPorTipo(inicio, fim, tipo.name());
         } // fim do bloco if/else
-
-        for (Object[] objeto : retorno) {
-            String nome = (String) objeto[0];
-            BigInteger total = (BigInteger) objeto[1];
-            mapa.put(nome, total);
-        } // fim do bloco for
 
         return mapa;
     }// fim do método buscarTotaisTodosClientesPorTipoEEquipe

@@ -1,4 +1,4 @@
-package com.valhala.tarefa.dao.impl;
+package com.valhala.tarefa.dao.jpa;
 
 import java.util.List;
 
@@ -14,17 +14,15 @@ import com.valhala.tarefa.model.Cliente;
  * @version 1.0
  * @since 23/06/2014
  */
-public class ClienteDaoImpl extends BaseDao<Cliente> implements ClienteDao {
+class ClienteDaoJPAImpl extends BaseJPADao<Cliente> implements ClienteDao {
 
-    public static final Class<Cliente> CLASSE_PERSISTENTE = Cliente.class;
-
-    public ClienteDaoImpl() {
-        this.classePersistente = ClienteDaoImpl.CLASSE_PERSISTENTE;
+    public ClienteDaoJPAImpl() {
+        this.classePersistente = Cliente.class;
     } // fim do método construtor
 
     @Override
     public List<Cliente> listarTudo() {
-        TypedQuery<Cliente> query = this.entityManager.createNamedQuery(Cliente.NAMEDQUERY_BUSCAR_TODOS, ClienteDaoImpl.CLASSE_PERSISTENTE);
+        TypedQuery<Cliente> query = construirTypedQuery(Cliente.NAMEDQUERY_BUSCAR_TODOS);
         List<Cliente> clientes = query.getResultList();
         return clientes;
     } // fim do método listaTudo

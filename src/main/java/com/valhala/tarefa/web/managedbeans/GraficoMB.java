@@ -40,12 +40,9 @@ public class GraficoMB extends BaseMB implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 
-    @EJB
-    private TarefaEJB tarefaService;
-    @EJB
-    private EquipeEJB equipeService;
-    @EJB
-    private ClienteEJB clienteService;
+    @EJB private TarefaEJB tarefaService;
+    @EJB private EquipeEJB equipeService;
+    @EJB private ClienteEJB clienteService;
 
     private PieChartModel graficoDemandasEquipes;
     private PieChartModel graficoDemandasSistemas;
@@ -105,7 +102,7 @@ public class GraficoMB extends BaseMB implements Serializable {
         Set<String> chaves = mapa.keySet();
         Map<String, Number> valor = new LinkedHashMap<>();
         for (String chave : chaves) {
-            valor.put(chave, mapa.get(chave));
+        	valor.put(chave, mapa.get(chave));
         }
         graficoDemandasCliente.setData(valor);
     }

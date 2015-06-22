@@ -12,7 +12,7 @@ import com.valhala.tarefa.model.Colaborador;
 import com.valhala.tarefa.model.Equipe;
 import com.valhala.tarefa.model.Prioridade;
 import com.valhala.tarefa.model.Status;
-import com.valhala.tarefa.model.StatusSla;
+import com.valhala.tarefa.model.StatusSLA;
 import com.valhala.tarefa.model.Tarefa;
 import com.valhala.tarefa.model.TipoDemanda;
 
@@ -39,7 +39,7 @@ public final class TarefaStreamConverter implements StreamConverter<Tarefa> {
                         abertura(DATE_FORMAT.parse(atributos[4])).
                         status(Status.valueOf(atributos[5])).
                         categoria(atributos[6]).
-                        statusSla(StatusSla.valueOf(atributos[7])).
+                        statusSla(StatusSLA.valueOf(atributos[7])).
                         colaborador(atributos[9] != null && !atributos[9].trim().equals("") ? new Colaborador.Builder(atributos[9], null).build() : null).build();
                 System.out.println("CATEGORIA: " + tarefa.getCategoria());
                 tarefas.add(tarefa);

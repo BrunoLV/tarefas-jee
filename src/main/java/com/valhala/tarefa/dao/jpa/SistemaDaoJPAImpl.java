@@ -1,4 +1,4 @@
-package com.valhala.tarefa.dao.impl;
+package com.valhala.tarefa.dao.jpa;
 
 import java.util.List;
 
@@ -14,17 +14,15 @@ import com.valhala.tarefa.model.Sistema;
  * @version 1.0
  * @since 23/06/2014
  */
-public class SistemaDaoImpl extends BaseDao<Sistema> implements SistemaDao {
+class SistemaDaoJPAImpl extends BaseJPADao<Sistema> implements SistemaDao {
 
-    public static final Class<Sistema> CLASSE_PERSISTENTE = Sistema.class;
-
-    public SistemaDaoImpl() {
-        this.classePersistente = SistemaDaoImpl.CLASSE_PERSISTENTE;
+    public SistemaDaoJPAImpl() {
+        this.classePersistente = Sistema.class;
     } // fim do método construtor
 
     @Override
     public List<Sistema> listarTudo() {
-        TypedQuery<Sistema> query = this.entityManager.createNamedQuery(Sistema.NAMEDQUERY_BUSCAR_TODOS, SistemaDaoImpl.CLASSE_PERSISTENTE);
+        TypedQuery<Sistema> query = construirTypedQuery(Sistema.NAMEDQUERY_BUSCAR_TODOS);
         List<Sistema> sistemas = query.getResultList();
         return sistemas;
     } // fim do método listarTudo

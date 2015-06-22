@@ -1,7 +1,6 @@
 package com.valhala.tarefa.ejb;
 
 import com.valhala.tarefa.dao.api.SistemaDao;
-import com.valhala.tarefa.exceptions.ConsultaSemRetornoException;
 import com.valhala.tarefa.model.Sistema;
 import com.valhala.tarefa.qualifiers.Auditavel;
 import java.io.Serializable;

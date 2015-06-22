@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Table(name = "tb_equipe")
 @NamedQueries({
     @NamedQuery(name = Equipe.NAMEDQUERY_BUSCAR_TODOS, query = "select e from Equipe e"),
-    @NamedQuery(name = Equipe.NAMEDQUERY_BUSCAR_POR_NOME, query = "select e from Equipe e where e.nome = :nome")
+    @NamedQuery(name = Equipe.NAMEDQUERY_BUSCAR_POR_NOME, query = "select e from Equipe e where e.nome = ?1")
 })
 public class Equipe implements Serializable {
 

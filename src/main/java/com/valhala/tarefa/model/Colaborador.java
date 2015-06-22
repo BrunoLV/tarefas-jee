@@ -29,8 +29,8 @@ import javax.persistence.Table;
 @Table(name = "tb_colaborador")
 @NamedQueries({
     @NamedQuery(name = Colaborador.NAMEDQUERY_BUSCAR_TODOS, query = "select c from Colaborador c"),
-    @NamedQuery(name = Colaborador.NAMEDQUERY_BUSCAR_POR_MATRICULA, query = "select c from Colaborador c where c.matricula = :matricula"),
-    @NamedQuery(name = Colaborador.NAMEDQUERY_BUSCAR_POR_NOME, query = "select c from Colaborador c where c.nome = :nome")})
+    @NamedQuery(name = Colaborador.NAMEDQUERY_BUSCAR_POR_MATRICULA, query = "select c from Colaborador c where c.matricula = ?1"),
+    @NamedQuery(name = Colaborador.NAMEDQUERY_BUSCAR_POR_NOME, query = "select c from Colaborador c where c.nome = ?1")})
 public class Colaborador implements Serializable {
 
     public static final String NAMEDQUERY_BUSCAR_TODOS = "buscarTodosColaboradores";

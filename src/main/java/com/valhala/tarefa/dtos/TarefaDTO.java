@@ -5,7 +5,7 @@ import java.util.Date;
 
 import com.valhala.tarefa.model.Prioridade;
 import com.valhala.tarefa.model.Status;
-import com.valhala.tarefa.model.StatusSla;
+import com.valhala.tarefa.model.StatusSLA;
 import com.valhala.tarefa.model.Tarefa;
 import com.valhala.tarefa.model.TipoDemanda;
 
@@ -26,7 +26,7 @@ public class TarefaDTO implements Serializable {
     private Date finalPlanejado;
     private Date finalEfetivo;
     private Status status;
-    private StatusSla statusSla;
+    private StatusSLA statusSla;
     private String observacao;
     private Long diasAbertura;
     private ColaboradorDTO colaborador = new ColaboradorDTO();
@@ -142,11 +142,11 @@ public class TarefaDTO implements Serializable {
         this.status = status;
     }
 
-    public StatusSla getStatusSla() {
+    public StatusSLA getStatusSla() {
         return statusSla;
     }
 
-    public void setStatusSla(StatusSla statusSla) {
+    public void setStatusSla(StatusSLA statusSla) {
         this.statusSla = statusSla;
     }
 

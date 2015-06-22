@@ -24,7 +24,7 @@ import com.valhala.tarefa.model.Equipe;
 import com.valhala.tarefa.model.Prioridade;
 import com.valhala.tarefa.model.Sistema;
 import com.valhala.tarefa.model.Status;
-import com.valhala.tarefa.model.StatusSla;
+import com.valhala.tarefa.model.StatusSLA;
 import com.valhala.tarefa.model.Tarefa;
 import com.valhala.tarefa.model.TipoDemanda;
 import com.valhala.tarefa.dtos.ClienteDTO;
@@ -50,16 +50,11 @@ public class TarefaMB extends BaseMB implements Serializable {
 
     private static final String OUTCOME_ENVIAR_EDICAO = "/pages/manter/cadastro-tarefas.xhtml?faces-redirect=true";
 
-    @EJB
-    private TarefaEJB tarefaService;
-    @EJB
-    private ClienteEJB clienteService;
-    @EJB
-    private SistemaEJB sistemaService;
-    @EJB
-    private EquipeEJB equipeService;
-    @EJB
-    private ColaboradorEJB colaboradorService;
+    @EJB private TarefaEJB tarefaService;
+    @EJB private ClienteEJB clienteService;
+    @EJB private SistemaEJB sistemaService;
+    @EJB private EquipeEJB equipeService;
+    @EJB private ColaboradorEJB colaboradorService;
 
     private TarefaDTO tarefa;
 
@@ -119,8 +114,8 @@ public class TarefaMB extends BaseMB implements Serializable {
         return Status.values();
     }
 
-    public StatusSla[] getStatusSla() {
-        return StatusSla.values();
+    public StatusSLA[] getStatusSla() {
+        return StatusSLA.values();
     }
 
     public TipoDemanda[] getTiposDemanda() {

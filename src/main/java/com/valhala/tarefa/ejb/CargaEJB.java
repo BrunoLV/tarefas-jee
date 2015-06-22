@@ -40,16 +40,11 @@ import com.valhala.tarefa.qualifiers.Auditavel;
 @TransactionManagement(TransactionManagementType.BEAN)
 public class CargaEJB {
 
-    @Inject
-    private SistemaDao sistemaDao;
-    @Inject
-    private ClienteDao clienteDao;
-    @Inject
-    private EquipeDao equipeDao;
-    @Inject
-    private TarefaDao tarefaDao;
-    @Inject
-    private ColaboradorDao colaboradorDao;
+    @Inject private SistemaDao sistemaDao;
+    @Inject private ClienteDao clienteDao;
+    @Inject private EquipeDao equipeDao;
+    @Inject private TarefaDao tarefaDao;
+    @Inject private ColaboradorDao colaboradorDao;
 
     @Resource
     private UserTransaction transaction;
